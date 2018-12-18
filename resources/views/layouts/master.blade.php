@@ -10,8 +10,6 @@
 
   @include('layouts.main-footer')
 
-  @include('layouts.control-sidebar')
-
 </div>
 
 @include('layouts.footer')
