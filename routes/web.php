@@ -13,5 +13,10 @@
 
 Auth::routes(['register' => false]);
 
-Route::view('/', 'auth.login');
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::view('/', 'auth.login');
+
+Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+});
