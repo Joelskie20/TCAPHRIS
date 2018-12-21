@@ -13,10 +13,10 @@
 
 Auth::routes(['register' => false]);
 
-// Route::view('/', 'auth.login');
-
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+    Route::post('/dashboard', 'HomeController@store');
+    Route::put('/dashboard/{id}', 'HomeController@update');
 });

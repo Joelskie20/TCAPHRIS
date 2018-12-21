@@ -15,10 +15,22 @@
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
-      <a href="#" class="pull-left btn btn-default btn-sm" style="margin:10px;"><i class="fa fa-clock-o"></i> TIME IN</a>
-      <div class="pull-left" style="margin:15px;color:#fff;">
+      {{-- <a href="#" class="pull-left btn btn-default btn-sm" style="margin:10px;"><i class="fa fa-clock-o"></i> TIME IN</a> --}}
+      @if($disabled == false)
+      <form method="POST" action="{{ action('HomeController@store') }}">
+        @csrf
+        <button onclick="return confirm('Are you sure you want to Time In?');" class="pull-left btn btn-default btn-sm" style="margin:10px;"><i class="fa fa-clock-o"></i> TIME IN</button>
+      </form>
+      @else
+      <form method="POST" action="{{ action('HomeController@update', ['id' => Auth::user()->id ]) }}">
+        @method('PUT')
+        @csrf
+        <button onclick="return confirm('Are you sure you want to Time Out?');" class="pull-left btn btn-default btn-sm" style="margin:10px;"><i class="fa fa-clock-o"></i> TIME OUT</button>
+      </form>
+      @endif
+      <div class="pull-left" style="margin:15px; color:#fff;">
         <i style="margin-right: 5px;" class="fa fa-calendar"></i>{{  Carbon::parse(Carbon::now())->format('F d, Y') }}
-        <i class="fa fa-clock-o" style="margin-left:15px; margin-right: 5px;"></i><p class="display-time"></p></div>
+        <i class="fa fa-clock-o" style="margin-left: 15px; margin-right: 5px;"></i><p class="display-time"></p></div>
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">

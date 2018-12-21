@@ -2,6 +2,7 @@
 <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js">
+moment.tz.setDefault("Asia/Manila");
 var moment = require('moment');
 </script>
 <script>
