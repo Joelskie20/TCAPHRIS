@@ -3,3 +3,8 @@
     width: 60%;
     margin: 7% auto;
 }
+
+p.display-time {
+    display: inline-block;
+    margin: 0;
+}

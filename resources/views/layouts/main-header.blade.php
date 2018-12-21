@@ -16,7 +16,9 @@
         <span class="sr-only">Toggle navigation</span>
       </a>
       <a href="#" class="pull-left btn btn-default btn-sm" style="margin:10px;"><i class="fa fa-clock-o"></i> TIME IN</a>
-      <div class="pull-left" style="margin:15px;color:#fff;"><i style="margin-right: 5px;" class="fa fa-calendar"></i>{{  Carbon::parse(Carbon::now())->format('F d, Y') }}<i class="fa fa-clock-o" style="margin-left:15px; margin-right: 5px;"></i>{{ Carbon::now()->format('g:i a') }}</div>
+      <div class="pull-left" style="margin:15px;color:#fff;">
+        <i style="margin-right: 5px;" class="fa fa-calendar"></i>{{  Carbon::parse(Carbon::now())->format('F d, Y') }}
+        <i class="fa fa-clock-o" style="margin-left:15px; margin-right: 5px;"></i><p class="display-time"></p></div>
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
