@@ -26,22 +26,27 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $attendance = Attendance::where([
-            ['user_id', '=', Auth::user()->id],
-            ['time_out', '=', null]
-        ])->first();
+        // $attendance = Attendance::where([
+        //     ['user_id', '=', auth()->id()],
+        //     ['time_out', '=', null]
+        // ])->first();
 
-        $disabled = ($attendance) ? true : false;
+        $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
         
         return view('dashboard', ['disabled' => $disabled]);
     }
 
     public function store(Request $request)
     {
-        $attendance = new Attendance;
-        $attendance->user_id = Auth::user()->id;
-        $attendance->time_in = strtotime(Carbon::now());
-        $attendance->save();
+        // $attendance = new Attendance;
+        // $attendance->user_id = auth()->id();
+        // $attendance->time_in = strtotime(Carbon::now());
+        // $attendance->save();
+
+        Attendance::create([
+            'user_id' => auth()->id(),
+            'time_in' => strtotime(Carbon::now())
+        ]);
 
         Session::flash('message', 'Successfully Timed In at ' . Carbon::now()->toDayDateTimeString());
         return back();
@@ -49,15 +54,12 @@ class HomeController extends Controller
 
     public function update(Request $request, $id)
     {
-        $attendance = Attendance::where([
-            ['time_out', '=', null],
-            ['user_id', '=', $id],
-        ])->first();
+        $attendance = Attendance::checkAttendanceStatus();
 
         $attendance->time_out = strtotime(Carbon::now());
         $attendance->update();
 
-        Session::flash('message', "Successfully Time Out at ". Carbon::now()->toDayDateTimeString());
+        Session::flash('message', "Successfully Timed Out at ". Carbon::now()->toDayDateTimeString());
         return back();
     }
 }
