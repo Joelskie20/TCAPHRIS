@@ -18,3 +18,7 @@ Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 Route::post('/dashboard', 'HomeController@store');
 Route::put('/dashboard/{id}', 'HomeController@update');
+Route::get('/dailytimerecords', function() {
+    $disabled = (\App\Attendance::checkAttendanceStatus()) ? true : false;
+    return view('dtr.index', compact('disabled'));
+})->name('dtr');

@@ -20,8 +20,8 @@
     <ul class="sidebar-menu" data-widget="tree">
     <li class="header">MAIN NAVIGATION</li>
     <!-- Optionally, you can add icons to the links -->
-    <li class="{{ route('dashboard') ? 'active' : '' }}"><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-    {{-- <li><a href="#"><i class="fa fa-calendar"></i> <span>Daily Time Records</span></a></li> --}}
+    <li class="{{ Route::is('dashboard') ? 'active' : '' }}"><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+    <li class="{{ Route::is('dtr') ? 'active' : '' }}"><a href="{{ route('dtr') }}"><i class="fa fa-calendar"></i> <span>Daily Time Records</span></a></li>
     {{-- <li class="treeview">
         <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
         <span class="pull-right-container">
