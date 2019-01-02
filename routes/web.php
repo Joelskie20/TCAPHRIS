@@ -13,11 +13,11 @@
 
 Auth::routes();
 
-Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
+Route::get('/', 'Auth\LoginController@showLoginForm')->middleware('guest');
 
-Route::get('/dashboard', 'HomeController@index')->name('dashboard');
-Route::post('/dashboard', 'HomeController@store');
-Route::put('/dashboard/{id}', 'HomeController@update');
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+Route::post('/dashboard', 'DashboardController@store');
+Route::put('/dashboard/{id}', 'DashboardController@update');
 Route::get('/dailytimerecords', function() {
     $disabled = (\App\Attendance::checkAttendanceStatus()) ? true : false;
     return view('dtr.index', compact('disabled'));

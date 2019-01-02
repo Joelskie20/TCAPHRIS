@@ -28,13 +28,13 @@
 							<div class="box-body">
 								<div class="row">
 									<div class="col-xs-12 col-sm-6">
-										<form method="POST" action="{{ action('HomeController@store') }}">
+										<form method="POST" action="{{ action('DashboardController@store') }}">
 											@csrf
 											<button onclick="return confirm('Are you sure you want to Time In?');" class="btn btn-primary btn-block btn-lg" {{ ($disabled) ? 'disabled' : '' }}>TIME IN</button>
 										</form>
 									</div>
 									<div class="col-xs-12 col-sm-6">
-										<form method="POST" action="{{ action('HomeController@update', ['id' => Auth::user()->id]) }}">
+										<form method="POST" action="{{ action('DashboardController@update', ['id' => Auth::user()->id]) }}">
 											@method('PUT')
 											@csrf
 											<button onclick="return confirm('Are you sure you want to Time Out?');" class="btn btn-primary btn-block btn-lg" {{ ($disabled) ? '' : 'disabled' }}>TIME OUT</button>

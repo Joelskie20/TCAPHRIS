@@ -7,7 +7,7 @@ use Session;
 use Carbon\Carbon;
 use App\Attendance;
 use Illuminate\Http\Request;
-class HomeController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Create a new controller instance.
