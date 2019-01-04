@@ -22,4 +22,5 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/daily-time-records', 'DtrController@index')->name('dtr');
     Route::get('/team-schedule', 'TeamScheduleController@index')->name('team-schedule');
+    Route::get('/department', 'DepartmentController@index')->name('department');
 });

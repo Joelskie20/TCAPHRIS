@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Dtr;
+use App\Department;
 use App\Attendance;
 use Illuminate\Http\Request;
 
-class DtrController extends Controller
+class DepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,10 @@ class DtrController extends Controller
     {
         $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
 
-        return view('dtr.index', compact('disabled'));
+        return view('department.index', [
+            'disabled' => $disabled,
+            'departments' => Department::all()
+        ]);
     }
 
     /**
@@ -44,10 +47,10 @@ class DtrController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Dtr  $dtr
+     * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function show(Dtr $dtr)
+    public function show(Department $department)
     {
         //
     }
@@ -55,10 +58,10 @@ class DtrController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Dtr  $dtr
+     * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function edit(Dtr $dtr)
+    public function edit(Department $department)
     {
         //
     }
@@ -67,10 +70,10 @@ class DtrController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Dtr  $dtr
+     * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dtr $dtr)
+    public function update(Request $request, Department $department)
     {
         //
     }
@@ -78,10 +81,10 @@ class DtrController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Dtr  $dtr
+     * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Dtr $dtr)
+    public function destroy(Department $department)
     {
         //
     }

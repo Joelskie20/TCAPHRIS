@@ -46,7 +46,7 @@
             </a>
             <ul class="treeview-menu">
                 <li><a href="#"><i class="fa fa-circle-o"></i> Calendar</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Departments</a></li>
+                <li><a href="{{ route('department') }}"><i class="{{ Route::is('department') ? 'fa fa-circle' : 'fa fa-circle-o' }}"></i> Departments</a></li>
                 <li><a href="#"><i class="fa fa-circle-o"></i> Teams</a></li>
                 <li><a href="#"><i class="fa fa-circle-o"></i> Roles</a></li>
             </ul>
