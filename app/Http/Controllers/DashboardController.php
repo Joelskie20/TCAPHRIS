@@ -9,11 +9,6 @@ use App\Attendance;
 use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -26,11 +21,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // $attendance = Attendance::where([
-        //     ['user_id', '=', auth()->id()],
-        //     ['time_out', '=', null]
-        // ])->first();
-
         $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
         
         return view('dashboard', ['disabled' => $disabled]);
@@ -38,17 +28,13 @@ class DashboardController extends Controller
 
     public function store(Request $request)
     {
-        // $attendance = new Attendance;
-        // $attendance->user_id = auth()->id();
-        // $attendance->time_in = strtotime(Carbon::now());
-        // $attendance->save();
 
         Attendance::create([
             'user_id' => auth()->id(),
             'time_in' => strtotime(Carbon::now())
         ]);
 
-        Session::flash('message', 'Successfully Timed In at ' . Carbon::now()->toDayDateTimeString());
+        Session::flash('message', 'Time In: ' . Carbon::now()->format('h:i:s A, F d, Y'));
         return back();
     }
 
@@ -59,7 +45,7 @@ class DashboardController extends Controller
         $attendance->time_out = strtotime(Carbon::now());
         $attendance->update();
 
-        Session::flash('message', "Successfully Timed Out at ". Carbon::now()->toDayDateTimeString());
+        Session::flash('message', 'Time Out: ' . Carbon::now()->format('h:i:s A, F d, Y'));
         return back();
     }
 }

@@ -8,7 +8,7 @@
 
     @yield('content')
 
-  {{-- @include('layouts.main-footer') --}}
+  @include('layouts.main-footer')
 
 </div>
 

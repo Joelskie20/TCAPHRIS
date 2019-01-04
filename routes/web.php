@@ -13,12 +13,13 @@
 
 Auth::routes();
 
-Route::get('/', 'Auth\LoginController@showLoginForm')->middleware('guest');
+Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
 
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-Route::post('/dashboard', 'DashboardController@store');
-Route::put('/dashboard/{id}', 'DashboardController@update');
-Route::get('/dailytimerecords', function() {
-    $disabled = (\App\Attendance::checkAttendanceStatus()) ? true : false;
-    return view('dtr.index', compact('disabled'));
-})->name('dtr');
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::post('/dashboard', 'DashboardController@store');
+    Route::put('/dashboard/{id}', 'DashboardController@update');
+
+    Route::get('/daily-time-records', 'DtrController@index')->name('dtr');
+    Route::get('/team-schedule', 'TeamScheduleController@index')->name('team-schedule');
+});

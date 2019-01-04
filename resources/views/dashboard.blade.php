@@ -10,13 +10,11 @@
           Dashboard
         </h1>
       </section>
-
       <!-- Main content -->
       <section class="content container-fluid">
 				@if (Session::has('message'))
-					<div class="alert alert-success alert-dismissible">{{ Session::get('message') }}
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
+					<div class="alert alert-success alert-dismissible" style="font-size: 25px;">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4><i class="icon fa fa-check"></i> Success!</h4>{{ Session::get('message') }}
 					</div>
 				@endif
         <div class="col-xs-12 col-sm-6">
