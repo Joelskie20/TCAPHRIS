@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +34,10 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        //
+        $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
+        return view('department.create', [
+            'disabled' => $disabled
+        ]);
     }
 
     /**
@@ -41,7 +48,11 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Department::create(request()->validate([
+            'department_name' => ['required', 'max:255']
+        ]));
+
+        return redirect('/department');
     }
 
     /**
@@ -63,7 +74,11 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
-        //
+        $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
+        return view('department.edit', [
+            'disabled' => $disabled,
+            'department' => $department
+        ]);
     }
 
     /**
@@ -75,7 +90,11 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, Department $department)
     {
-        //
+        $department->update($request->validate([
+            'department_name' => ['required']
+        ]));
+
+        return redirect('/department');
     }
 
     /**
@@ -86,6 +105,7 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        //
+        $department->delete();
+        return redirect('/department');
     }
 }
