@@ -5,7 +5,7 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel">
     <div class="pull-left image">
-        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+        <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
     </div>
     <div class="pull-left info">
         <p>{{ Auth::user()->name }}</p>
@@ -46,7 +46,7 @@
             </a>
             <ul class="treeview-menu">
                 <li><a href="#"><i class="fa fa-circle-o"></i> Calendar</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Departments</a></li>
+                <li><a href="{{ route('department') }}"><i class="fa fa-circle-o"></i> Departments</a></li>
                 <li><a href="#"><i class="fa fa-circle-o"></i> Teams</a></li>
                 <li><a href="#"><i class="fa fa-circle-o"></i> Roles</a></li>
             </ul>
