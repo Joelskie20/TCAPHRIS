@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\Attendance;
+use App\{User, Attendance, Gender, Department, Team};
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -28,7 +27,10 @@ class EmployeeController extends Controller
     public function create()
     {
         return view('employee.create', [
-            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false
+            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
+            'genders' => Gender::all(),
+            'departments' => Department::all(),
+            'teams' => Team::all()
         ]);
     }
 

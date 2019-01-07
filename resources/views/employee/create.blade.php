@@ -45,7 +45,10 @@
                                     <label for="departmentID">Department <small class="label label-success">Required</small></label>
                                     <select class="form-control" id="departmentID" name="departmentID" required="">
                                         <option value="0">-- None --</option>
-                                        <option value="4__Digital Marketing">Digital Marketing</option><option value="3__Human Resource">Human Resource</option><option value="1__Management">Management</option>										</select>
+                                        @foreach($departments as $department)
+                                            <option value="{{ $department->id }}">{{ $department->department_name }}</option>
+                                        @endforeach										
+                                    </select>
                                 </div>
                             </div>
 
@@ -55,7 +58,10 @@
                                     <label for="teamID">Team <small class="label label-success">Required</small></label>
                                     <select class="form-control" id="teamID" name="teamID" required="">
                                         <option value="0" class="opt-none">-- None --</option>
-                                        <option class="d4 team-department" value="3__eCommerce" style="display: none;">eCommerce</option><option class="d4 team-department" value="1__Web Integration" style="display: none;">Web Integration</option>										</select>
+                                        @foreach($teams as $team)
+                                            <option value="{{ $team->id }}">{{ $team->team_name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
@@ -199,8 +205,9 @@
                                 <div class="form-group">
                                     <label for="gender">Gender <small class="label label-success">Required</small></label>
                                     <select class="form-control" id="gender" name="gender" required="">
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
+                                        @foreach($genders as $gender)
+                                            <option value="{{ $gender->id }}">{{ $gender->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

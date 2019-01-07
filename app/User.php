@@ -34,4 +34,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    // Helper functions for 'Gender'
+    public function gender()
+    {
+        return $this->hasOne('App\Gender', 'id', 'gender_id');
+    }
+
+    public function getGender()
+    {
+        return $this->gender->name;
+    }
 }
