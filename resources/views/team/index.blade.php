@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Departments')
+@section('title', 'Teams')
 
 @section('styles')
 <!-- DataTables -->
@@ -10,13 +10,13 @@
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
-	    <h1>Departments</h1>
+	    <h1>Teams</h1>
     </section>
     <div class="content">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Departments List</h3>
-                <a href="{{ action('DepartmentController@create') }}" class="btn btn-primary pull-right">Add Department</a>
+                <h3 class="box-title">Teams List</h3>
+                <a href="{{ action('TeamController@create') }}" class="btn btn-primary pull-right">Add Team</a>
             </div>
             <div class="box-body">
                 
@@ -24,18 +24,18 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Department Name</th>
+                            <th>Team Name</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($departments as $key => $department)
+                        @foreach ($teams as $key => $team)
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td>{{ $department->department_name }}</td>
+                                <td>{{ $team->team_name }}</td>
                                 <td>
-                                    <a href="/departments/{{ $department->id }}/edit" class="btn btn-primary btn-xs" title="Edit"><i class="fa fa-pencil"></i></a>
-                                    <form style="display: inline-block;" action="/departments/{{ $department->id }}" method="POST">
+                                    <a href="/teams/{{ $team->id }}/edit" class="btn btn-primary btn-xs" title="Edit"><i class="fa fa-pencil"></i></a>
+                                    <form style="display: inline-block;" action="/teams/{{ $team->id }}" method="POST">
                                         @method('DELETE')
                                         @csrf
                                         <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');" title="Delete">

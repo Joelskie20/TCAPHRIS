@@ -16,5 +16,11 @@ function startTime(){
 }
 
 startTime();
+
+$(document).ready(function() {
+	$('.treeview-menu li').click(function() {
+		$('.treeview').addClass('active');
+	});
+});
 </script>
 @yield('scripts')

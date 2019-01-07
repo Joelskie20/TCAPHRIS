@@ -34,7 +34,7 @@
         <li class="{{ Route::is('team-schedule') ? 'active' : '' }}">
             <a href="{{ route('team-schedule') }}"><i class="fa fa-calendar"></i> <span>Team Schedule</span></a>
         </li>
-    
+
         <!-- COMPANY -->
         <li class="treeview">
             <a href="#">
@@ -45,10 +45,10 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Calendar</a></li>
-                <li><a href="{{ route('department') }}"><i class="fa fa-circle-o"></i> Departments</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Teams</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Roles</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i>Calendar</a></li>
+                <li><a href="{{ route('departments') }}"><i class="fa fa-circle-o"></i>Departments</a></li>
+                <li><a href="{{ route('teams') }}"><i class="fa fa-circle-o"></i>Teams</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i>Roles</a></li>
             </ul>
         </li>
 

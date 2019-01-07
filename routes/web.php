@@ -19,14 +19,20 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::post('/dashboard', 'DashboardController@store');
     Route::put('/dashboard/{id}', 'DashboardController@update');
-
     Route::get('/daily-time-records', 'DtrController@index')->name('dtr');
     Route::get('/team-schedule', 'TeamScheduleController@index')->name('team-schedule');
-    Route::get('/department', 'DepartmentController@index')->name('department');
-    Route::get('/department/create', 'DepartmentController@create');
+
+    Route::get('/departments', 'DepartmentController@index')->name('departments');
+    Route::get('/departments/create', 'DepartmentController@create');
     Route::post('/department', 'DepartmentController@store');
-    Route::delete('/department/{department}', 'DepartmentController@destroy');
-    Route::get('/department/{department}/edit', 'DepartmentController@edit')->name('edit');
-    Route::patch('/department/{department}', 'DepartmentController@update');
-    // Route::resource('/department', 'DepartmentController')->name('department');
+    Route::get('/departments/{department}/edit', 'DepartmentController@edit')->name('edit');
+    Route::patch('/departments/{department}', 'DepartmentController@update');
+    Route::delete('/departments/{department}', 'DepartmentController@destroy');
+
+    Route::get('/teams', 'TeamController@index')->name('teams');
+    Route::get('/teams/create', 'TeamController@create');
+    Route::post('/teams', 'TeamController@store');
+    Route::get('/teams/{team}/edit', 'TeamController@edit');
+    Route::patch('/teams/{team}', 'TeamController@update');
+    Route::delete('/teams/{team}', 'TeamController@destroy');
 });
