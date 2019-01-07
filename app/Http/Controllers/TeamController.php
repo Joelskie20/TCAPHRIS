@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Department;
+use App\Team;
 use App\Attendance;
 use Illuminate\Http\Request;
 
-class DepartmentController extends Controller
+class TeamController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -20,10 +16,9 @@ class DepartmentController extends Controller
     public function index()
     {
         $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
-
-        return view('department.index', [
+        return view('team.index', [
             'disabled' => $disabled,
-            'departments' => Department::all()
+            'teams' => Team::all()
         ]);
     }
 
@@ -35,7 +30,7 @@ class DepartmentController extends Controller
     public function create()
     {
         $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
-        return view('department.create', compact('disabled'));
+        return view('team.create', compact('disabled'));
     }
 
     /**
@@ -46,20 +41,20 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        Department::create($request->validate([
-            'department_name' => ['required', 'max:255']
+        Team::create(request()->validate([
+            'team_name' => ['required']
         ]));
 
-        return redirect('/departments');
+        return redirect('/teams');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Department  $department
+     * @param  \App\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function show(Department $department)
+    public function show(Team $team)
     {
         //
     }
@@ -67,15 +62,15 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Department  $department
+     * @param  \App\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function edit(Department $department)
+    public function edit(Team $team)
     {
         $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
-        return view('department.edit', [
+        return view('team.edit', [
             'disabled' => $disabled,
-            'department' => $department
+            'team' => $team
         ]);
     }
 
@@ -83,27 +78,27 @@ class DepartmentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Department  $department
+     * @param  \App\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Department $department)
+    public function update(Request $request, Team $team)
     {
-        $department->update($request->validate([
-            'department_name' => ['required']
+        $team->update($request->validate([
+            'team_name' => ['required']
         ]));
 
-        return redirect('/departments');
+        return redirect('/teams');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Department  $department
+     * @param  \App\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Department $department)
+    public function destroy(Team $team)
     {
-        $department->delete();
-        return redirect('/departments');
+        $team->delete();
+        return redirect('/teams');
     }
 }
