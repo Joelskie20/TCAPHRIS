@@ -35,4 +35,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/teams/{team}/edit', 'TeamController@edit');
     Route::patch('/teams/{team}', 'TeamController@update');
     Route::delete('/teams/{team}', 'TeamController@destroy');
+
+    Route::get('/employees', 'EmployeeController@index')->name('employees');
+    Route::get('/employees/create', 'EmployeeController@create');
 });

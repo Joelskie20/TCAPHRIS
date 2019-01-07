@@ -35,6 +35,11 @@
             <a href="{{ route('team-schedule') }}"><i class="fa fa-calendar"></i> <span>Team Schedule</span></a>
         </li>
 
+        <!-- EMPLOYEES -->
+        <li class="{{ Route::is('employees') ? 'active' : '' }}">
+            <a href="{{ route('employees') }}"><i class="fa fa-users"></i> <span>Employees</span></a>
+        </li>
+
         <!-- COMPANY -->
         <li class="treeview">
             <a href="#">
