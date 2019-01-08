@@ -24,7 +24,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/departments', 'DepartmentController@index')->name('departments');
     Route::get('/departments/create', 'DepartmentController@create');
-    Route::post('/department', 'DepartmentController@store');
+    Route::post('/departments', 'DepartmentController@store');
     Route::get('/departments/{department}/edit', 'DepartmentController@edit')->name('edit');
     Route::patch('/departments/{department}', 'DepartmentController@update');
     Route::delete('/departments/{department}', 'DepartmentController@destroy');

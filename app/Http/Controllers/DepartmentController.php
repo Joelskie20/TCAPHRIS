@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Department;
 use App\Attendance;
+use Session;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -17,7 +18,7 @@ class DepartmentController extends Controller
     {
         return view('department.index', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
-            'departments' => Department::all()
+            'departments' => Department::all(),
         ]);
     }
 
@@ -28,8 +29,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
-        return view('department.create', compact('disabled'));
+        //
     }
 
     /**
@@ -43,6 +43,8 @@ class DepartmentController extends Controller
         Department::create($request->validate([
             'department_name' => ['required', 'max:255']
         ]));
+
+        Session::flash('message', 'Department added.');
 
         return redirect('/departments');
     }
@@ -66,11 +68,7 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
-        $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
-        return view('department.edit', [
-            'disabled' => $disabled,
-            'department' => $department
-        ]);
+        //
     }
 
     /**
@@ -86,6 +84,8 @@ class DepartmentController extends Controller
             'department_name' => ['required']
         ]));
 
+        Session::flash('message', 'Department has been updated.');
+
         return redirect('/departments');
     }
 
@@ -98,6 +98,9 @@ class DepartmentController extends Controller
     public function destroy(Department $department)
     {
         $department->delete();
+
+        Session::flash('message', 'Department has been deleted.');
+
         return redirect('/departments');
     }
 }
