@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Team;
+use App\Position;
 use App\Attendance;
 use Illuminate\Http\Request;
 
-class TeamController extends Controller
+class PositionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class TeamController extends Controller
      */
     public function index()
     {
-        return view('team.index', [
+        return view('position.index', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
-            'teams' => Team::all()
+            'positions' => Position::all()
         ]);
     }
 
@@ -29,7 +29,7 @@ class TeamController extends Controller
     public function create()
     {
         $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
-        return view('team.create', compact('disabled'));
+        return view('position.create', compact('disabled'));
     }
 
     /**
@@ -40,20 +40,20 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        Team::create(request()->validate([
-            'team_name' => ['required']
+        Position::create(request()->validate([
+            'name' => 'required'
         ]));
 
-        return redirect('/teams');
+        return redirect('/positions');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Team  $team
+     * @param  \App\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function show(Team $team)
+    public function show(Position $position)
     {
         //
     }
@@ -61,15 +61,15 @@ class TeamController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Team  $team
+     * @param  \App\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function edit(Team $team)
+    public function edit(Position $position)
     {
         $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
-        return view('team.edit', [
+        return view('position.edit', [
             'disabled' => $disabled,
-            'team' => $team
+            'position' => $position
         ]);
     }
 
@@ -77,27 +77,28 @@ class TeamController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Team  $team
+     * @param  \App\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Team $team)
+    public function update(Request $request, Position $position)
     {
-        $team->update($request->validate([
-            'team_name' => ['required']
+        $position->update($request->validate([
+            'name' => 'required'
         ]));
 
-        return redirect('/teams');
+        return redirect('/positions');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Team  $team
+     * @param  \App\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Team $team)
+    public function destroy(Position $position)
     {
-        $team->delete();
-        return redirect('/teams');
+        $position->delete();
+
+        return redirect('/positions');
     }
 }

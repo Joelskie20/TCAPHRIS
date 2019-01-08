@@ -8,10 +8,6 @@ use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -19,10 +15,8 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
-
         return view('department.index', [
-            'disabled' => $disabled,
+            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
             'departments' => Department::all()
         ]);
     }

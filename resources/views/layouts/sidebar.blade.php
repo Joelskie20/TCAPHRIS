@@ -53,6 +53,7 @@
                 <li><a href="#"><i class="fa fa-circle-o"></i>Calendar</a></li>
                 <li><a href="{{ route('departments') }}"><i class="fa fa-circle-o"></i>Departments</a></li>
                 <li><a href="{{ route('teams') }}"><i class="fa fa-circle-o"></i>Teams</a></li>
+                <li><a href="{{ route('positions') }}"><i class="fa fa-circle-o"></i>Positions</a></li>
                 <li><a href="#"><i class="fa fa-circle-o"></i>Roles</a></li>
             </ul>
         </li>

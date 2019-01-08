@@ -36,6 +36,13 @@ Route::group(['middleware' => 'auth'], function() {
     Route::patch('/teams/{team}', 'TeamController@update');
     Route::delete('/teams/{team}', 'TeamController@destroy');
 
+    Route::get('/positions', 'PositionController@index')->name('positions');
+    Route::get('/positions/create', 'PositionController@create');
+    Route::post('/positions', 'PositionController@store');
+    Route::get('/positions/{position}/edit', 'PositionController@edit');
+    Route::patch('/positions/{position}', 'PositionController@update');
+    Route::delete('/positions/{position}', 'PositionController@destroy');
+
     Route::get('/employees', 'EmployeeController@index')->name('employees');
     Route::get('/employees/create', 'EmployeeController@create');
 });
