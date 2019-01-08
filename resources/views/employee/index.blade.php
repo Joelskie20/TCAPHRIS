@@ -57,7 +57,7 @@ form h5 {
             <div class="box-header with-border">
                 <h3 class="box-title">Employee List</h3>
                 <div class="box-tools pull-right">
-                    <a href="/employees/create" class="btn btn-success btn-sm"><i class="fa fa-user-plus mr05"></i> REGISTER EMPLOYEE</a>
+                    <a href="/employees/create" class="btn btn-success btn-sm"><i class="fa fa-plus mr05"></i> ADD EMPLOYEE</a>
                 </div>
             </div>
             <div class="box-body">

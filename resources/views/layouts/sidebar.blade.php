@@ -25,6 +25,11 @@
             <a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
         </li>
 
+        <!-- EMPLOYEES -->
+        <li class="{{ Route::is('employees') ? 'active' : '' }}">
+            <a href="{{ route('employees') }}"><i class="fa fa-users"></i> <span>Employee Records</span></a>
+        </li>
+
         <!-- DAILY TIME RECORDS -->
         <li class="{{ Route::is('dtr') ? 'active' : '' }}">
             <a href="{{ route('dtr') }}"><i class="fa fa-clock-o"></i> <span>Daily Time Records</span></a>
@@ -35,25 +40,20 @@
             <a href="{{ route('team-schedule') }}"><i class="fa fa-calendar"></i> <span>Team Schedule</span></a>
         </li>
 
-        <!-- EMPLOYEES -->
-        <li class="{{ Route::is('employees') ? 'active' : '' }}">
-            <a href="{{ route('employees') }}"><i class="fa fa-users"></i> <span>Employees</span></a>
-        </li>
-
         <!-- COMPANY -->
         <li class="treeview">
             <a href="#">
-                <i class="fa fa-building"></i>
-                <span>Company</span>
+                <i class="fa fa-gears"></i>
+                <span>System Settings</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i>Calendar</a></li>
-                <li><a href="{{ route('departments') }}"><i class="fa fa-circle-o"></i>Departments</a></li>
-                <li><a href="{{ route('teams') }}"><i class="fa fa-circle-o"></i>Teams</a></li>
-                <li><a href="{{ route('positions') }}"><i class="fa fa-circle-o"></i>Positions</a></li>
+                <li><a href="#"><i class="fa fa-calendar"></i>Calendar</a></li>
+                <li><a href="{{ route('departments') }}"><i class="fa fa-briefcase"></i>Departments</a></li>
+                <li><a href="{{ route('teams') }}"><i class="fa fa-users"></i>Teams</a></li>
+                <li><a href="{{ route('positions') }}"><i class="fa fa-black-tie"></i>Positions</a></li>
                 <li><a href="#"><i class="fa fa-circle-o"></i>Roles</a></li>
             </ul>
         </li>
