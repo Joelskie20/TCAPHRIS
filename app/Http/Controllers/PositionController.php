@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Position;
+use Session;
 use App\Attendance;
 use Illuminate\Http\Request;
 
@@ -28,8 +29,7 @@ class PositionController extends Controller
      */
     public function create()
     {
-        $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
-        return view('position.create', compact('disabled'));
+        //
     }
 
     /**
@@ -43,6 +43,8 @@ class PositionController extends Controller
         Position::create(request()->validate([
             'name' => 'required'
         ]));
+
+        Session::flash('message', 'Position has been successfully added.');
 
         return redirect('/positions');
     }
@@ -66,11 +68,7 @@ class PositionController extends Controller
      */
     public function edit(Position $position)
     {
-        $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
-        return view('position.edit', [
-            'disabled' => $disabled,
-            'position' => $position
-        ]);
+        //
     }
 
     /**
@@ -86,6 +84,8 @@ class PositionController extends Controller
             'name' => 'required'
         ]));
 
+        Session::flash('message', 'Position has been successfully edited.');
+
         return redirect('/positions');
     }
 
@@ -98,6 +98,8 @@ class PositionController extends Controller
     public function destroy(Position $position)
     {
         $position->delete();
+
+        Session::flash('message', 'Position has been successfully deleted.');
 
         return redirect('/positions');
     }

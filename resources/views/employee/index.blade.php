@@ -38,9 +38,6 @@ form h5 {
 .permanent-address {
     display: none;
 }
-.mr05 {
-    margin-right: 5px !important;
-}
 </style>
 @endsection
 

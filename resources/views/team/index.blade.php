@@ -13,10 +13,53 @@
 	    <h1>Teams</h1>
     </section>
     <div class="content">
+        @if (Session::has('message'))
+            <div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4><i class="icon fa fa-check"></i> Success!</h4>{{ Session::get('message') }}</div>
+        @endif
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Teams List</h3>
-                <a href="{{ action('TeamController@create') }}" class="btn btn-primary pull-right">Add Team</a>
+                {{-- <a href="{{ action('TeamController@create') }}" class="btn btn-primary pull-right">Add Team</a> --}}
+                <button type="button" class="btn btn-success pull-right btn-add-department" data-toggle="modal" data-target="#modal-default-add">
+                    <i class="fa fa-plus mr05"></i> ADD TEAM
+                </button>
+
+                <div class="modal fade add-team-modal" id="modal-default-add">
+                    <form action="{{ action('TeamController@store') }}" method="POST">
+                        @csrf
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Add Team</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="form-modal-message-add">* All fields are required.</p>
+                                    <div class="form-group {{ ($errors->any()) ? 'has-error' : '' }}" id="team-name-add">
+                                        @if($errors->any())
+                                            <i class="fa fa-times-circle-o"></i>
+                                        @endif
+                                        <label for="team-name-add-label">Team Name</label>
+                                        <input type="text" class="form-control" id="team-name-add-label" name="team_name" placeholder="Enter team name" required>
+                                        @if($errors->any())
+                                            @foreach($errors->all() as $error)
+                                                <span class="help-block">{{ $error }}</span>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-create-team">Create Team</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                    </form>
+                    <!-- /.modal-dialog -->
+                </div>
+
             </div>
             <div class="box-body">
                 
@@ -30,15 +73,44 @@
                     </thead>
                     <tbody>
                         @foreach ($teams as $key => $team)
+                        <div class="modal fade" id="modal-default-edit-{{ $team->id }}">
+                                <form action="{{ action('TeamController@update', ['id' => $team->id]) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title">Edit Team</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="form-modal-message-add">* All fields are required.</p>
+                                                <div class="form-group team-name" id="team-name-add">
+                                                    <label for="team-name-add-label">Team Name</label>
+                                                    <input type="text" class="form-control" name="team_name" value="{{ $team->team_name }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary btn-update-team">Update Team</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                </form>
+                                <!-- /.modal-dialog -->
+                            </div>
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $team->team_name }}</td>
                                 <td>
-                                    <a href="/teams/{{ $team->id }}/edit" class="btn btn-primary btn-xs" title="Edit"><i class="fa fa-pencil"></i></a>
+                                    {{-- <a href="/teams/{{ $team->id }}/edit" class="btn btn-primary btn-xs" title="Edit"><i class="fa fa-pencil"></i></a> --}}
+                                    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default-edit-{{ $team->id }}"><i class="fa fa-pencil"></i></button>
                                     <form style="display: inline-block;" action="/teams/{{ $team->id }}" method="POST">
                                         @method('DELETE')
                                         @csrf
-                                        <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');" title="Delete">
+                                        <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('This process is irreversible. Please make sure before you confirm. All teams, subteams and employees under this department will be unassigned. Reconsider updating the department instead.\n\n Are you sure you want to delete this item?');" title="Delete">
                                         <i class="fa fa-trash-o"></i>
                                         </button>
                                     </form>
@@ -64,5 +136,8 @@ $(document).ready(function() {
         'iDisplayLength': 100
     });
 });
+</script>
+<script>
+    $('div.alert').delay(3000).fadeOut(300);
 </script>
 @endsection

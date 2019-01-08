@@ -21,7 +21,6 @@
             
             <div class="box-header with-border">
                 <h3 class="box-title">Departments List</h3>
-                {{-- <a href="{{ action('DepartmentController@create') }}" class="btn btn-primary pull-right">Add Department</a> --}}
                 <button type="button" class="btn btn-success pull-right btn-add-department" data-toggle="modal" data-target="#modal-default-add">
                     <i class="fa fa-plus mr05"></i> ADD DEPARTMENT
                 </button>
@@ -108,12 +107,11 @@
                             <td>{{ ++$key }}</td>
                             <td>{{ $department->department_name }}</td>
                             <td>
-                                {{-- <a href="/departments/{{ $department->id }}" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default-edit" title="Edit"><i class="fa fa-pencil"></i></a> --}}
                                 <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default-edit-{{ $department->id }}"><i class="fa fa-pencil"></i></button>
                                 <form style="display: inline-block;" action="/departments/{{ $department->id }}" method="POST">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');" title="Delete">
+                                    <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('This process is irreversible. Please make sure before you confirm. All teams, subteams and employees under this department will be unassigned. Reconsider updating the department instead.\n\n Are you sure you want to delete this item?');" title="Delete">
                                     <i class="fa fa-trash-o"></i>
                                     </button>
                                 </form>
