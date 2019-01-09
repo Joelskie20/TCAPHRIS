@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\{User, Attendance, Gender, Department, Team, Position};
+use Auth;
+use Hash;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -43,7 +45,11 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        dd('store');
+        $user = new User;
+
+        $user->createUser($request);
+
+        return "success";
     }
 
     /**
