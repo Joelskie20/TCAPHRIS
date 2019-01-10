@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Department;
-use App\Attendance;
+use App\Position;
 use Session;
+use App\Attendance;
 use Illuminate\Http\Request;
 
-class DepartmentController extends Controller
+class PositionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,9 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        return view('department.index', [
+        return view('position.index', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
-            'departments' => Department::all(),
+            'positions' => Position::all()
         ]);
     }
 
@@ -40,22 +40,22 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        Department::create($request->validate([
-            'name' => ['required', 'max:255']
+        Position::create(request()->validate([
+            'name' => 'required'
         ]));
 
-        Session::flash('message', 'Department added.');
+        Session::flash('message', 'Position has been successfully added.');
 
-        return redirect('/departments');
+        return redirect('/positions');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Department  $department
+     * @param  \App\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function show(Department $department)
+    public function show(Position $position)
     {
         //
     }
@@ -63,10 +63,10 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Department  $department
+     * @param  \App\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function edit(Department $department)
+    public function edit(Position $position)
     {
         //
     }
@@ -75,32 +75,32 @@ class DepartmentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Department  $department
+     * @param  \App\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Department $department)
+    public function update(Request $request, Position $position)
     {
-        $department->update($request->validate([
-            'name' => ['required']
+        $position->update($request->validate([
+            'name' => 'required'
         ]));
 
-        Session::flash('message', 'Department has been updated.');
+        Session::flash('message', 'Position has been successfully edited.');
 
-        return redirect('/departments');
+        return redirect('/positions');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Department  $department
+     * @param  \App\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Department $department)
+    public function destroy(Position $position)
     {
-        $department->delete();
+        $position->delete();
 
-        Session::flash('message', 'Department has been deleted.');
+        Session::flash('message', 'Position has been successfully deleted.');
 
-        return redirect('/departments');
+        return redirect('/positions');
     }
 }

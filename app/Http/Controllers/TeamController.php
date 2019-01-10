@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Team;
+use Session;
 use App\Attendance;
 use Illuminate\Http\Request;
 
@@ -15,9 +16,8 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
         return view('team.index', [
-            'disabled' => $disabled,
+            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
             'teams' => Team::all()
         ]);
     }
@@ -29,8 +29,7 @@ class TeamController extends Controller
      */
     public function create()
     {
-        $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
-        return view('team.create', compact('disabled'));
+        //
     }
 
     /**
@@ -42,8 +41,10 @@ class TeamController extends Controller
     public function store(Request $request)
     {
         Team::create(request()->validate([
-            'team_name' => ['required']
+            'name' => ['required']
         ]));
+
+        Session::flash('message', 'Team has been successfully added.');
 
         return redirect('/teams');
     }
@@ -67,11 +68,7 @@ class TeamController extends Controller
      */
     public function edit(Team $team)
     {
-        $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
-        return view('team.edit', [
-            'disabled' => $disabled,
-            'team' => $team
-        ]);
+        //
     }
 
     /**
@@ -84,8 +81,10 @@ class TeamController extends Controller
     public function update(Request $request, Team $team)
     {
         $team->update($request->validate([
-            'team_name' => ['required']
+            'name' => ['required']
         ]));
+
+        Session::flash('message', 'Team has been successfully edited.');
 
         return redirect('/teams');
     }
@@ -99,6 +98,9 @@ class TeamController extends Controller
     public function destroy(Team $team)
     {
         $team->delete();
+
+        Session::flash('message', 'Team has been successfully deleted.');
+
         return redirect('/teams');
     }
 }

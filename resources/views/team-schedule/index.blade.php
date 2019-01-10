@@ -7,6 +7,13 @@ if(isset($_GET['v'])) {
 
 @section('title', 'Team Schedule')
 
+@section('styles')
+<style>
+.team-select tr th { vertical-align: middle !important; }
+.table-schedule th, .table-schedule td { font-size:12px; }
+</style>
+@endsection
+
 @section('content')
   <div class="content-wrapper">
         <section class="content-header">

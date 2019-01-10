@@ -34,7 +34,7 @@ class DashboardController extends Controller
             'time_in' => strtotime(Carbon::now())
         ]);
 
-        Session::flash('message', 'Time In: ' . Carbon::now()->format('h:i:s A, F d, Y'));
+        Session::flash('message', 'Time In: ' . Carbon::now()->format('h:i A, F d, Y'));
         return back();
     }
 
@@ -45,7 +45,7 @@ class DashboardController extends Controller
         $attendance->time_out = strtotime(Carbon::now());
         $attendance->update();
 
-        Session::flash('message', 'Time Out: ' . Carbon::now()->format('h:i:s A, F d, Y'));
+        Session::flash('message', 'Time Out: ' . Carbon::now()->format('h:i A, F d, Y'));
         return back();
     }
 }

@@ -9,14 +9,59 @@
 
 @section('content')
 <div class="content-wrapper">
+    
     <section class="content-header">
 	    <h1>Departments</h1>
     </section>
     <div class="content">
+        @if (Session::has('message'))
+            <div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4><i class="icon fa fa-check"></i> Success!</h4>{{ Session::get('message') }}</div>
+        @endif
         <div class="box">
+            
             <div class="box-header with-border">
                 <h3 class="box-title">Departments List</h3>
-                <a href="{{ action('DepartmentController@create') }}" class="btn btn-primary pull-right">Add Department</a>
+                <button type="button" class="btn btn-success pull-right btn-add-department" data-toggle="modal" data-target="#modal-default-add">
+                    <i class="fa fa-plus mr05"></i> ADD DEPARTMENT
+                </button>
+
+                <div class="modal fade add-department-modal" id="modal-default-add">
+                    <form action="{{ action('DepartmentController@store') }}" method="POST">
+                        @csrf
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Add Department</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="form-modal-message-add">* All fields are required.</p>
+                                    <div class="form-group {{ ($errors->any()) ? 'has-error' : '' }}" id="department-name-add">
+                                        @if($errors->any())
+                                            <i class="fa fa-times-circle-o"></i>
+                                        @endif
+                                        <label for="department-name-add-label">Department Name</label>
+                                        <input type="text" class="form-control" id="department-name-add-label" name="name" placeholder="Enter department name" required>
+                                        @if($errors->any())
+                                            @foreach($errors->all() as $error)
+                                                <span class="help-block">{{ $error }}</span>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-create-department">Create Department</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                    </form>
+                    <!-- /.modal-dialog -->
+                </div>
+
+                
             </div>
             <div class="box-body">
                 
@@ -29,21 +74,49 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($departments as $key => $department)
-                            <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $department->department_name }}</td>
-                                <td>
-                                    <a href="/departments/{{ $department->id }}/edit" class="btn btn-primary btn-xs" title="Edit"><i class="fa fa-pencil"></i></a>
-                                    <form style="display: inline-block;" action="/departments/{{ $department->id }}" method="POST">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');" title="Delete">
-                                        <i class="fa fa-trash-o"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
+                        @foreach($departments as $key => $department)
+                        <div class="modal fade" id="modal-default-edit-{{ $department->id }}">
+                            <form action="{{ action('DepartmentController@update', ['id' => $department->id]) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">Edit Department</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="form-modal-message-add">* All fields are required.</p>
+                                            <div class="form-group department-name" id="department-name-add">
+                                                <label for="department-name-add-label">Department Name</label>
+                                                <input type="text" class="form-control" name="name" value="{{ $department->name }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary btn-update-department">Update Department</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                            </form>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <tr>
+                            <td>{{ ++$key }}</td>
+                            <td>{{ $department->name }}</td>
+                            <td>
+                                <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default-edit-{{ $department->id }}"><i class="fa fa-pencil"></i></button>
+                                <form style="display: inline-block;" action="/departments/{{ $department->id }}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('This process is irreversible. Please make sure before you confirm. All teams, subteams and employees under this department will be unassigned. Reconsider updating the department instead.\n\n Are you sure you want to delete this item?');" title="Delete">
+                                    <i class="fa fa-trash-o"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -64,5 +137,8 @@ $(document).ready(function() {
         'iDisplayLength': 100
     });
 });
+</script>
+<script>
+$('div.alert').delay(3000).fadeOut(300);
 </script>
 @endsection

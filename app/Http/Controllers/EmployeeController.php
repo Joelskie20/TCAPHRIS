@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Department;
-use App\Attendance;
-use Session;
+use App\{User, Attendance, Gender, Department, Team, Position};
+use Auth;
+use Hash;
 use Illuminate\Http\Request;
 
-class DepartmentController extends Controller
+class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,9 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        return view('department.index', [
+        return view('employee.index', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
-            'departments' => Department::all(),
+            'employees' => User::all()
         ]);
     }
 
@@ -29,7 +29,13 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('employee.create', [
+            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
+            'genders' => Gender::all(),
+            'departments' => Department::all(),
+            'teams' => Team::all(),
+            'positions' => Position::all()
+        ]);
     }
 
     /**
@@ -40,22 +46,20 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        Department::create($request->validate([
-            'name' => ['required', 'max:255']
-        ]));
+        $user = new User;
 
-        Session::flash('message', 'Department added.');
+        $user->createUser($request);
 
-        return redirect('/departments');
+        return redirect('/employees');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Department  $department
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Department $department)
+    public function show(User $user)
     {
         //
     }
@@ -63,10 +67,10 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Department  $department
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Department $department)
+    public function edit(User $user)
     {
         //
     }
@@ -75,32 +79,22 @@ class DepartmentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Department  $department
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Department $department)
+    public function update(Request $request, User $user)
     {
-        $department->update($request->validate([
-            'name' => ['required']
-        ]));
-
-        Session::flash('message', 'Department has been updated.');
-
-        return redirect('/departments');
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Department  $department
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Department $department)
+    public function destroy(User $user)
     {
-        $department->delete();
-
-        Session::flash('message', 'Department has been deleted.');
-
-        return redirect('/departments');
+        //
     }
 }
