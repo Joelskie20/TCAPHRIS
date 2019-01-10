@@ -41,7 +41,7 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         Department::create($request->validate([
-            'department_name' => ['required', 'max:255']
+            'name' => ['required', 'max:255']
         ]));
 
         Session::flash('message', 'Department added.');
@@ -81,7 +81,7 @@ class DepartmentController extends Controller
     public function update(Request $request, Department $department)
     {
         $department->update($request->validate([
-            'department_name' => ['required']
+            'name' => ['required']
         ]));
 
         Session::flash('message', 'Department has been updated.');

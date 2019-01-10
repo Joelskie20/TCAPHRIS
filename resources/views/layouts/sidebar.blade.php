@@ -36,9 +36,9 @@
         </li>
 
         <!-- TEAM SCHEDULE -->
-        <li class="{{ Route::is('team-schedule') ? 'active' : '' }}">
+        {{-- <li class="{{ Route::is('team-schedule') ? 'active' : '' }}">
             <a href="{{ route('team-schedule') }}"><i class="fa fa-calendar"></i> <span>Team Schedule</span></a>
-        </li>
+        </li> --}}
 
         <!-- COMPANY -->
         <li class="treeview">
@@ -50,11 +50,11 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-calendar"></i>Calendar</a></li>
+                {{-- <li><a href="#"><i class="fa fa-calendar"></i>Calendar</a></li> --}}
                 <li><a href="{{ route('departments') }}"><i class="fa fa-briefcase"></i>Departments</a></li>
                 <li><a href="{{ route('teams') }}"><i class="fa fa-users"></i>Teams</a></li>
                 <li><a href="{{ route('positions') }}"><i class="fa fa-black-tie"></i>Positions</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i>Roles</a></li>
+                {{-- <li><a href="#"><i class="fa fa-circle-o"></i>Roles</a></li> --}}
             </ul>
         </li>
 

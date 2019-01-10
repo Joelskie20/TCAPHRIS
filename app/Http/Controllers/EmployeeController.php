@@ -17,7 +17,8 @@ class EmployeeController extends Controller
     public function index()
     {
         return view('employee.index', [
-            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false
+            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
+            'employees' => User::all()
         ]);
     }
 
@@ -49,7 +50,7 @@ class EmployeeController extends Controller
 
         $user->createUser($request);
 
-        return "success";
+        return redirect('/employees');
     }
 
     /**

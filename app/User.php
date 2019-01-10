@@ -97,7 +97,7 @@ class User extends Authenticatable
 
         // Other Fields
 
-        $this->name = $request->first_name . ' ' . $request->middle_name . ' ' . $request->last_name;
+        $this->name = $request->last_name . ', ' . $request->first_name . ' ' . $request->middle_name;
         $this->password = Hash::make($request->employee_id);
 
         $this->save();
@@ -113,4 +113,36 @@ class User extends Authenticatable
     {
         return $this->gender->name;
     }
+
+    public function position()
+    {
+        return $this->hasOne('App\Position', 'id', 'position_id');
+    }
+
+    public function getPosition()
+    {
+        return $this->position->name;
+    }
+
+    public function team()
+    {
+        return $this->hasOne('App\Team', 'id', 'team_id');
+    }
+
+    public function getTeam()
+    {
+        return $this->team->name;
+    }
+
+    public function department()
+    {
+        return $this->hasOne('App\Department', 'id', 'department_id');
+    }
+
+    public function getDepartment()
+    {
+        return $this->department->name;
+    }
+
+    
 }

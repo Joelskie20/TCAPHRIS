@@ -41,7 +41,7 @@ class TeamController extends Controller
     public function store(Request $request)
     {
         Team::create(request()->validate([
-            'team_name' => ['required']
+            'name' => ['required']
         ]));
 
         Session::flash('message', 'Team has been successfully added.');
@@ -81,7 +81,7 @@ class TeamController extends Controller
     public function update(Request $request, Team $team)
     {
         $team->update($request->validate([
-            'team_name' => ['required']
+            'name' => ['required']
         ]));
 
         Session::flash('message', 'Team has been successfully edited.');

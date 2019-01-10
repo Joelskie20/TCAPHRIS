@@ -54,7 +54,7 @@
                                 <select class="form-control" id="departmentID" name="department_id" >
                                     <option value="0">-- None --</option>
                                     @foreach($departments as $department)
-                                        <option value="{{ $department->id }}">{{ $department->department_name }}</option>
+                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
                                     @endforeach										
                                 </select>
                             </div>
@@ -67,7 +67,7 @@
                                 <select class="form-control" id="teamID" name="team_id" >
                                     <option value="0" class="opt-none">-- None --</option>
                                     @foreach($teams as $team)
-                                        <option value="{{ $team->id }}">{{ $team->team_name }}</option>
+                                        <option value="{{ $team->id }}">{{ $team->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

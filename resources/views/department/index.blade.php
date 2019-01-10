@@ -42,7 +42,7 @@
                                             <i class="fa fa-times-circle-o"></i>
                                         @endif
                                         <label for="department-name-add-label">Department Name</label>
-                                        <input type="text" class="form-control" id="department-name-add-label" name="department_name" placeholder="Enter department name" required>
+                                        <input type="text" class="form-control" id="department-name-add-label" name="name" placeholder="Enter department name" required>
                                         @if($errors->any())
                                             @foreach($errors->all() as $error)
                                                 <span class="help-block">{{ $error }}</span>
@@ -90,7 +90,7 @@
                                             <p class="form-modal-message-add">* All fields are required.</p>
                                             <div class="form-group department-name" id="department-name-add">
                                                 <label for="department-name-add-label">Department Name</label>
-                                                <input type="text" class="form-control" name="department_name" value="{{ $department->department_name }}" required>
+                                                <input type="text" class="form-control" name="name" value="{{ $department->name }}" required>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -105,7 +105,7 @@
                         </div>
                         <tr>
                             <td>{{ ++$key }}</td>
-                            <td>{{ $department->department_name }}</td>
+                            <td>{{ $department->name }}</td>
                             <td>
                                 <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default-edit-{{ $department->id }}"><i class="fa fa-pencil"></i></button>
                                 <form style="display: inline-block;" action="/departments/{{ $department->id }}" method="POST">

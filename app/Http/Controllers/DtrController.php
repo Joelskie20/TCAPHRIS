@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Dtr;
+use App\User;
 use App\Attendance;
 use Illuminate\Http\Request;
 
@@ -15,9 +16,10 @@ class DtrController extends Controller
      */
     public function index()
     {
-        $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
-
-        return view('dtr.index', compact('disabled'));
+        return view('dtr.index', [
+            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
+            'attendances' => Attendance::latest()->get()
+        ]);
     }
 
     /**
@@ -84,5 +86,14 @@ class DtrController extends Controller
     public function destroy(Dtr $dtr)
     {
         //
+    }
+
+    public function dtrSolo($id)
+    {
+        return view('dtr.dtrSolo', [
+            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
+            'attendances' => Attendance::where('user_id', '=', $id)->latest()->get(),
+            'employee_dtr_id' => User::findOrFail($id)->employee_id
+        ]);
     }
 }

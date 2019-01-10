@@ -19,7 +19,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::post('/dashboard', 'DashboardController@store');
     Route::put('/dashboard/{id}', 'DashboardController@update');
-    Route::get('/daily-time-records', 'DtrController@index')->name('dtr');
+    Route::get('/daily-time-records/', 'DtrController@index')->name('dtr');
+    Route::get('/daily-time-records/{id}', 'DtrController@dtrSolo');
+
     Route::get('/team-schedule', 'TeamScheduleController@index')->name('team-schedule');
 
     Route::get('/departments', 'DepartmentController@index')->name('departments');

@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Department extends Model
 {
-    protected $fillable = ['department_name'];
+    protected $fillable = ['name'];
+
+    public function user()
+    {
+        $this->belongsTo('App\User', 'id', 'department_id');
+    }
 }

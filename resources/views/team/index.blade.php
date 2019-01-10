@@ -41,7 +41,7 @@
                                             <i class="fa fa-times-circle-o"></i>
                                         @endif
                                         <label for="team-name-add-label">Team Name</label>
-                                        <input type="text" class="form-control" id="team-name-add-label" name="team_name" placeholder="Enter team name" required>
+                                        <input type="text" class="form-control" id="team-name-add-label" name="name" placeholder="Enter team name" required>
                                         @if($errors->any())
                                             @foreach($errors->all() as $error)
                                                 <span class="help-block">{{ $error }}</span>
@@ -88,7 +88,7 @@
                                                 <p class="form-modal-message-add">* All fields are required.</p>
                                                 <div class="form-group team-name" id="team-name-add">
                                                     <label for="team-name-add-label">Team Name</label>
-                                                    <input type="text" class="form-control" name="team_name" value="{{ $team->team_name }}" required>
+                                                    <input type="text" class="form-control" name="name" value="{{ $team->name }}" required>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -103,7 +103,7 @@
                             </div>
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td>{{ $team->team_name }}</td>
+                                <td>{{ $team->name }}</td>
                                 <td>
                                     {{-- <a href="/teams/{{ $team->id }}/edit" class="btn btn-primary btn-xs" title="Edit"><i class="fa fa-pencil"></i></a> --}}
                                     <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default-edit-{{ $team->id }}"><i class="fa fa-pencil"></i></button>
