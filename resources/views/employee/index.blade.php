@@ -86,7 +86,7 @@ form h5 {
                             <td>{{ $employee->getDepartment() }}</td>
                             <td>-</td>
                             <td><small class="text-green">-</small></td>
-                            <td>-</td>
+                            <td>{{ $employee->last_login }}</td>
                             <td class="data-row-options-cell">
                                 <a href="#" class="btn btn-primary btn-xs mr05" title="View Profile"><i class="fa fa-user"></i></a>
                                 <a href="#" class="btn btn-success mr05 btn-xs" title="Edit Employee"><i class="fa fa-pencil"></i></a>
