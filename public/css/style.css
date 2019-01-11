@@ -12,3 +12,9 @@ p.display-time {
 .mr05 {
     margin-right: 5px !important;
 }
+
+.workshift-form .row{margin-bottom:10px;padding-bottom:5px;border-bottom:1px dotted #ccc;}
+.workshift-form .row:last-child{border-bottom:0;}
+label.text-bold{font-weight:700 !important;}
+table.data-list small.icon{display:inline-block;width:12px;text-align:center;}
+.day-overlap{display:none;}

@@ -35,6 +35,11 @@
             <a href="{{ route('dtr') }}"><i class="fa fa-clock-o"></i> <span>Daily Time Records</span></a>
         </li>
 
+        <!-- DAILY TIME RECORDS -->
+        <li class="{{ Route::is('workshift') ? 'active' : '' }}">
+            <a href="{{ route('workshift') }}"><i class="fa fa-sitemap"></i> <span>Workshifts</span></a>
+        </li>
+
         <!-- TEAM SCHEDULE -->
         {{-- <li class="{{ Route::is('team-schedule') ? 'active' : '' }}">
             <a href="{{ route('team-schedule') }}"><i class="fa fa-calendar"></i> <span>Team Schedule</span></a>
