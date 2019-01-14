@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\{User, Attendance, Gender, Department, Team, Position};
+use Session;
+use App\{User, Attendance, Gender, Department, Team, Position, Workshift};
 use Auth;
 use Hash;
 use Illuminate\Http\Request;
@@ -34,7 +35,9 @@ class EmployeeController extends Controller
             'genders' => Gender::all(),
             'departments' => Department::all(),
             'teams' => Team::all(),
-            'positions' => Position::all()
+            'positions' => Position::all(),
+            'workshifts' => Workshift::all(),
+            'employees' => User::all()
         ]);
     }
 
@@ -49,6 +52,8 @@ class EmployeeController extends Controller
         $user = new User;
 
         $user->createUser($request);
+
+        Session::flash('message', 'User has been created.');
 
         return redirect('/employees');
     }
@@ -72,7 +77,17 @@ class EmployeeController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        // dd('edit: ' . $user->id);
+        return view('employee.edit', [
+            'employees' => User::all(),
+            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
+            'genders' => Gender::all(),
+            'departments' => Department::all(),
+            'teams' => Team::all(),
+            'positions' => Position::all(),
+            'workshifts' => Workshift::all(),
+            'user' => $user
+        ]);
     }
 
     /**
@@ -84,7 +99,13 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $user = User::findOrFail($user->id);
+
+        $user->updateUser($request, $user);
+
+        Session::flash('message', 'User has been updated.');
+
+        return redirect('/employees/');
     }
 
     /**
@@ -96,5 +117,5 @@ class EmployeeController extends Controller
     public function destroy(User $user)
     {
         //
-    }
+    }    
 }

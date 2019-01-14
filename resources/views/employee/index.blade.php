@@ -49,7 +49,9 @@ form h5 {
     </section>
     <!-- Main content -->
     <section class="content">
-
+        @if (Session::has('message'))
+            <div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4><i class="icon fa fa-check"></i> Success!</h4>{{ Session::get('message') }}</div>
+        @endif
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Employee List</h3>
@@ -77,9 +79,9 @@ form h5 {
                         @foreach($employees as $employee)
                             <tr id="e3" data-id="3">
                             <td class="profile-image"><img alt="{{ $employee->name }}" src="{{ ($employee->getGender() == "Male") ? asset('dist/img/default-male.png') : asset('dist/img/default-female.png') }}"></td>
-                            <td class="text-center"><a title="Lao, Kennt Gilbert Garcia" href="{{ url()->current() }}employee-profile">{{ $employee->employee_id }}</a></td>
+                            <td class="text-center"><a title="{{ $employee->name }}" href="{{ url()->current() }}employee-profile">{{ $employee->employee_id }}</a></td>
                             <td><a title="Lao, Kennt Gilbert Garcia" href="{{ url()->current() }}employee-profile">{{ $employee->name }}</a></td>
-                            <td><span title="Morning Monday-Friday 6AM-3PM Sat-Sun Restday">-</span></td>
+                            <td><span title="Morning Monday-Friday 6AM-3PM Sat-Sun Restday">{{ $employee->getWorkshiftCode() }}</span></td>
                             <td>{{ $employee->getGender() }}</td>
                             <td>{{ $employee->getPosition() }}</td>
                             <td>{{ $employee->getTeam() }}</td>
@@ -89,7 +91,7 @@ form h5 {
                             <td>{{ ($employee->last_login == NULL) ? '-'  : $employee->last_login }}</td>
                             <td class="data-row-options-cell">
                                 <a href="#" class="btn btn-primary btn-xs mr05" title="View Profile"><i class="fa fa-user"></i></a>
-                                <a href="#" class="btn btn-success mr05 btn-xs" title="Edit Employee"><i class="fa fa-pencil"></i></a>
+                                <a href="/employees/{{ $employee->id }}/edit" class="btn btn-success mr05 btn-xs" title="Edit Employee"><i class="fa fa-pencil"></i></a>
                                 <a href="#" class="btn btn-warning mr05 btn-xs" title="Time Records"><i class="fa fa-clock-o"></i></a>
                                 <a href="#" class="btn btn-info mr05 btn-xs" title="Workshifts"><i class="fa fa-calendar"></i></a>
                             </td>
@@ -124,5 +126,8 @@ $(document).ready(function() {
         'iDisplayLength': 100
     });
 });
+</script>
+<script>
+    $('div.alert').delay(3000).fadeOut(300);
 </script>
 @endsection

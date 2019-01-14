@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use App\Workshift;
 use App\Attendance;
 use Illuminate\Http\Request;
@@ -46,6 +47,8 @@ class WorkshiftController extends Controller
 
         $workshift->createWorkshift($request);
 
+        Session::flash('message', 'Workshift has been created.');
+
         return redirect('/workshifts');
     }
 
@@ -87,6 +90,8 @@ class WorkshiftController extends Controller
 
         $workshift->updateWorkshift($request, $workshift);
 
+        Session::flash('message', 'Workshift has been updated.');
+
         return redirect('/workshifts/');
     }
 
@@ -98,6 +103,8 @@ class WorkshiftController extends Controller
      */
     public function destroy(Workshift $workshift)
     {
-        //
+        $workshift->delete();
+
+        return redirect('/workshifts');
     }
 }

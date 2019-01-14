@@ -46,12 +46,15 @@ Route::group(['middleware' => 'auth'], function() {
     Route::delete('/positions/{position}', 'PositionController@destroy');
 
     Route::get('/employees', 'EmployeeController@index')->name('employees');
-    Route::get('/employees/create', 'EmployeeController@create');
+    Route::get('/employees/create', 'EmployeeController@create')->name('employee-create');
     Route::post('/employees/', 'EmployeeController@store');
+    Route::get('/employees/{user}/edit', 'EmployeeController@edit');
+    Route::patch('/employees/{user}', 'EmployeeController@update');
 
     Route::get('/workshifts', 'WorkshiftController@index')->name('workshift');
     Route::get('/workshifts/create', 'WorkshiftController@create');
     Route::post('/workshifts', 'WorkshiftController@store');
     Route::get('/workshifts/{workshift}/edit', 'WorkshiftController@edit');
     Route::patch('/workshifts/{workshift}', 'WorkshiftController@update');
+    Route::delete('/workshifts/{workshift}', 'WorkshiftController@destroy');
 });

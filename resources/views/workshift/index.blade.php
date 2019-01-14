@@ -16,6 +16,9 @@
 
 				<!-- Main content -->
 	<section class="content">
+		@if (Session::has('message'))
+            <div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4><i class="icon fa fa-check"></i> Success!</h4>{{ Session::get('message') }}</div>
+        @endif
 		<div class="box">
 			<div class="box-header with-border">
 				<h3 class="box-title">
@@ -152,9 +155,16 @@
 										
 										<td></td>
 										<td class="data-row-options-cell">
-											<div class="inner" style="width:61px;">
+											<div class="inner" style="width:75px;">
 												<a href="#" class="btn btn-primary btn-xs" title="View Workshift Info"	target="_blank"><i class="fa fa-clock-o"></i></a>
 												<a href="/workshifts/{{ $workshift->id }}/edit" class="btn btn-success btn-xs" title="Edit Workshift"><i class="fa fa-pencil"></i></a>
+												<form style="display: inline-block;" action="/workshifts/{{ $workshift->id }}" method="POST">
+													@method('DELETE')
+													@csrf
+													<button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');" title="Delete">
+														<i class="fa fa-trash-o"></i>
+													</button>
+                                				</form>
 											</div>
 										</td>
 									</tr>

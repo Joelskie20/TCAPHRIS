@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Add Employee')
+@section('title', 'Edit Employee')
 
 @section('styles')
 <!-- bootstrap datepicker -->
@@ -11,13 +11,14 @@
 <div class="content-wrapper">
 
     <section class="content-header">
-        <h1>Add Employee</h1>
+        <h1>Edit Employee</h1>
     </section>
 
     <!-- Main content -->
     <section class="content">
 
-        <form method="POST" action="{{ action('EmployeeController@store') }}">
+        <form method="POST" action="{{ action('EmployeeController@update', ['id' => $user->id]) }}">
+            @method('PATCH')
             @csrf
             <!-- EMPLOYEE INFORMATION -->
             <div class="box box-success">
@@ -31,7 +32,7 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="employeeID">Employee ID <small class="label label-success">Required</small></label>
-                                <input type="text" maxlength="7" class="form-control" placeholder="2170043" id="employee_id" name="employee_id" data-inputmask="&quot;mask&quot;: &quot;9999999&quot;" data-mask="">
+                                <input type="text" maxlength="7" class="form-control" placeholder="2170043" id="employee_id" name="employee_id" data-inputmask="&quot;mask&quot;: &quot;9999999&quot;" data-mask="" value="{{ $user->employee_id }}">
                             </div>
                         </div>
 
@@ -41,7 +42,7 @@
                                 <label for="positionID">Position <small class="label label-success">Required</small></label>
                                 <select class="form-control" id="positionID" name="position_id" >
                                 @foreach($positions as $position)
-                                    <option value="{{ $position->id }}">{{ $position->name }}</option>
+                                    <option value="{{ $position->id }}" {{ $position->id == $user->position_id ? 'selected' : '' }}>{{ $position->name }}</option>
                                 @endforeach
                                 </select>
                             </div>
@@ -54,7 +55,7 @@
                                 <select class="form-control" id="departmentID" name="department_id" >
                                     <option value="0">-- None --</option>
                                     @foreach($departments as $department)
-                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                        <option value="{{ $department->id }}" {{ $department->id == $user->department_id ? 'selected' : '' }}>{{ $department->name }}</option>
                                     @endforeach										
                                 </select>
                             </div>
@@ -67,7 +68,7 @@
                                 <select class="form-control" id="teamID" name="team_id" >
                                     <option value="0" class="opt-none">-- None --</option>
                                     @foreach($teams as $team)
-                                        <option value="{{ $team->id }}">{{ $team->name }}</option>
+                                        <option value="{{ $team->id }}" {{ $team->id == $user->team_id ? 'selected' : '' }}>{{ $team->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -77,7 +78,7 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="baseSalary">Base Salary <small class="label label-danger">Required</small></label>
-                                <input type="text" maxlength="20" class="form-control number-format" id="baseSalary" name="base_salary" >
+                                <input type="text" maxlength="20" class="form-control number-format" id="baseSalary" name="base_salary" value="{{ number_format($user->base_salary, 2,'.',',') }}">
                             </div>
                         </div>
 
@@ -86,7 +87,8 @@
                             <div class="form-group">
                                 <label for="taxStatus">Tax Status <small class="label label-success">Required</small></label>
                                 <select class="form-control" id="taxStatus" name="tax_status" >
-                                    <option value="s">Single</option><option value="s1">Single with 1 dependent</option><option value="s2">Single with 2 dependent</option><option value="s3">Single with 3 dependent</option><option value="s4">Single with 4 dependent</option><option value="m">Married</option><option value="m1">Married with 1 dependent</option><option value="m2">Married with 2 dependent</option><option value="m3">Married with 3 dependent</option><option value="m4">Married with 4 dependent</option><option value="hf">Head of the Family</option>										</select>
+                                    <option value="s" {{ $user->tax_status == 's' ? 'selected' : '' }}>Single</option><option value="s1" {{ $user->tax_status == 's1' ? 'selected' : '' }}>Single with 1 dependent</option><option value="s2" {{ $user->tax_status == 's2' ? 'selected' : '' }}>Single with 2 dependent</option><option value="s3" {{ $user->tax_status == 's3' ? 'selected' : '' }}>Single with 3 dependent</option><option value="s4" {{ $user->tax_status == 's4' ? 'selected' : '' }}>Single with 4 dependent</option><option value="m" {{ $user->tax_status == 'm' ? 'selected' : '' }}>Married</option><option value="m1" {{ $user->tax_status == 'm1' ? 'selected' : '' }}>Married with 1 dependent</option><option value="m2" {{ $user->tax_status == 'm2' ? 'selected' : '' }}>Married with 2 dependent</option><option value="m3" {{ $user->tax_status == 'm3' ? 'selected' : '' }}>Married with 3 dependent</option><option value="m4" {{ $user->tax_status == 'm4' ? 'selected' : '' }}>Married with 4 dependent</option><option value="hf" {{ $user->tax_status == 'hf' ? 'selected' : '' }}>Head of the Family</option>
+                                </select>
                             </div>
                         </div>
 
@@ -95,8 +97,8 @@
                             <div class="form-group">
                                 <label for="paymentFrequency">Payment Frequency <small class="label label-success">Required</small></label>
                                 <select class="form-control" id="paymentFrequency" name="payment_frequency" >
-                                    <option value="monthly">Monthly</option>
-                                    <option value="daily">Daily</option>
+                                    <option value="monthly" {{ $user->payment_frequency == 'monthly' ? 'selected' : '' }}>Monthly</option>
+                                    <option value="daily" {{ $user->payment_frequency == 'daily' ? 'selected' : '' }}>Daily</option>
                                 </select>
                             </div>
                         </div>
@@ -109,7 +111,7 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input type="text" id="hiredate" name="hire_date" placeholder="mm/dd/yyyy" class="form-control pull-right datepicker" >
+                                    <input type="text" id="hiredate" name="hire_date" placeholder="mm/dd/yyyy" class="form-control pull-right datepicker" value="{{ Carbon::parse($user->hire_date)->format('m/d/Y') }}">
                                 </div>
                             </div>
                         </div>
@@ -122,7 +124,7 @@
                                     <option value="0">-- To Follow --</option>
                                     @foreach($employees as $employee)
                                         @if($employee->getPosition() == 'Manager')
-                                            <option value="{{ $employee->id }}">[{{ $employee->employee_id }}] {{ $employee->name }} ({{ $employee->getTeam() }})</option>
+                                            <option value="{{ $employee->id }}" {{ $employee->id == $user->direct_manager_id ? 'selected' : '' }}>[{{ $employee->employee_id }}] {{ $employee->name }} ({{ $employee->getTeam() }})</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -138,7 +140,7 @@
                                     <label for="workshift">Workshift <small class="label label-success">Required</small></label>
                                     <select class="form-control" id="workshift" name="workshift_id" >
                                     @foreach($workshifts as $workshift)
-                                        <option value="{{ $workshift->id }}">[{{ $workshift->code }}] {{ $workshift->name }}</option>
+                                        <option value="{{ $workshift->id }}" {{ $workshift->id == $user->workshift_id ? 'selected' : '' }}>[{{ $workshift->code }}] {{ $workshift->name }}</option>
                                     @endforeach
                                     </select>
                                 </div>
@@ -180,7 +182,7 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="firstname">First Name <small class="label label-danger">Required</small></label>
-                                <input type="text" maxlength="50" class="form-control" id="firstname" name="first_name" placeholder="Juan" >
+                                <input type="text" maxlength="50" class="form-control" id="firstname" name="first_name" value="{{ $user->first_name }}">
                             </div>
                         </div>
 
@@ -188,7 +190,7 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="middlename">Middle Name</label>
-                                <input type="text" maxlength="50" class="form-control" id="middlename" name="middle_name">
+                                <input type="text" maxlength="50" class="form-control" id="middlename" name="middle_name" value="{{ $user->middle_name }}">
                             </div>
                         </div>
 
@@ -196,7 +198,7 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="lastname">Last Name <small class="label label-danger">Required</small></label>
-                                <input type="text" maxlength="50" class="form-control" id="lastname" name="last_name" placeholder="dela Cruz" >
+                                <input type="text" maxlength="50" class="form-control" id="lastname" name="last_name" value="{{ $user->last_name }}">
                             </div>
                         </div>
 
@@ -208,7 +210,7 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input type="text" id="birthDate" name="birth_date" placeholder="mm/dd/yyyy" class="form-control pull-right datepicker" >
+                                    <input type="text" id="birthDate" name="birth_date" class="form-control pull-right datepicker" value="{{ Carbon::parse($user->birth_date)->format('m/d/Y') }}">
                                 </div>
                             </div>
                         </div>
@@ -219,7 +221,7 @@
                                 <label for="gender">Gender <small class="label label-success">Required</small></label>
                                 <select class="form-control" id="gender" name="gender_id" >
                                     @foreach($genders as $gender)
-                                        <option value="{{ $gender->id }}">{{ $gender->name }}</option>
+                                        <option value="{{ $gender->id }}" {{ $gender->id == $user->gender_id ? 'selected' : '' }}>{{ $gender->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -229,7 +231,7 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="nationality">Nationality <small class="label label-danger">Required</small></label>
-                                <input type="text" maxlength="50" class="form-control" id="nationality" name="nationality" >
+                                <input type="text" maxlength="50" class="form-control" id="nationality" name="nationality" value="{{ $user->nationality }}">
                             </div>
                         </div>
 
@@ -237,7 +239,7 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="religion">Religion</label>
-                                <input type="text" maxlength="50" class="form-control" id="religion" name="religion">
+                                <input type="text" maxlength="50" class="form-control" id="religion" name="religion" value="{{ $user->religion }}">
                             </div>
                         </div>
 
@@ -262,7 +264,7 @@
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="present_unitNumber">Unit Number <small class="label label-danger">Required</small></label>
-                                        <input type="text" maxlength="50" class="form-control" id="present_unitNumber" name="present_unitNumber">
+                                        <input type="text" maxlength="50" class="form-control" id="present_unitNumber" name="present_unit_number"">
                                     </div>
                                 </div>
 
@@ -270,7 +272,7 @@
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="present_buildingName">Building Name</label>
-                                        <input type="text" maxlength="50" class="form-control" id="present_buildingName" name="present_buildingName">
+                                        <input type="text" maxlength="50" class="form-control" id="present_buildingName" name="present_building_name"">
                                     </div>
                                 </div>
 
@@ -278,7 +280,7 @@
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="present_streetName">Street Name <small class="label label-danger">Required</small></label>
-                                        <input type="text" maxlength="50" class="form-control" id="present_streetName" name="present_streetName">
+                                        <input type="text" maxlength="50" class="form-control" id="present_streetName" name="present_street_name"">
                                     </div>
                                 </div>
 
@@ -286,7 +288,7 @@
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="present_subdivision">Subdivision</label>
-                                        <input type="text" maxlength="50" class="form-control" id="present_subdivision" name="present_subdivision">
+                                        <input type="text" maxlength="50" class="form-control" id="present_subdivision" name="present_subdivision"">
                                     </div>
                                 </div>
 
@@ -294,7 +296,7 @@
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="present_barangay">Barangay <small class="label label-danger">Required</small></label>
-                                        <input type="text" maxlength="50" class="form-control" id="present_barangay" name="present_barangay_id">
+                                        <input type="text" maxlength="50" class="form-control" id="present_barangay" name="present_barangay_id" >
                                     </div>
                                 </div>
 
@@ -347,7 +349,7 @@
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="permanent_unitNumber">Unit Number <small class="label label-danger">Required</small></label>
-                                        <input type="text" maxlength="50" class="form-control" id="permanent_unitNumber" name="permanent_unitNumber">
+                                        <input type="text" maxlength="50" class="form-control" id="permanent_unitNumber" name="permanent_unit_number">
                                     </div>
                                 </div>
 
@@ -355,7 +357,7 @@
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="permanent_buildingName">Building Name</label>
-                                        <input type="text" maxlength="50" class="form-control" id="permanent_buildingName" name="permanent_buildingName">
+                                        <input type="text" maxlength="50" class="form-control" id="permanent_buildingName" name="permanent_building_name">
                                     </div>
                                 </div>
 
@@ -363,7 +365,7 @@
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="permanent_streetName">Street Name <small class="label label-danger">Required</small></label>
-                                        <input type="text" maxlength="50" class="form-control" id="permanent_streetName" name="permanent_streetName">
+                                        <input type="text" maxlength="50" class="form-control" id="permanent_streetName" name="permanent_street_name">
                                     </div>
                                 </div>
 
@@ -424,7 +426,7 @@
                             <div class="col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" maxlength="50" class="form-control" id="email" name="email" placeholder="name@email.com">
+                                    <input type="email" maxlength="50" class="form-control" id="email" name="email" value="{{ $user->email }}">
                                 </div>
                             </div>
 
@@ -432,7 +434,7 @@
                             <div class="col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label for="mobile">Mobile <small class="label label-danger">Required</small></label>
-                                    <input type="text" maxlength="50" class="form-control" id="mobile" name="mobile_number" placeholder="09123456789">
+                                    <input type="text" maxlength="50" class="form-control" id="mobile" name="mobile_number" value="{{ $user->mobile_number }}">
                                 </div>
                             </div>
 
@@ -440,7 +442,7 @@
                             <div class="col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label for="landline">Landline</label>
-                                    <input type="text" maxlength="50" class="form-control" id="landline" name="landline" placeholder="9502483">
+                                    <input type="text" maxlength="50" class="form-control" id="landline" name="landline" value="{{ $user->landline }}">
                                 </div>
                             </div>
 
@@ -462,7 +464,7 @@
                             <div class="col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-group">
                                     <label for="tin">TIN</label>
-                                    <input type="text" maxlength="20" class="form-control" id="tin" name="tin_number" data-inputmask="&quot;mask&quot;: &quot;999-999-999-999&quot;" data-mask="">
+                                    <input type="text" maxlength="20" class="form-control" id="tin" name="tin_number" data-inputmask="&quot;mask&quot;: &quot;999-999-999-999&quot;" data-mask="" value="{{ $user->tin_number }}">
                                 </div>
                             </div>
 
@@ -470,7 +472,7 @@
                             <div class="col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-group">
                                     <label for="sss">SSS</label>
-                                    <input type="text" maxlength="50" class="form-control" id="sss" name="sss_number">
+                                    <input type="text" maxlength="50" class="form-control" id="sss" name="sss_number" value="{{ $user->sss_number }}">
                                 </div>
                             </div>
 
@@ -478,7 +480,7 @@
                             <div class="col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-group">
                                     <label for="philhealth">PhilHealth</label>
-                                    <input type="text" maxlength="50" class="form-control" id="philhealth" name="philhealth_number">
+                                    <input type="text" maxlength="50" class="form-control" id="philhealth" name="philhealth_number" value="{{ $user->philhealth_number }}">
                                 </div>
                             </div>
 
@@ -486,7 +488,7 @@
                             <div class="col-sm-6 col-md-4 col-lg-3">
                                 <div class="form-group">
                                     <label for="hdmf">Pag-Ibig</label>
-                                    <input type="text" maxlength="50" class="form-control" id="hdmf" name="pagibig_number">
+                                    <input type="text" maxlength="50" class="form-control" id="hdmf" name="pagibig_number" value="{{ $user->pagibig_number }}">
                                 </div>
                             </div>
 
@@ -532,7 +534,8 @@
         });
 
         $('#workshift').change(function() {
-            console.log($(this).find(':selected').val());
+            
+            console.log($(this).find(':selected').val())
         });
 
     });

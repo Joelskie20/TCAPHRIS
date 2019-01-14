@@ -26,7 +26,7 @@
         </li>
 
         <!-- EMPLOYEES -->
-        <li class="{{ Route::is('employees') ? 'active' : '' }}">
+        <li class="{{ (Route::is('employees') || Route::is('employee-create')) ? 'active' : '' }}">
             <a href="{{ route('employees') }}"><i class="fa fa-users"></i> <span>Employee Records</span></a>
         </li>
 
