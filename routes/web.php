@@ -48,4 +48,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/employees', 'EmployeeController@index')->name('employees');
     Route::get('/employees/create', 'EmployeeController@create');
     Route::post('/employees/', 'EmployeeController@store');
+
+    Route::get('/workshifts', 'WorkshiftController@index')->name('workshift');
+    Route::get('/workshifts/create', 'WorkshiftController@create');
+    Route::post('/workshifts', 'WorkshiftController@store');
+    Route::get('/workshifts/{workshift}/edit', 'WorkshiftController@edit');
+    Route::patch('/workshifts/{workshift}', 'WorkshiftController@update');
 });
