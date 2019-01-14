@@ -372,46 +372,46 @@
 					$('#mondayTimeOut').parent().find('.day-overlap').hide();
 				}
 			});
-			$('#mondayTimeIn, #mondayTimeOut').change(function() {
-				if($('#mondayTimeIn').val()*1 > $('#mondayTimeOut').val()*1) {
-					$('#mondayTimeOut').parent().find('.day-overlap').show();
+			$('#tuesdayTimeIn, #tuesdayTimeOut').change(function() {
+				if($('#tuesdayTimeIn').val()*1 > $('#tuesdayTimeOut').val()*1) {
+					$('#tuesdayTimeOut').parent().find('.day-overlap').show();
 				} else {
-					$('#mondayTimeOut').parent().find('.day-overlap').hide();
+					$('#tuesdayTimeOut').parent().find('.day-overlap').hide();
 				}
 			});
-			$('#mondayTimeIn, #mondayTimeOut').change(function() {
-				if($('#mondayTimeIn').val()*1 > $('#mondayTimeOut').val()*1) {
-					$('#mondayTimeOut').parent().find('.day-overlap').show();
+			$('#wednesdayTimeIn, #wednesdayTimeOut').change(function() {
+				if($('#wednesdayTimeIn').val()*1 > $('#wednesdayTimeOut').val()*1) {
+					$('#wednesdayTimeOut').parent().find('.day-overlap').show();
 				} else {
-					$('#mondayTimeOut').parent().find('.day-overlap').hide();
+					$('#wednesdayTimeOut').parent().find('.day-overlap').hide();
 				}
 			});
-			$('#mondayTimeIn, #mondayTimeOut').change(function() {
-				if($('#mondayTimeIn').val()*1 > $('#mondayTimeOut').val()*1) {
-					$('#mondayTimeOut').parent().find('.day-overlap').show();
+			$('#thursdayTimeIn, #thursdayTimeOut').change(function() {
+				if($('#thursdayTimeIn').val()*1 > $('#thursdayTimeOut').val()*1) {
+					$('#thursdayTimeOut').parent().find('.day-overlap').show();
 				} else {
-					$('#mondayTimeOut').parent().find('.day-overlap').hide();
+					$('#thursdayTimeOut').parent().find('.day-overlap').hide();
 				}
 			});
-			$('#mondayTimeIn, #mondayTimeOut').change(function() {
-				if($('#mondayTimeIn').val()*1 > $('#mondayTimeOut').val()*1) {
-					$('#mondayTimeOut').parent().find('.day-overlap').show();
+			$('#fridayTimeIn, #fridayTimeOut').change(function() {
+				if($('#fridayTimeIn').val()*1 > $('#fridayTimeOut').val()*1) {
+					$('#fridayTimeOut').parent().find('.day-overlap').show();
 				} else {
-					$('#mondayTimeOut').parent().find('.day-overlap').hide();
+					$('#fridayTimeOut').parent().find('.day-overlap').hide();
 				}
 			});
-			$('#mondayTimeIn, #mondayTimeOut').change(function() {
-				if($('#mondayTimeIn').val()*1 > $('#mondayTimeOut').val()*1) {
-					$('#mondayTimeOut').parent().find('.day-overlap').show();
+			$('#saturdayTimeIn, #saturdayTimeOut').change(function() {
+				if($('#saturdayTimeIn').val()*1 > $('#saturdayTimeOut').val()*1) {
+					$('#saturdayTimeOut').parent().find('.day-overlap').show();
 				} else {
-					$('#mondayTimeOut').parent().find('.day-overlap').hide();
+					$('#saturdayTimeOut').parent().find('.day-overlap').hide();
 				}
 			});
-			$('#mondayTimeIn, #mondayTimeOut').change(function() {
-				if($('#mondayTimeIn').val()*1 > $('#mondayTimeOut').val()*1) {
-					$('#mondayTimeOut').parent().find('.day-overlap').show();
+			$('#sundayTimeIn, #sundayTimeOut').change(function() {
+				if($('#sundayTimeIn').val()*1 > $('#sundayTimeOut').val()*1) {
+					$('#sundayTimeOut').parent().find('.day-overlap').show();
 				} else {
-					$('#mondayTimeOut').parent().find('.day-overlap').hide();
+					$('#sundayTimeOut').parent().find('.day-overlap').hide();
 				}
 			});
 			

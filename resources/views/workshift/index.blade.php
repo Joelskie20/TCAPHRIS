@@ -26,18 +26,18 @@
 			</div>
 			<!-- /.box-header -->
 		<div class="box-body">
-			<div class="dataTables_wrapper form-inline dt-bootstrap">
+			<div class="form-inline dt-bootstrap">
 				<div class="row">
 					<div class="col-sm-6">
-						<div class="dataTables_filter search-bar">
+						{{-- <div class="dataTables_filter search-bar">
 							<label>Search:
 								<input type="search" class="form-control w200 input-sm search-field" placeholder="Workshift Code or Name" value="">
 							</label>
 							<input class="btn btn-primary btn-sm btn-search mr05" style="margin-top:-2px;" type="submit" value="Search">
 							<button class="btn btn-default btn-sm btn-clear-search" style="margin-top:-2px;">Clear</button>
-						</div>
+						</div> --}}
 					</div>
-					<div class="col-sm-6">
+					{{-- <div class="col-sm-6">
 						<div class="dataTables_paginate paging_simple_numbers">
 							<ul class="pagination">
 								<li class="paginate_button previous disabled" id="invoice-list_previous"><a href="#" class="pagination-disabled">Previous</a></li>
@@ -45,26 +45,28 @@
 								<li class="paginate_button next disabled" id="invoice-list_next"><a href="#" class="pagination-disabled">Next</a></li>
 							</ul>
 						</div>
-					</div>
+					</div> --}}
 				</div>
 				<div class="row">
 					<div class="col-xs-12 table-responsive">
-						<table id="table" class="table table-bordered table-striped" role="grid">
+						<table id="table" class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Code</th>
+								<th>Name</th>
+								<th>Monday</th>
+								<th>Tuesday</th>
+								<th>Wednesday</th>
+								<th>Thursday</th>
+								<th>Friday</th>
+								<th>Saturday</th>
+								<th>Sunday</th>
+								<th>Remarks</th>
+								<th style="width:34px;"></th>
+							</tr>
+						</thead>
 							<tbody>
-								<tr>
-									<th></th>
-									<th>Code</th>
-									<th>Name</th>
-									<th>Monday</th>
-									<th>Tuesday</th>
-									<th>Wednesday</th>
-									<th>Thursday</th>
-									<th>Friday</th>
-									<th>Saturday</th>
-									<th>Sunday</th>
-									<th>Remarks</th>
-									<th style="width:34px;"></th>
-								</tr>
 								@foreach($workshifts as $key => $workshift)
 									<tr id="w2" data-id="2">
 										<td>{{ ++$key }}</td>
@@ -151,7 +153,7 @@
 										<td></td>
 										<td class="data-row-options-cell">
 											<div class="inner" style="width:61px;">
-												<a href="#" class="btn btn-primary btn-xs mr05" title="View Workshift Info"	target="_blank"><i class="fa fa-clock-o"></i></a>
+												<a href="#" class="btn btn-primary btn-xs" title="View Workshift Info"	target="_blank"><i class="fa fa-clock-o"></i></a>
 												<a href="/workshifts/{{ $workshift->id }}/edit" class="btn btn-success btn-xs" title="Edit Workshift"><i class="fa fa-pencil"></i></a>
 											</div>
 										</td>
@@ -162,9 +164,10 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-6">
-						Showing 1 to 4 out of 4 results. </div>
-					<div class="col-sm-6">
+					{{-- <div class="col-sm-6">
+						Showing 1 to 4 out of 4 results. 
+					</div> --}}
+					{{-- <div class="col-sm-6">
 						<div class="dataTables_paginate paging_simple_numbers">
 							<ul class="pagination">
 								<li class="paginate_button previous disabled" id="invoice-list_previous"><a href="#" class="pagination-disabled">Previous</a></li>
@@ -172,7 +175,7 @@
 								<li class="paginate_button next disabled" id="invoice-list_next"><a href="#" class="pagination-disabled">Next</a></li>
 							</ul>
 						</div>
-					</div>
+					</div> --}}
 				</div>
 			</div>
 		</div>
@@ -191,7 +194,8 @@
 <script>
 $(document).ready(function() {
     $('#table').dataTable({
-        'iDisplayLength': 100
+        'iDisplayLength': 100,
+		'ordering': false
     });
 });
 </script>
