@@ -87,14 +87,14 @@ form h5 {
                                 @if($employee->employee_id <= 0) 
                                     {{ 'Unassigned' }}
                                 @else
-                                    <a href="#" title="{{ $employee->lastNameFirst() }}">{{ $employee->employee_id }}</a>
+                                    <a href="/employee/{{ $employee->id }}" title="{{ $employee->lastNameFirst() }}">{{ $employee->employee_id }}</a>
                                 @endif
                             </td>
                             <td {{ $employee->lastNameFirst() == 'Unassigned' ? 'class=apply-opacity' : '' }}>
                                 @if($employee->lastNameFirst() == 'Unassigned')
                                     {{ 'Unassigned' }}
                                 @else
-                                    <a href="#" title="{{ $employee->lastNameFirst() }}" >{{ $employee->lastNameFirst()  }}</a>
+                                    <a href="/employee/{{ $employee->id }}" title="{{ $employee->lastNameFirst() }}" >{{ $employee->lastNameFirst()  }}</a>
                                 @endif
                             </td>
                             <td {!! ($employee->getWorkshiftCode() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}><span title="{{ ($employee->getWorkshiftCode() == 'Unassigned') ? 'Unassigned' : $employee->getWorkshiftName() }}">{{ $employee->getWorkshiftCode() }}</span></td>
@@ -106,7 +106,7 @@ form h5 {
                             <td><small class="text-green">-</small></td>
                             <td>{{ ($employee->last_login == NULL) ? '-'  : $employee->last_login }}</td>
                             <td class="data-row-options-cell">
-                                <a href="#" class="btn btn-primary btn-xs mr05" title="View Profile"><i class="fa fa-user"></i></a>
+                                <a href="/employee/{{ $employee->id }}" class="btn btn-primary btn-xs mr05" title="View Profile"><i class="fa fa-user"></i></a>
                                 <a href="/employees/{{ $employee->id }}/edit" class="btn btn-success mr05 btn-xs" title="Edit Employee"><i class="fa fa-pencil"></i></a>
                                 <a href="#" class="btn btn-warning mr05 btn-xs" title="Time Records"><i class="fa fa-clock-o"></i></a>
                                 <a href="#" class="btn btn-info mr05 btn-xs" title="Workshifts"><i class="fa fa-calendar"></i></a>

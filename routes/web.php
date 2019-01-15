@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/employees/', 'EmployeeController@store');
     Route::get('/employees/{user}/edit', 'EmployeeController@edit');
     Route::patch('/employees/{user}', 'EmployeeController@update');
+    Route::get('/employee/{employee}', 'EmployeeController@show');
 
     Route::get('/workshifts', 'WorkshiftController@index')->name('workshift');
     Route::get('/workshifts/create', 'WorkshiftController@create');

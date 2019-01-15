@@ -64,9 +64,12 @@ class EmployeeController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $employee)
     {
-        //
+        return view('employee.show', [
+            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
+            'employee' => $employee
+        ]);
     }
 
     /**
