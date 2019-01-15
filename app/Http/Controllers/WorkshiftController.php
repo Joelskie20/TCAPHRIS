@@ -60,7 +60,7 @@ class WorkshiftController extends Controller
      */
     public function show(Workshift $workshift)
     {
-        //
+        return $workshift;
     }
 
     /**

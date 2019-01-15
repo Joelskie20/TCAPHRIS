@@ -166,12 +166,38 @@ class User extends Authenticatable
         // Other Fields
 
         $this->name = $request->last_name . ', ' . $request->first_name . ' ' . $request->middle_name;
-        $this->password = Hash::make($request->employee_id);
+        // $this->password = Hash::make($request->employee_id);
 
         $this->save();
     }
 
-    // Helper functions for 'Gender'
+    public function lastNameFirst()
+    {
+        if (empty($this->first_name) || empty($this->last_name)) {
+            return 'Unassigned';
+        }
+
+        return ($this->last_name . ', ' . $this->first_name . ' ' . $this->middle_name);
+    }
+
+    public function firstNameFirst()
+    {
+        if (empty($this->first_name) || empty($this->last_name)) {
+            return 'Unassigned';
+        }
+
+        return $this->first_name . ' ' . $this->middle_name . ' ' . $this->last_name;
+    }
+
+    public function firstAndLastName()
+    {
+        if (empty($this->first_name) || empty($this->last_name)) {
+            return 'Unassigned';
+        }
+        
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
     public function gender()
     {
         return $this->hasOne('App\Gender', 'id', 'gender_id');
@@ -179,7 +205,7 @@ class User extends Authenticatable
 
     public function getGender()
     {
-        return $this->gender->name;
+        return $this->gender->name ?? 'Unassigned';
     }
 
     public function position()
@@ -189,7 +215,7 @@ class User extends Authenticatable
 
     public function getPosition()
     {
-        return $this->position->name;
+        return $this->position->name ?? 'Unassigned';
     }
 
     public function team()
@@ -199,7 +225,7 @@ class User extends Authenticatable
 
     public function getTeam()
     {
-        return $this->team->name;
+        return $this->team->name ?? 'Unassigned';
     }
 
     public function department()
@@ -209,7 +235,7 @@ class User extends Authenticatable
 
     public function getDepartment()
     {
-        return $this->department->name;
+        return $this->department->name ?? 'Unassigned';
     }
 
     public function workshift()
@@ -219,11 +245,11 @@ class User extends Authenticatable
 
     public function getWorkshiftCode()
     {
-        return $this->workshift->code;
+        return $this->workshift->code ?? 'Unassigned';
     }
 
     public function getWorkshiftName()
     {
-        return $this->workshift->name;
+        return $this->workshift->name ?? 'Unassigned';
     }
 }

@@ -54,9 +54,3 @@
       <!-- /.content -->
   </div>
 @endsection
-
-@section('scripts')
-<script>
-	$('div.alert').delay(3000).fadeOut(300);
-</script>
-@endsection

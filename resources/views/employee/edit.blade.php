@@ -32,7 +32,7 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="employeeID">Employee ID <small class="label label-success">Required</small></label>
-                                <input type="text" maxlength="7" class="form-control" placeholder="2170043" id="employee_id" name="employee_id" data-inputmask="&quot;mask&quot;: &quot;9999999&quot;" data-mask="" value="{{ $user->employee_id }}">
+                                <input type="text" maxlength="7" class="form-control" placeholder="2170043" id="employee_id" name="employee_id" data-inputmask="&quot;mask&quot;: &quot;9999999&quot;" data-mask="" value="{{ $user->employee_id == 0 ? '' : $user->employee_id }}">
                             </div>
                         </div>
 
@@ -40,7 +40,8 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="positionID">Position <small class="label label-success">Required</small></label>
-                                <select class="form-control" id="positionID" name="position_id" >
+                                <select class="form-control" id="positionID" name="position_id">
+                                <option value="0">-- None --</option>
                                 @foreach($positions as $position)
                                     <option value="{{ $position->id }}" {{ $position->id == $user->position_id ? 'selected' : '' }}>{{ $position->name }}</option>
                                 @endforeach

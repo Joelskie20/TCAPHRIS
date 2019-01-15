@@ -40,6 +40,7 @@
                             <div class="form-group">
                                 <label for="positionID">Position <small class="label label-success">Required</small></label>
                                 <select class="form-control" id="positionID" name="position_id" >
+                                <option value="0">-- None --</option>
                                 @foreach($positions as $position)
                                     <option value="{{ $position->id }}">{{ $position->name }}</option>
                                 @endforeach
@@ -162,7 +163,10 @@
                                         <th>Sunday</th>
                                         <th>Remarks</th>
                                     </tr>
-                                    <tr id="w2" data-id="2"><td><a title="MRG-MF-6A3P-SSR" href="#">MRG-MF-6A3P-SSR</a></td><td><a title="Morning Monday-Friday 6AM-3PM Sat-Sun Restday" href="#">Morning Monday-Friday 6AM-3PM Sat-Sun Restday</a></td><td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td><td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td><td></td></tr>			</tbody></table>
+                                    <tr id="w2" data-id="2">
+                                        <td><a title="MRG-MF-6A3P-SSR" href="#" id="workshift-code">{{ $workshift->code }}</a></td>                                        
+                                        <td><a title="Morning Monday-Friday 6AM-3PM Sat-Sun Restday" id="workshift-name" href="#">Morning Monday-Friday 6AM-3PM Sat-Sun Restday</a></td>
+                                        <td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td><td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td><td></td></tr>			</tbody></table>
                             </div>
                         </div>
                 </div>
@@ -532,7 +536,16 @@
         });
 
         $('#workshift').change(function() {
-            console.log($(this).find(':selected').val());
+            // console.log($(this).find(':selected').val());
+            var id = $(this).find(':selected').val();
+            $.ajax({
+                type: "get",
+                url: 'http://hris.com/workshifts/' + id,
+                success: function (data) {
+                    $('#workshift-code').text(data['code']);
+                    $('#workshift-name').text(data['name']);
+                }
+            });
         });
 
     });

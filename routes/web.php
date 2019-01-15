@@ -57,4 +57,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/workshifts/{workshift}/edit', 'WorkshiftController@edit');
     Route::patch('/workshifts/{workshift}', 'WorkshiftController@update');
     Route::delete('/workshifts/{workshift}', 'WorkshiftController@destroy');
+
+    Route::get('/workshifts/{workshift}', 'WorkshiftController@show');
 });

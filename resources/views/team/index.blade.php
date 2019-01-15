@@ -137,7 +137,4 @@ $(document).ready(function() {
     });
 });
 </script>
-<script>
-    $('div.alert').delay(3000).fadeOut(300);
-</script>
 @endsection

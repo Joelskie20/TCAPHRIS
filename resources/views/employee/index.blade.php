@@ -38,6 +38,10 @@ form h5 {
 .permanent-address {
     display: none;
 }
+
+.apply-opacity {
+    opacity: .50;
+}
 </style>
 @endsection
 
@@ -79,13 +83,25 @@ form h5 {
                         @foreach($employees as $employee)
                             <tr id="e3" data-id="3">
                             <td class="profile-image"><img alt="{{ $employee->name }}" src="{{ ($employee->getGender() == "Male") ? asset('dist/img/default-male.png') : asset('dist/img/default-female.png') }}"></td>
-                            <td class="text-center"><a title="{{ $employee->name }}" href="{{ url()->current() }}employee-profile">{{ $employee->employee_id }}</a></td>
-                            <td><a title="Lao, Kennt Gilbert Garcia" href="{{ url()->current() }}employee-profile">{{ $employee->name }}</a></td>
-                            <td><span title="Morning Monday-Friday 6AM-3PM Sat-Sun Restday">{{ $employee->getWorkshiftCode() }}</span></td>
-                            <td>{{ $employee->getGender() }}</td>
-                            <td>{{ $employee->getPosition() }}</td>
-                            <td>{{ $employee->getTeam() }}</td>
-                            <td>{{ $employee->getDepartment() }}</td>
+                            <td class="text-center {{ $employee->employee_id <= 0 ? 'apply-opacity' : '' }}">
+                                @if($employee->employee_id <= 0) 
+                                    {{ 'Unassigned' }}
+                                @else
+                                    <a href="#" title="{{ $employee->lastNameFirst() }}">{{ $employee->employee_id }}</a>
+                                @endif
+                            </td>
+                            <td {{ $employee->lastNameFirst() == 'Unassigned' ? 'class=apply-opacity' : '' }}>
+                                @if($employee->lastNameFirst() == 'Unassigned')
+                                    {{ 'Unassigned' }}
+                                @else
+                                    <a href="#" title="{{ $employee->lastNameFirst() }}" >{{ $employee->lastNameFirst()  }}</a>
+                                @endif
+                            </td>
+                            <td {!! ($employee->getWorkshiftCode() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}><span title="{{ ($employee->getWorkshiftCode() == 'Unassigned') ? 'Unassigned' : $employee->getWorkshiftName() }}">{{ $employee->getWorkshiftCode() }}</span></td>
+                            <td {!! ($employee->getGender() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}>{{ $employee->getGender() }}</td>
+                            <td {!! ($employee->getPosition() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}>{{ $employee->getPosition() }}</td>
+                            <td {!! ($employee->getTeam() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}>{{ $employee->getTeam() }}</td>
+                            <td {!! ($employee->getDepartment() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}>{{ $employee->getDepartment() }}</td>
                             <td>-</td>
                             <td><small class="text-green">-</small></td>
                             <td>{{ ($employee->last_login == NULL) ? '-'  : $employee->last_login }}</td>
@@ -126,8 +142,5 @@ $(document).ready(function() {
         'iDisplayLength': 100
     });
 });
-</script>
-<script>
-    $('div.alert').delay(3000).fadeOut(300);
 </script>
 @endsection
