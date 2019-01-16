@@ -8,7 +8,7 @@
         <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
     </div>
     <div class="pull-left info">
-        <p>{{ Auth::user()->name }}</p>
+        <p>{{ Auth::user()->firstNameFirst() }}</p>
         <!-- Status -->
         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
     </div>
@@ -26,12 +26,12 @@
         </li>
 
         <!-- EMPLOYEES -->
-        <li class="{{ (Route::is('employees') || Route::is('employee-create')) ? 'active' : '' }}">
+        <li class="{{ (Route::is('employees') || Route::is('employee-create') || Route::is('employee-profile')) ? 'active' : '' }}">
             <a href="{{ route('employees') }}"><i class="fa fa-users"></i> <span>Employee Records</span></a>
         </li>
 
         <!-- DAILY TIME RECORDS -->
-        <li class="{{ Route::is('dtr') ? 'active' : '' }}">
+        <li class="{{ (Route::is('dtr') || Route::is('dtr-profile')) ? 'active' : '' }}">
             <a href="{{ route('dtr') }}"><i class="fa fa-clock-o"></i> <span>Daily Time Records</span></a>
         </li>
 

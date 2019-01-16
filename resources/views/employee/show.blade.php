@@ -84,8 +84,7 @@ table tr.rest-day{background:#98fb98 !important;}
 												class="fa fa-pencil"></i> Edit</a>
 									</div>
 									<div class="col-sm-6">
-										<a href="#" class="btn btn-warning btn-block btn-profile"><i
-												class="fa fa-clock-o"></i> Employee Time Records</a>
+										<a href="/daily-time-records/{{ $employee->id }}" class="btn btn-warning btn-block btn-profile"><i class="fa fa-clock-o"></i> Employee Time Records</a>
 									</div>
 								</div>
 
@@ -152,48 +151,79 @@ table tr.rest-day{background:#98fb98 !important;}
 												</tr>
 												<tr>
 													<th>Monday</th>
-													<td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span> &nbsp; <span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td>
+													@if ($employee->workshift->monday_workshift == 'RD')
+														<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
+													@else
+														<td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> {{ App\Workshift::regularTime($employee->workshift->getMondayTimeIn()) }} - {{ App\Workshift::regularTime($employee->workshift->getMondayTimeOut()) }}</span> &nbsp; <span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $employee->workshift->getMondayWorkHours() }}</span></td>
+													@endif
 												</tr>
 												<tr>
 													<th>Tuesday</th>
-													<td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span> &nbsp; <span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td>
+													@if ($employee->workshift->tuesday_workshift == 'RD')
+														<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
+													@else
+														<td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> {{ App\Workshift::regularTime($employee->workshift->getTuesdayTimeIn()) }} - {{ App\Workshift::regularTime($employee->workshift->getTuesdayTimeOut()) }}</span> &nbsp; <span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $employee->workshift->getTuesdayWorkHours() }}</span></td>
+													@endif
 												</tr>
 												<tr>
 													<th>Wednesday</th>
-													<td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span> &nbsp; <span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td>
+													@if ($employee->workshift->wednesday_workshift == 'RD')
+														<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
+													@else
+														<td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> {{ App\Workshift::regularTime($employee->workshift->getWednesdayTimeIn()) }} - {{ App\Workshift::regularTime($employee->workshift->getWednesdayTimeOut()) }}</span> &nbsp; <span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $employee->workshift->getWednesdayWorkHours() }}</span></td>
+													@endif
 												</tr>
 												<tr>
 													<th>Thursday</th>
-													<td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span> &nbsp; <span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td>
+													@if ($employee->workshift->thursday_workshift == 'RD')
+														<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
+													@else
+														<td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> {{ App\Workshift::regularTime($employee->workshift->getThursdayTimeIn()) }} - {{ App\Workshift::regularTime($employee->workshift->getThursdayTimeOut()) }}</span> &nbsp; <span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $employee->workshift->getThursdayWorkHours() }}</span></td>
+													@endif
 												</tr>
 												<tr>
 													<th>Friday</th>
-													<td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span> &nbsp; <span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td>
+													@if ($employee->workshift->friday_workshift == 'RD')
+														<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
+													@else
+														<td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> {{ App\Workshift::regularTime($employee->workshift->getFridayTimeIn()) }} - {{ App\Workshift::regularTime($employee->workshift->getFridayTimeOut()) }}</span> &nbsp; <span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $employee->workshift->getFridayWorkHours() }}</span></td>
+													@endif
 												</tr>
 												<tr>
 													<th>Saturday</th>
-													<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
+													@if ($employee->workshift->saturday_workshift == 'RD')
+														<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
+													@else
+														<td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> {{ App\Workshift::regularTime($employee->workshift->getSaturdayTimeIn()) }} - {{ App\Workshift::regularTime($employee->workshift->getSaturdayTimeOut()) }}</span> &nbsp; <span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $employee->workshift->getSaturdayWorkHours() }}</span></td>
+													@endif
 												</tr>
 												<tr>
 													<th>Sunday</th>
-													<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
+													@if ($employee->workshift->sunday_workshift == 'RD')
+														<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
+													@else
+														<td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> {{ App\Workshift::regularTime($employee->workshift->getSundayTimeIn()) }} - {{ App\Workshift::regularTime($employee->workshift->getSundayTimeOut()) }}</span> &nbsp; <span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $employee->workshift->getSundayWorkHours() }}</span></td>
+													@endif
 												</tr>
-																							</tbody>
+											</tbody>
 										</table>
 										
 										<h4>Workshift Schedules
-																						<a href="#" class="btn btn-info btn-xs pull-right">MANAGE WORKSHIFT</a>
-																					</h4>
+											<a href="#" class="btn btn-info btn-xs pull-right">MANAGE WORKSHIFT</a>
+										</h4>
 										<table class="table table-bordered table-hover table-striped">
-											<thead>
+											{{-- <thead>
 												<tr>
 													<th>Effectivity Date</th>
 													<th>Code</th>
 													<th>Workshift</th>
 												</tr>
-											</thead>
-											<tbody>
+											</thead> --}}
+											{{-- <tbody>
 												<tr><td>October 15, 2018</td><td>MRG-MF-6A3P-SSR</td><td>Morning Monday-Friday 6AM-3PM Sat-Sun Restday</td></tr><tr><td>September 15, 2018</td><td>NGT-THM-9P6A-MTR</td><td>Night Shift 9PM-6AM Monday-Tuesday Restday</td></tr>												<tr><td colspan="3"></td></tr>
+											</tbody> --}}
+											<tbody>
+												<tr><td class="text-center">To follow</td></tr>
 											</tbody>
 										</table>
 										
@@ -206,24 +236,24 @@ table tr.rest-day{background:#98fb98 !important;}
 										<table class="table table-bordered table-hover table-striped">
 											<tbody>
 												<tr>
-													<th>Fullname</th>
-													<td>Lao, Kennt Gilbert Garcia</td>
+													<th>Full Name</th>
+													<td>{{ $employee->lastNameFirst() }}</td>
 												</tr>
 												<tr>
-													<th>Birthdate</th>
-													<td>01/03/1992</td>
+													<th>Birth Date</th>
+													<td>{{ date('m/d/Y', strtotime($employee->birth_date)) }}</td>
 												</tr>
 												<tr>
 													<th>Gender</th>
-													<td>Male</td>
+													<td>{{ $employee->getGender() }}</td>
 												</tr>
 												<tr>
 													<th>Nationality</th>
-													<td>Filipino</td>
+													<td>{{ $employee->nationality }}</td>
 												</tr>
 												<tr>
 													<th>Religion</th>
-													<td></td>
+													<td>{{ $employee->religion }}</td>
 												</tr>
 											</tbody>
 										</table>
@@ -233,25 +263,23 @@ table tr.rest-day{background:#98fb98 !important;}
 											<tbody>
 												<tr>
 													<th>Present Address</th>
-													<td>
-														B18 L11 St. Mark St., Mountain View Subdivision, Muzon, San Jose del Monte, Philippines													</td>
+													<td>-</td>
 												</tr>
 												<tr>
 													<th>Permanent Address</th>
-													<td>
-														<em>Same with present address.</em>													</td>
+													<td>-</td>
 												</tr>
 												<tr>
 													<th>Email</th>
-													<td></td>
+													<td>{{ $employee->email }}</td>
 												</tr>
 												<tr>
 													<th>Mobile</th>
-													<td>09369241731</td>
+													<td>{{ $employee->mobile_number }}</td>
 												</tr>
 												<tr>
 													<th>Landline</th>
-													<td></td>
+													<td>{{ $employee->landline }}</td>
 												</tr>
 											</tbody>
 										</table>
@@ -266,39 +294,43 @@ table tr.rest-day{background:#98fb98 !important;}
 											<tbody>
 												<tr>
 													<th>Employee ID</th>
-													<td>20180003</td>
+													<td>{{ $employee->employee_id }}</td>
 												</tr>
 												<tr>
 													<th>Position</th>
-													<td>Developer</td>
+													<td>{{ $employee->getPosition() }}</td>
 												</tr>
 												<tr>
 													<th>Team</th>
-													<td>Web Integration</td>
+													<td>{{ $employee->getTeam() }}</td>
 												</tr>
 												<tr>
 													<th>Department</th>
-													<td></td>
+													<td>{{ $employee->getDepartment() }}</td>
 												</tr>
 												<tr>
 													<th>Direct Manager</th>
-													<td><a href="http://webrevosystems.com/sandbox/hris/employee/1">[20180001] Ryan Michael Reyes</a></td>
+													@if ($employee->direct_manager_id == 0)
+														<td>Unassigned</td>
+													@else
+														<td><a href="/employee/{{ $employee->getManagerId() }}">[{{ $employee->getManagerEmployeeId() }}] {{ $employee->getManagerName() }}</a></td>
+													@endif
 												</tr>
 												<tr>
 													<th>Hire Date</th>
-													<td>09/15/2018</td>
+													<td>{{ date('m/d/Y', strtotime($employee->hire_date)) }}</td>
 												</tr>
 												<tr>
 													<th>Base Salary</th>
-													<td><span class="actual-salary hide mr05">P 25,000.00</span> <button class="btn btn-default btn-xs btn-view-salary">View Salary</button></td>
+													<td><span class="actual-salary hide mr05">P {{ number_format($employee->base_salary, 2,'.',',') }}</span> <button class="btn btn-default btn-xs btn-view-salary">View Salary</button></td>
 												</tr>
 												<tr>
 													<th>Payment Frequency</th>
-													<td>Monthly</td>
+													<td>{{ ucwords($employee->payment_frequency) }}</td>
 												</tr>
 												<tr>
 													<th>Tax Status</th>
-													<td>S</td>
+													<td>{{ ucwords($employee->tax_status) }}</td>
 												</tr>
 											</tbody>
 										</table>
@@ -308,19 +340,19 @@ table tr.rest-day{background:#98fb98 !important;}
 											<tbody>
 												<tr>
 													<th>TIN</th>
-													<td></td>
+													<td>{{ $employee->tin_number }}</td>
 												</tr>
 												<tr>
 													<th>SSS</th>
-													<td></td>
+													<td>{{ $employee->sss_number }}</td>
 												</tr>
 												<tr>
 													<th>PhilHealth</th>
-													<td></td>
+													<td>{{ $employee->philhealth_number }}</td>
 												</tr>
 												<tr>
 													<th>Pag-Ibig</th>
-													<td></td>
+													<td>{{ $employee->pagibig_number }}</td>
 												</tr>
 											</tbody>
 										</table>

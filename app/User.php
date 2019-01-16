@@ -252,4 +252,21 @@ class User extends Authenticatable
     {
         return $this->workshift->name ?? 'Unassigned';
     }
+
+    // Delete soon
+
+    public function getManagerId()
+    {
+        return $this->where('id', $this->direct_manager_id)->pluck('id')->first() ?? 'Unassigned';
+    }
+
+    public function getManagerEmployeeId()
+    {
+        return $this->where('id', $this->direct_manager_id)->pluck('employee_id')->first() ?? 'Unassigned';
+    }
+
+    public function getManagerName()
+    {
+        return $this->where('id', $this->direct_manager_id)->pluck('name')->first() ?? 'Unassigned';
+    }
 }

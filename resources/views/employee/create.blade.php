@@ -120,7 +120,7 @@
                             <div class="form-group">
                                 <label for="managerID">Direct Manager</label>
                                 <select class="form-control select2 w100p" id="managerID" name="direct_manager_id">
-                                    <option value="0">-- To Follow --</option>
+                                    <option value="0">-- To Follow / None --</option>
                                     @foreach($employees as $employee)
                                         @if($employee->getPosition() == 'Manager')
                                             <option value="{{ $employee->id }}">[{{ $employee->employee_id }}] {{ $employee->name }} ({{ $employee->getTeam() }})</option>
