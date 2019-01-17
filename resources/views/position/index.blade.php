@@ -34,7 +34,6 @@
                                         <h4 class="modal-title">Add Position</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <p class="form-modal-message-add">* All fields are required.</p>
                                         <div class="form-group {{ ($errors->any()) ? 'has-error' : '' }}" id="position-name-add">
                                             @if($errors->any())
                                                 <i class="fa fa-times-circle-o"></i>
@@ -84,7 +83,6 @@
                                                 <h4 class="modal-title">Edit Position</h4>
                                             </div>
                                             <div class="modal-body">
-                                                <p class="form-modal-message-add">* All fields are required.</p>
                                                 <div class="form-group position-name" id="position-name-add">
                                                     <label for="position-name-add-label">Position Name</label>
                                                     <input type="text" class="form-control" name="name" value="{{ $position->name }}" required>
