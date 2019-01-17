@@ -166,6 +166,8 @@ class User extends Authenticatable
         // Other Fields
 
         $this->name = $request->last_name . ', ' . $request->first_name . ' ' . $request->middle_name;
+        $this->status = $request->status;
+
         // $this->password = Hash::make($request->employee_id);
 
         $this->save();
@@ -251,6 +253,11 @@ class User extends Authenticatable
     public function getWorkshiftName()
     {
         return $this->workshift->name ?? 'Unassigned';
+    }
+
+    public function getStatus()
+    {
+        return ($this->status) ? 'Active' : 'Deactivated';
     }
 
     // Delete soon

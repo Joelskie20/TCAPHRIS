@@ -117,8 +117,12 @@ class EmployeeController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(User $employee)
     {
-        //
+        $employee->delete();
+
+        Session::flash('message', 'User has been deleted.');
+
+        return redirect('/employees');
     }    
 }

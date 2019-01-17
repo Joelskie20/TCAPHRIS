@@ -135,6 +135,17 @@
                     </div>
                         <div class="row">
 
+                            <!-- USER STATUS -->
+                            <div class="col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="paymentFrequency">Status <small class="label label-success">Required</small></label>
+                                    <select class="form-control" id="userStatus" name="status" >
+                                        <option value="1" {{ $user->status == 1 ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ $user->status == 0 ? 'selected' : '' }}>Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <!-- WORKSHIFT -->
                             <div class="col-md-6 col-lg-4">
                                 <div class="form-group">
