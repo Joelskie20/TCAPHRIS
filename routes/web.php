@@ -20,7 +20,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/dashboard', 'DashboardController@store');
     Route::put('/dashboard/{id}', 'DashboardController@update');
     Route::get('/daily-time-records/', 'DtrController@index')->name('dtr');
-    Route::get('/daily-time-records/{id}', 'DtrController@dtrSolo');
+    Route::get('/daily-time-records/{id}', 'DtrController@show')->name('dtr-profile');
 
     Route::get('/team-schedule', 'TeamScheduleController@index')->name('team-schedule');
 
@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/employees/', 'EmployeeController@store');
     Route::get('/employees/{user}/edit', 'EmployeeController@edit');
     Route::patch('/employees/{user}', 'EmployeeController@update');
+    Route::get('/employee/{employee}', 'EmployeeController@show')->name('employee-profile');
 
     Route::get('/workshifts', 'WorkshiftController@index')->name('workshift');
     Route::get('/workshifts/create', 'WorkshiftController@create');

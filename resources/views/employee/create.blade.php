@@ -120,7 +120,7 @@
                             <div class="form-group">
                                 <label for="managerID">Direct Manager</label>
                                 <select class="form-control select2 w100p" id="managerID" name="direct_manager_id">
-                                    <option value="0">-- To Follow --</option>
+                                    <option value="0">-- To Follow / None --</option>
                                     @foreach($employees as $employee)
                                         @if($employee->getPosition() == 'Manager')
                                             <option value="{{ $employee->id }}">[{{ $employee->employee_id }}] {{ $employee->name }} ({{ $employee->getTeam() }})</option>
@@ -164,7 +164,7 @@
                                         <th>Remarks</th>
                                     </tr>
                                     <tr id="w2" data-id="2">
-                                        <td><a title="MRG-MF-6A3P-SSR" href="#" id="workshift-code">{{ $workshift->code }}</a></td>                                        
+                                        <td><a title="MRG-MF-6A3P-SSR" href="#" id="workshift-code"></a></td>                                        
                                         <td><a title="Morning Monday-Friday 6AM-3PM Sat-Sun Restday" id="workshift-name" href="#">Morning Monday-Friday 6AM-3PM Sat-Sun Restday</a></td>
                                         <td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td><td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td><td></td></tr>			</tbody></table>
                             </div>
@@ -515,6 +515,8 @@
 <script>
     $(function() {
 
+        loadSelected($('#workshift').find(':selected').val());
+
         $('input.number-format').keyup(function(event) {
             if(event.which >= 37 && event.which <= 40){
                 event.preventDefault();
@@ -538,6 +540,12 @@
         $('#workshift').change(function() {
             // console.log($(this).find(':selected').val());
             var id = $(this).find(':selected').val();
+            loadSelected(id)
+            
+        });
+
+        function loadSelected(id)
+        {
             $.ajax({
                 type: "get",
                 url: 'http://hris.com/workshifts/' + id,
@@ -546,7 +554,7 @@
                     $('#workshift-name').text(data['name']);
                 }
             });
-        });
+        }
 
     });
 </script>

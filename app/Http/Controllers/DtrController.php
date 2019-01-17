@@ -49,9 +49,13 @@ class DtrController extends Controller
      * @param  \App\Dtr  $dtr
      * @return \Illuminate\Http\Response
      */
-    public function show(Dtr $dtr)
+    public function show($id)
     {
-        //
+        return view('dtr.show', [
+            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
+            'attendances' => Attendance::where('user_id', '=', $id)->latest()->get(),
+            'employee' => User::findOrFail($id)
+        ]);
     }
 
     /**
@@ -86,14 +90,5 @@ class DtrController extends Controller
     public function destroy(Dtr $dtr)
     {
         //
-    }
-
-    public function dtrSolo($id)
-    {
-        return view('dtr.dtrSolo', [
-            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
-            'attendances' => Attendance::where('user_id', '=', $id)->latest()->get(),
-            'employee_dtr_id' => User::findOrFail($id)->employee_id
-        ]);
     }
 }

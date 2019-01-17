@@ -14,14 +14,15 @@ class Dtr extends Model
         $mins = 0;
         $secs = 0;
 
-        $hours = floor($difference/86400);
-        $mins = floor(($difference-($hours*3600)) / 60);
-        $secs = floor(($difference-(($hours*3600)+($mins*60))));
+        $hours = floor( $difference / 86400 );
+        $mins = floor( ($difference - ($hours * 3600) ) / 60);
+        $secs = floor( ($difference - ( ($hours*3600) + ($mins*60))));
 
         $output = '';
         if($hours != 0) { $output .= number_format($hours,0,'.',',').'h '; }
         if($mins != 0) { $output .= number_format($mins,0,'.',',').'m '; }
         if($secs != 0) { $output .= number_format($secs,0,'.',',').'s'; }
+        
         return $output;
     }
 
