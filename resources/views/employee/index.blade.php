@@ -105,13 +105,20 @@ form h5 {
                             <td {!! ($employee->getTeam() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}>{{ $employee->getTeam() }}</td>
                             <td {!! ($employee->getDepartment() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}>{{ $employee->getDepartment() }}</td>
                             <td>-</td>
-                            <td><small class="text-green">-</small></td>
+                            <td><small class="text-{{ ($employee->getStatus() == 'Deactivated') ? 'muted' : 'green' }}">{{ $employee->getStatus() }}</small></td>
                             <td>{{ ($employee->last_login == NULL) ? '-'  : $employee->last_login }}</td>
                             <td class="data-row-options-cell">
                                 <a href="/employee/{{ $employee->id }}" class="btn btn-primary btn-xs mr05" title="View Profile"><i class="fa fa-user"></i></a>
                                 <a href="/employees/{{ $employee->id }}/edit" class="btn btn-success mr05 btn-xs" title="Edit Employee"><i class="fa fa-pencil"></i></a>
                                 <a href="/daily-time-records/{{ $employee->id }}" class="btn btn-warning mr05 btn-xs" title="Time Records" target="_blank"><i class="fa fa-clock-o"></i></a>
                                 <a href="#" class="btn btn-info mr05 btn-xs" title="Workshifts"><i class="fa fa-calendar"></i></a>
+                                <form style="display: inline-block;" action="/employee/{{ $employee->id }}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');" title="Delete">
+                                    <i class="fa fa-trash-o"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         @endforeach
