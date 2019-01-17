@@ -36,7 +36,6 @@
                                     <h4 class="modal-title">Add Department</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <p class="form-modal-message-add">* All fields are required.</p>
                                     <div class="form-group {{ ($errors->any()) ? 'has-error' : '' }}" id="department-name-add">
                                         @if($errors->any())
                                             <i class="fa fa-times-circle-o"></i>
@@ -87,7 +86,6 @@
                                             <h4 class="modal-title">Edit Department</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <p class="form-modal-message-add">* All fields are required.</p>
                                             <div class="form-group department-name" id="department-name-add">
                                                 <label for="department-name-add-label">Department Name</label>
                                                 <input type="text" class="form-control" name="name" value="{{ $department->name }}" required>
