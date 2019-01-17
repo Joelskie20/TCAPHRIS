@@ -74,7 +74,7 @@ table tr.rest-day{background:#98fb98 !important;}
 									</li>
 									<li class="list-group-item">
 										<b>Account Status</b>
-										<a class="pull-right text-success">Active</a>
+										<a class="pull-right text-{{ $employee->getStatus() == 'Deactivated' ? 'danger' : 'success' }}">{{ $employee->getStatus() }}</a>
 									</li>
 								</ul>
 
