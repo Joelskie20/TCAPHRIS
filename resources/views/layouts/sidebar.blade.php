@@ -37,7 +37,23 @@
 
         <!-- DAILY TIME RECORDS -->
         <li class="{{ Route::is('workshift') ? 'active' : '' }}">
-            <a href="{{ route('workshift') }}"><i class="fa fa-sitemap"></i> <span>Workshifts</span></a>
+            <a href="{{ route('workshift') }}"><i class="fa fa-sitemap"></i> <span>Workshift</span></a>
+        </li>
+
+        <!-- LEAVES -->
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-calendar"></i>
+                <span>Leaves</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="#"><i class="fa fa-calendar-check-o"></i>Approved Leaves</a></li>
+                <li><a href="#"><i class="fa fa-calendar-plus-o"></i>Leaves for Approval</a></li>
+                <li><a href="#"><i class="fa fa-calendar-times-o"></i>Denied Leaves</a></li>
+            </ul>
         </li>
 
         <!-- TEAM SCHEDULE -->
@@ -46,7 +62,7 @@
         </li> --}}
 
         <!-- COMPANY -->
-        <li class="treeview">
+        <li class="treeview {{ (Route::is('departments') || Route::is('teams') || Route::is('positions')) ? 'active' : '' }}">
             <a href="#">
                 <i class="fa fa-gears"></i>
                 <span>System Settings</span>
