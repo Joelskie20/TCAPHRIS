@@ -38,10 +38,6 @@ form h5 {
 .permanent-address {
     display: none;
 }
-
-.apply-opacity {
-    opacity: .50;
-}
 </style>
 @endsection
 

@@ -276,4 +276,14 @@ class User extends Authenticatable
     {
         return $this->where('id', $this->direct_manager_id)->pluck('name')->first() ?? 'Unassigned';
     }
+
+    public function leaves()
+    {
+        return $this->hasMany('App\Leave');
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany('App\Attendance');
+    }
 }

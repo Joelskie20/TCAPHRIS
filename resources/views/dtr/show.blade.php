@@ -54,7 +54,7 @@
                                 @foreach ($attendances as $attendance)
                                     <tr style="text-align: center;">
                                         <td>{{ $attendance->created_at->format('m/d/Y') }}</td>
-                                        <td>{{ "REG-MF-8A5P-SSR" }}</td>
+                                        <td>{{ $attendance->user->workshift->code }}</td>
                                         <td style="line-height: 1.1;">
                                             {{ date('g:i:s a', $attendance->time_in) }}
                                             <br><span style="font-size: 80%; opacity: .50"> ({{ date('m/d', $attendance->time_in) }})</span>

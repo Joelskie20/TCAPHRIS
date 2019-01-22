@@ -15,4 +15,9 @@ class Attendance extends Model
             ['time_out', '=', null]
         ])->first();
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

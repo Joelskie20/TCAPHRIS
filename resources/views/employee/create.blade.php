@@ -2,11 +2,6 @@
 
 @section('title', 'Add Employee')
 
-@section('styles')
-<!-- bootstrap datepicker -->
-<link rel="stylesheet" href="{{ asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
-@endsection
-
 @section('content')
 <div class="content-wrapper">
 
@@ -557,6 +552,10 @@
                 }
             });
         }
+
+        $('.datepicker').datepicker({
+            autoclose: true,
+        });
 
     });
 </script>

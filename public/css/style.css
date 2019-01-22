@@ -18,3 +18,11 @@ p.display-time {
 label.text-bold{font-weight:700 !important;}
 table.data-list small.icon{display:inline-block;width:12px;text-align:center;}
 .day-overlap{display:none;}
+
+.apply-opacity {
+    opacity: .50;
+}
+
+.ml05 {
+    margin-left: 5px !important;
+}

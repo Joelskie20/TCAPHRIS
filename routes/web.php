@@ -59,6 +59,15 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/workshifts/{workshift}/edit', 'WorkshiftController@edit');
     Route::patch('/workshifts/{workshift}', 'WorkshiftController@update');
     Route::delete('/workshifts/{workshift}', 'WorkshiftController@destroy');
-
     Route::get('/workshifts/{workshift}', 'WorkshiftController@show');
+
+    Route::get('/approved-leaves', 'LeaveController@approved')->name('approved-leaves');
+    Route::get('/denied-leaves', 'LeaveController@denied')->name('denied-leaves');
+    Route::get('/leaves-for-approval', 'LeaveController@forApproval')->name('leaves-for-approval');
+    Route::get('/approving-leaves', 'LeaveController@index')->name('approving-leaves');
+    Route::post('/leaves', 'LeaveController@store');
+    Route::patch('/leaves/{leave}', 'LeaveController@update');
+    Route::patch('/approving-leaves/{leave}', 'LeaveController@approvingLeaves');
+    Route::patch('/denying-leaves/{leave}', 'LeaveController@denyingLeaves');
+    Route::delete('/leaves/{leave}', 'LeaveController@destroy');
 });

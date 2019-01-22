@@ -41,7 +41,7 @@
         </li>
 
         <!-- LEAVES -->
-        <li class="treeview">
+        <li class="treeview {{ Route::is('approved-leaves') || Route::is('denied-leaves') || Route::is('leaves-for-approval') || Route::is('approving-leaves') ? 'active' : '' }}">
             <a href="#">
                 <i class="fa fa-calendar"></i>
                 <span>Leaves</span>
@@ -50,9 +50,16 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-calendar-check-o"></i>Approved Leaves</a></li>
-                <li><a href="#"><i class="fa fa-calendar-plus-o"></i>Leaves for Approval</a></li>
-                <li><a href="#"><i class="fa fa-calendar-times-o"></i>Denied Leaves</a></li>
+                <li><a href="{{ route('leaves-for-approval') }}"><i class="fa fa-calendar-plus-o"></i>Leaves for Approval 
+                    @if(App\Leave::where('status', 'forApproval')->get()->count() > 0)
+                        <span class="label label-warning ml05">{{ App\Leave::where('status', 'forApproval')->get()->count() }}</span>
+                    @else
+                        {{ '' }}
+                    @endif
+                </a></li>
+                <li><a href="{{ route('approved-leaves') }}"><i class="fa fa-calendar-check-o"></i>Approved Leaves</a></li>
+                <li><a href="{{ route('denied-leaves') }}"><i class="fa fa-calendar-times-o"></i>Denied Leaves</a></li>
+                <li><a href="{{ route('approving-leaves') }}"><i class="fa fa-check"></i>For Your Approval</a></li>
             </ul>
         </li>
 
