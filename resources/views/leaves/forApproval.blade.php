@@ -28,7 +28,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <div class="form-inline dt-bootstrap">
+                <div>
                     <div class="row">
                         <div class="col-xs-12 table-responsive">
                             <table id="table" class="table table-bordered table-striped">
