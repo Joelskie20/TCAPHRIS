@@ -61,7 +61,7 @@
                                                     @method('PATCH')
                                                     <div class="modal-body">
                                                         <div class="row">
-                                                            <div class="col-sm-6">
+                                                            <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label for="leaveDate">Leave Date</label>
                                                                     <div class="input-group date" data-provide="datepicker">
