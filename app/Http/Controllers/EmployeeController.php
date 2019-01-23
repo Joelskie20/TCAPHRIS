@@ -106,6 +106,10 @@ class EmployeeController extends Controller
 
         $user->updateUser($request, $user);
 
+        $user->leaves()->update([
+            'direct_manager_id' => $request->direct_manager_id
+        ]);
+
         Session::flash('message', 'User has been updated.');
 
         return redirect('/employees/');

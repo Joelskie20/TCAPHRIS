@@ -6,6 +6,8 @@
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 <!-- bootstrap datepicker -->
 <script src="{{ asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+<!-- Multiple -->
+<script src="{{ asset('bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <!-- Moment.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js">
 moment.tz.setDefault("Asia/Manila");
@@ -27,5 +29,6 @@ startTime();
 </script>
 <script>
     $('div.alert').delay(3000).fadeOut(300);
+	// $('.select2').select2();
 </script>
 @yield('scripts')
