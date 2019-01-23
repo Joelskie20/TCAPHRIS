@@ -35,9 +35,14 @@
             <a href="{{ route('dtr') }}"><i class="fa fa-clock-o"></i> <span>Daily Time Records</span></a>
         </li>
 
-        <!-- DAILY TIME RECORDS -->
+        <!-- WORKSHIFT -->
         <li class="{{ Route::is('workshift') ? 'active' : '' }}">
             <a href="{{ route('workshift') }}"><i class="fa fa-sitemap"></i> <span>Workshift</span></a>
+        </li>
+
+        <!-- COMPANY CALENDAR -->
+        <li class="{{ Route::is('holiday') ? 'active' : '' }}">
+            <a href="{{ route('holiday') }}"><i class="glyphicon glyphicon-calendar"></i> <span>Company Calendar</span></a>
         </li>
 
         <!-- LEAVES -->

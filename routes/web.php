@@ -70,4 +70,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::patch('/approving-leaves/{leave}', 'LeaveController@approvingLeaves');
     Route::patch('/denying-leaves/{leave}', 'LeaveController@denyingLeaves');
     Route::delete('/leaves/{leave}', 'LeaveController@destroy');
+
+    Route::get('/company-calendar', 'HolidayController@index')->name('holiday');
+    Route::post('/company-calendar', 'HolidayController@store');
+    Route::delete('/company-calendar/{holiday}', 'HolidayController@destroy');
+    Route::patch('/company-calendar/{holiday}', 'HolidayController@update');
 });
