@@ -160,8 +160,8 @@
                                         <th>Sunday</th>
                                     </tr>
                                     <tr id="w2" data-id="2">
-                                        <td><a title="MRG-MF-6A3P-SSR" href="" id="workshift-code"></a></td>                                        
-                                        <td><a title="Morning Monday-Friday 6AM-3PM Sat-Sun Restday" id="workshift-name" href="#">Morning Monday-Friday 6AM-3PM Sat-Sun Restday</a></td>
+                                        <td><a target="_blank" title="MRG-MF-6A3P-SSR" href="" id="workshift-code"></a></td>                                        
+                                        <td><a target="_blank" title="Morning Monday-Friday 6AM-3PM Sat-Sun Restday" id="workshift-name" href="">Morning Monday-Friday 6AM-3PM Sat-Sun Restday</a></td>
                                         
                                         <td id="workshift-monday"></td>
                                         <td id="workshift-tuesday"></td>
@@ -558,11 +558,14 @@
             $.ajax({
                 type: "get",
                 async: true,
-                url: 'http://tcaphris.com/workshifts/' + id,
+                url: 'http://hris.com/workshifts/' + id,
                 success: function (data) {
                     $('#workshift-code').text(data['code']);
-                    $('#workshift-code').attr('href', ('/workshifts/' + id +'/edit'));
                     $('#workshift-name').text(data['name']);
+                    $('#workshift-code').attr('href', ('/workshifts/' + id +'/edit'));
+                    $('#workshift-name').attr('href', ('/workshifts/' + id +'/edit'));
+                    $('#workshift-code').attr('title', data['code']);
+                    $('#workshift-name').attr('title', data['name']);
                     $('#workshift-monday').html(dailyShift(data['monday_workshift']));
                     $('#workshift-tuesday').html(dailyShift(data['tuesday_workshift']));
                     $('#workshift-wednesday').html(dailyShift(data['wednesday_workshift']));

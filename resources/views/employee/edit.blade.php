@@ -174,11 +174,22 @@
                                         <th>Friday</th>
                                         <th>Saturday</th>
                                         <th>Sunday</th>
-                                        <th>Remarks</th>
                                     </tr>
-                                    <tr id="w2" data-id="2"><td><a title="MRG-MF-6A3P-SSR" href="#" id="workshift-code"></a></td>
-                                    <td><a title="Morning Monday-Friday 6AM-3PM Sat-Sun Restday" href="#" id="workshift-name"></a></td>
-                                    <td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 6:00 - 15:00</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> 8.0</span></td><td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td><td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td><td></td></tr>			</tbody></table>
+
+                                    <tr id="w2" data-id="2">
+                                        <td><a target="_blank" title="MRG-MF-6A3P-SSR" href="" id="workshift-code"></a></td>                                        
+                                        <td><a target="_blank" title="Morning Monday-Friday 6AM-3PM Sat-Sun Restday" id="workshift-name" href="#">Morning Monday-Friday 6AM-3PM Sat-Sun Restday</a></td>
+                                        
+                                        <td id="workshift-monday"></td>
+                                        <td id="workshift-tuesday"></td>
+                                        <td id="workshift-wednesday"></td>
+                                        <td id="workshift-thursday"></td>
+                                        <td id="workshift-friday"></td>
+                                        <td id="workshift-saturday"></td>
+                                        <td id="workshift-sunday"></td>
+
+                                    </tr>
+                                </tbody></table>
                             </div>
                         </div>
                 </div>
@@ -545,12 +556,13 @@
             return parts.join(".");
         }
 
+        
         $('.datepicker').datepicker({
             format: 'mm/dd/yyyy'
         });
 
         $('#workshift').change(function() {
-            // console.log($(this).find(':selected').val());
+            console.log($(this).find(':selected').val());
             var id = $(this).find(':selected').val();
             loadSelected(id)
             
@@ -560,13 +572,58 @@
         {
             $.ajax({
                 type: "get",
+                async: true,
                 url: 'http://hris.com/workshifts/' + id,
                 success: function (data) {
                     $('#workshift-code').text(data['code']);
                     $('#workshift-name').text(data['name']);
+                    $('#workshift-code').attr('href', ('/workshifts/' + id +'/edit'));
+                    $('#workshift-code').attr('title', data['code']);
+                    $('#workshift-name').attr('title', data['name']);
+                    $('#workshift-monday').html(dailyShift(data['monday_workshift']));
+                    $('#workshift-tuesday').html(dailyShift(data['tuesday_workshift']));
+                    $('#workshift-wednesday').html(dailyShift(data['wednesday_workshift']));
+                    $('#workshift-thursday').html(dailyShift(data['thursday_workshift']));
+                    $('#workshift-friday').html(dailyShift(data['friday_workshift']));
+                    $('#workshift-saturday').html(dailyShift(data['saturday_workshift']));
+                    $('#workshift-sunday').html(dailyShift(data['sunday_workshift']));
                 }
             });
         }
+
+        function dailyShift(dailyShift) {
+            if (dailyShift == "RD") {
+                return '<span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span>'
+            } else {
+                let convertTime = true;
+                dailyShift = dailyShift.split(',');
+
+                initialTime = dailyShift[0].split('-');
+                timeIn = toRegularTime(initialTime[0], convertTime);
+                timeOut = toRegularTime(initialTime[1], convertTime);
+                totalTime =  timeIn + " - " + timeOut;
+                return '<span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small><span id="workshift-monday"></span> '+ totalTime +'</span><br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small>' + dailyShift[1]   +'</span>';     
+            }
+        }
+
+        function toRegularTime(initialTime, convertTime) {
+
+            if(initialTime.length == 3) {
+                initialTime = "0" + initialTime;
+            } else if (initialTime.length == 2){
+                initialTime = "00" +  initialTime;
+            }
+
+            if(convertTime) {
+                return moment(initialTime, "HH:mm").format("hh:mm a");
+            } else {
+                return moment(initialTime, "HH:mm").format("HH:mm");
+            }          
+        }
+
+        $('.datepicker').datepicker({
+            autoclose: true,
+        });
 
     });
 </script>
