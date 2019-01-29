@@ -5,6 +5,11 @@
 @section('styles')
 <!-- bootstrap datepicker -->
 <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
+
+<style>
+.noresize{resize:none;}
+.checkbox-horizontal .checkbox{float:left;margin-top:10px;margin-right:10px;margin-bottom:0;}
+</style>
 @endsection
 
 @section('content')
@@ -522,6 +527,30 @@
                 </div>
             </div>
 
+            <!-- ACCOUNT ROLES -->
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Account Roles</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+
+                            <div class="checkbox-horizontal">
+                                
+                                @foreach($roles as $role)
+                                <div class="checkbox roles">
+                                    <label><input type="checkbox" class="checkbox-admin" name="roles[]" value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'checked' : '' }}>{{ ucwords($role->name) }}</label>
+                                </div>
+                                @endforeach
+                                
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="form-options mb20 clearfix">
                 <a href="/employees" class="btn btn-default pull-right">Cancel</a>
                 <button type="submit" class="btn btn-primary pull-right mr05">Update Employee</button>
@@ -573,7 +602,7 @@
             $.ajax({
                 type: "get",
                 async: true,
-                url: 'http://hris.com/workshifts/' + id,
+                url: '/workshifts/' + id,
                 success: function (data) {
                     $('#workshift-code').text(data['code']);
                     $('#workshift-name').text(data['name']);

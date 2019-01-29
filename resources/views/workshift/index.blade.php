@@ -24,7 +24,9 @@
 				<h3 class="box-title">
 					Workshift Schedule</h3>
 				<div class="box-tools pull-right">
+					@can('add workshift')
 					<a href="workshifts/create" class="btn btn-success btn-sm"><i class="fa fa-plus mr05"></i> ADD WORKSHIFT</a>
+					@endcan
 				</div>
 			</div>
 			<!-- /.box-header -->
@@ -65,8 +67,8 @@
 								<th>Friday</th>
 								<th>Saturday</th>
 								<th>Sunday</th>
-								<th>Remarks</th>
-								<th style="width:34px;"></th>
+								{{-- <th>Remarks</th> --}}
+								<th style="width:34px;">Actions</th>
 							</tr>
 						</thead>
 							<tbody>
@@ -153,11 +155,14 @@
 											</td>
 										@endif
 										
-										<td></td>
+										{{-- <td></td> --}}
 										<td class="data-row-options-cell">
 											<div class="inner" style="width:75px;">
-												<a href="#" class="btn btn-primary btn-xs" title="View Workshift Info"	target="_blank"><i class="fa fa-clock-o"></i></a>
+												@can('edit workshift')
 												<a href="/workshifts/{{ $workshift->id }}/edit" class="btn btn-success btn-xs" title="Edit Workshift"><i class="fa fa-pencil"></i></a>
+												@endcan
+
+												@can('delete workshift')
 												<form style="display: inline-block;" action="/workshifts/{{ $workshift->id }}" method="POST">
 													@method('DELETE')
 													@csrf
@@ -165,6 +170,7 @@
 														<i class="fa fa-trash-o"></i>
 													</button>
                                 				</form>
+												@endcan
 											</div>
 										</td>
 									</tr>

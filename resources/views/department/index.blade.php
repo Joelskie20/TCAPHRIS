@@ -21,9 +21,11 @@
             
             <div class="box-header with-border">
                 <h3 class="box-title">Departments List</h3>
+                @can('add department')
                 <button type="button" class="btn btn-success pull-right btn-add-department" data-toggle="modal" data-target="#modal-default-add">
                     <i class="fa fa-plus mr05"></i> ADD DEPARTMENT
                 </button>
+                @endcan
 
                 <div class="modal fade add-department-modal" id="modal-default-add">
                     <form action="{{ action('DepartmentController@store') }}" method="POST">
@@ -105,7 +107,11 @@
                             <td>{{ ++$key }}</td>
                             <td>{{ $department->name }}</td>
                             <td>
+                                @can('edit department')
                                 <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default-edit-{{ $department->id }}"><i class="fa fa-pencil"></i></button>
+                                @endcan
+                                
+                                @can('delete department')
                                 <form style="display: inline-block;" action="/departments/{{ $department->id }}" method="POST">
                                     @method('DELETE')
                                     @csrf
@@ -113,6 +119,7 @@
                                     <i class="fa fa-trash-o"></i>
                                     </button>
                                 </form>
+                                @endcan
                             </td>
                         </tr>
                         @endforeach
@@ -135,5 +142,11 @@ $(document).ready(function() {
         'iDisplayLength': 100
     });
 });
+</script>
+
+<script>
+    @if(count($errors) > 0)
+        $('#modal-default-add').modal('show');
+    @endif
 </script>
 @endsection

@@ -20,9 +20,11 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Teams List</h3>
                 {{-- <a href="{{ action('TeamController@create') }}" class="btn btn-primary pull-right">Add Team</a> --}}
+                @can('add team')
                 <button type="button" class="btn btn-success pull-right btn-add-department" data-toggle="modal" data-target="#modal-default-add">
                     <i class="fa fa-plus mr05"></i> ADD TEAM
                 </button>
+                @endcan
 
                 <div class="modal fade add-team-modal" id="modal-default-add">
                     <form action="{{ action('TeamController@store') }}" method="POST">
@@ -103,8 +105,11 @@
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $team->name }}</td>
                                 <td>
-                                    {{-- <a href="/teams/{{ $team->id }}/edit" class="btn btn-primary btn-xs" title="Edit"><i class="fa fa-pencil"></i></a> --}}
+                                    @can('edit team')
                                     <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default-edit-{{ $team->id }}"><i class="fa fa-pencil"></i></button>
+                                    @endcan
+
+                                    @can('delete team')
                                     <form style="display: inline-block;" action="/teams/{{ $team->id }}" method="POST">
                                         @method('DELETE')
                                         @csrf
@@ -112,6 +117,7 @@
                                         <i class="fa fa-trash-o"></i>
                                         </button>
                                     </form>
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach

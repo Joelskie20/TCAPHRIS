@@ -32,9 +32,11 @@
 
             <div class="box-header with-border">
                 <h3 class="box-title">Holidays</h3>
+                @can('add holiday')
                 <button type="button" class="btn btn-success pull-right btn-add-department" data-toggle="modal" data-target="#modal-default-add">
                     <i class="fa fa-plus mr05"></i> ADD HOLIDAY
                 </button>
+                @endcan
 
                 <div class="modal fade" id="modal-default-add">
                     <form action="{{ action('HolidayController@store') }}" method="POST">
@@ -150,7 +152,11 @@
                             <td>{{ $holiday->type }}</td>
                             <td>{{ $holiday->name }}</td>
                             <td>
+                                @can('edit holiday')
                                 <button type="button" class="btn btn-success btn-xs" id="edit-item" data-toggle="modal" data-target="#edit-holiday-modal-{{ $holiday->id }}"><i class="fa fa-pencil"></i></button>
+                                @endcan
+
+                                @can('delete holiday')
                                 <form style="display: inline-block;" action="/company-calendar/{{ $holiday->id }}" method="POST">
                                     @method('DELETE')
                                     @csrf
@@ -159,6 +165,7 @@
                                         <i class="fa fa-trash-o"></i>
                                     </button>
                                 </form>
+                                @endcan
                             </td>
                         </tr>
                         @endforeach
