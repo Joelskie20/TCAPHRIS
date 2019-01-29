@@ -63,8 +63,39 @@
 
             </div>
             <div class="box-body">
+
+                <div class="modal fade" id="modal-default-edit">
+                    <form action="#" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Edit Team</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group team-name" id="team-name-add">
+                                        <label for="team-name-add-label">Team Name</label>
+                                        <input type="text" class="form-control" name="name" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-update-team">Update Team</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                    </form>
+                    <!-- /.modal-dialog -->
+                </div>
                 
                 <table id="table" class="table table-bordered table-striped">
+                    <colgroup width="5%">
+					<colgroup width="85%">
+					<colgroup width="10%">
                     <thead>
                         <tr>
                             <th></th>
@@ -74,39 +105,13 @@
                     </thead>
                     <tbody>
                         @foreach ($teams as $key => $team)
-                        <div class="modal fade" id="modal-default-edit-{{ $team->id }}">
-                                <form action="{{ action('TeamController@update', ['id' => $team->id]) }}" method="POST">
-                                    @csrf
-                                    @method('PATCH')
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title">Edit Team</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group team-name" id="team-name-add">
-                                                    <label for="team-name-add-label">Team Name</label>
-                                                    <input type="text" class="form-control" name="name" value="{{ $team->name }}" required>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary btn-update-team">Update Team</button>
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                            </div>
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                </form>
-                                <!-- /.modal-dialog -->
-                            </div>
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td>{{ $team->name }}</td>
+                                <td class="teamName">{{ $team->name }}</td>
                                 <td>
                                     @can('edit team')
-                                    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default-edit-{{ $team->id }}"><i class="fa fa-pencil"></i></button>
+                                    <input type="hidden" name="team_id" value="{{ $team->id }}">
+                                    <button type="button" class="btn btn-success btn-xs btn-edit" data-toggle="modal" data-target="#modal-default-edit"><i class="fa fa-pencil"></i></button>
                                     @endcan
 
                                     @can('delete team')
@@ -138,6 +143,13 @@
 $(document).ready(function() {
     $('#table').dataTable({
         'iDisplayLength': 100
+    });
+
+    $('.btn-edit').click(function(){
+        let id = $(this).closest('tr').find('input[name="team_id"]').val();
+        let teamName = $(this).closest('tr').find('.teamName').html();
+        $('#modal-default-edit').find('input[name="name"]').val(teamName);
+		$('#modal-default-edit form').attr('action', '/teams/' + id);
     });
 });
 </script>

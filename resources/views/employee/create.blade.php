@@ -154,6 +154,15 @@
                         <div class="row workshift-selected">
                             <div class="col-xs-12 table-responsive">
                             <table id="employeeTable" class="table table-bordered table-striped data-list" role="grid">
+                                <colgroup width="10%">
+                                <colgroup width="20%">
+                                <colgroup width="10%">
+                                <colgroup width="10%">
+                                <colgroup width="10%">
+                                <colgroup width="10%">
+                                <colgroup width="10%">
+                                <colgroup width="10%">
+                                <colgroup width="10%">
                                 <tbody>
                                     <tr>
                                         <th>Code</th>
