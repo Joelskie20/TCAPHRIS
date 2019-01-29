@@ -75,15 +75,17 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/workshifts/{workshift}', 'WorkshiftController@show');
     });
 
-    Route::get('/approved-leaves', 'LeaveController@approved')->name('approved-leaves');
-    Route::get('/denied-leaves', 'LeaveController@denied')->name('denied-leaves');
-    Route::get('/leaves-for-approval', 'LeaveController@forApproval')->name('leaves-for-approval');
-    Route::get('/approving-leaves', 'LeaveController@index')->name('approving-leaves');
-    Route::post('/leaves', 'LeaveController@store');
-    Route::patch('/leaves/{leave}', 'LeaveController@update');
-    Route::patch('/approving-leaves/{leave}', 'LeaveController@approvingLeaves');
-    Route::patch('/denying-leaves/{leave}', 'LeaveController@denyingLeaves');
-    Route::delete('/leaves/{leave}', 'LeaveController@destroy');
+    Route::group(['middleware' => ['permission:leaves']], function () {
+        Route::get('/approved-leaves', 'LeaveController@approved')->name('approved-leaves')->middleware('permission:approved leaves');
+        Route::get('/denied-leaves', 'LeaveController@denied')->name('denied-leaves')->middleware('permission:denied leaves');
+        Route::get('/leaves-for-approval', 'LeaveController@forApproval')->name('leaves-for-approval')->middleware('permission:leaves for approval');
+        Route::get('/approving-leaves', 'LeaveController@index')->name('approving-leaves')->middleware('permission:can approve leaves');
+        Route::post('/leaves', 'LeaveController@store')->middleware('permission:add leave');
+        Route::patch('/leaves/{leave}', 'LeaveController@update')->middleware('permission:edit leave');
+        Route::patch('/approving-leaves/{leave}', 'LeaveController@approvingLeaves')->middleware('permission:can approve leaves');
+        Route::patch('/denying-leaves/{leave}', 'LeaveController@denyingLeaves')->middleware('permission:can approve leaves');
+        Route::delete('/leaves/{leave}', 'LeaveController@destroy')->middleware('permission:delete leave');
+    });
 
     Route::group(['middleware' => ['permission:holidays']], function () {
         Route::get('/company-calendar', 'HolidayController@index')->name('holiday');

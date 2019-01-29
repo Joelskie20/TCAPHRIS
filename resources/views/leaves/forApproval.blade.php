@@ -22,9 +22,11 @@
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title pull-left">Leaves Table</h3>
+                @can('add leave')
                 <div class="box-options pull-right">
                     <button type="button" class="btn btn-success btn-sm btn-add-leave pull-right" data-toggle="modal" data-target="#modal-default-add"><i class="fa fa-plus mr05"></i> ADD LEAVE</button>
                 </div>
+                @endcan
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -141,9 +143,13 @@
                                         </td>
                                         <td>{{ $leave->approval_remarks }}</td>
                                         <td>
+                                            @can('edit leave')
                                             <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default-edit-{{ $leave->id }}">
                                                 <i class="fa fa-pencil"></i>
                                             </button>
+                                            @endcan
+
+                                            @can('delete leave')
                                             <form style="display: inline-block;" action="/leaves/{{ $leave->id }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
@@ -151,6 +157,7 @@
                                                     <i class="fa fa-trash-o"></i>
                                                 </button>
                                             </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                     @endforeach

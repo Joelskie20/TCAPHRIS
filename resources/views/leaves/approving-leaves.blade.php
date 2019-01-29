@@ -22,9 +22,11 @@
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title pull-left">Leaves Table</h3>
+                @can('add leave')
                 <div class="box-options pull-right">
                     <button type="button" class="btn btn-success btn-sm btn-add-leave pull-right" data-toggle="modal" data-target="#modal-default-add"><i class="fa fa-plus mr05"></i> ADD LEAVE</button>
                 </div>
+                @endcan
             </div>
             <!-- /.box-header -->
             <div class="box-body">

@@ -61,6 +61,7 @@
                 </span>
             </a>
             <ul class="treeview-menu">
+                @can('leaves for approval')
                 <li><a href="{{ route('leaves-for-approval') }}"><i class="fa fa-calendar-plus-o"></i>Leaves for Approval 
                     @if(App\Leave::where('status', 'forApproval')->get()->count() > 0)
                         <span class="label label-warning ml05">{{ App\Leave::where('status', 'forApproval')->get()->count() }}</span>
@@ -68,9 +69,20 @@
                         {{ '' }}
                     @endif
                 </a></li>
+                @endcan
+
+                @can('approved leaves')
                 <li><a href="{{ route('approved-leaves') }}"><i class="fa fa-calendar-check-o"></i>Approved Leaves</a></li>
+                @endcan
+
+                @can('denied leaves')
                 <li><a href="{{ route('denied-leaves') }}"><i class="fa fa-calendar-times-o"></i>Denied Leaves</a></li>
+                @endcan
+
+                @can('can approve leaves')
                 <li><a href="{{ route('approving-leaves') }}"><i class="fa fa-check"></i>For Your Approval</a></li>
+                @endcan
+                
             </ul>
         </li>
 
