@@ -16,34 +16,46 @@ Auth::routes();
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-    Route::post('/dashboard', 'DashboardController@store');
-    Route::put('/dashboard/{id}', 'DashboardController@update');
-    Route::get('/daily-time-records/', 'DtrController@index')->name('dtr');
-    Route::get('/daily-time-records/{id}', 'DtrController@show')->name('dtr-profile');
 
-    Route::get('/team-schedule', 'TeamScheduleController@index')->name('team-schedule');
+    Route::group(['middleware' => ['permission:dashboard']], function () {
+        Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+        Route::post('/dashboard', 'DashboardController@store')->middleware('permission:time in');
+        Route::put('/dashboard/{id}', 'DashboardController@update')->middleware('permission:time out');
+    });
 
-    Route::get('/departments', 'DepartmentController@index')->name('departments');
-    Route::get('/departments/create', 'DepartmentController@create');
-    Route::post('/departments', 'DepartmentController@store');
-    Route::get('/departments/{department}/edit', 'DepartmentController@edit')->name('edit');
-    Route::patch('/departments/{department}', 'DepartmentController@update');
-    Route::delete('/departments/{department}', 'DepartmentController@destroy');
+    Route::group(['middleware' => ['permission:daily time records']], function() {
+        Route::get('/daily-time-records/', 'DtrController@index')->name('dtr');
+        Route::get('/daily-time-records/{id}', 'DtrController@show')->name('dtr-profile')->middleware('permission:view DTR based on user ID');
+    });
 
-    Route::get('/teams', 'TeamController@index')->name('teams');
-    Route::get('/teams/create', 'TeamController@create');
-    Route::post('/teams', 'TeamController@store');
-    Route::get('/teams/{team}/edit', 'TeamController@edit');
-    Route::patch('/teams/{team}', 'TeamController@update');
-    Route::delete('/teams/{team}', 'TeamController@destroy');
+    // Route::get('/team-schedule', 'TeamScheduleController@index')->name('team-schedule');
 
-    Route::get('/positions', 'PositionController@index')->name('positions');
-    Route::get('/positions/create', 'PositionController@create');
-    Route::post('/positions', 'PositionController@store');
-    Route::get('/positions/{position}/edit', 'PositionController@edit');
-    Route::patch('/positions/{position}', 'PositionController@update');
-    Route::delete('/positions/{position}', 'PositionController@destroy');
+    Route::group(['middleware' => ['permission:departments']], function () {
+        Route::get('/departments', 'DepartmentController@index')->name('departments');
+        Route::get('/departments/create', 'DepartmentController@create')->middleware('permission:add department');
+        Route::post('/departments', 'DepartmentController@store')->middleware('permission:add department');
+        Route::get('/departments/{department}/edit', 'DepartmentController@edit')->name('edit')->middleware('permission:edit department');
+        Route::patch('/departments/{department}', 'DepartmentController@update')->middleware('permission:edit department');
+        Route::delete('/departments/{department}', 'DepartmentController@destroy')->middleware('permission:delete department');
+    });
+
+    Route::group(['middleware' => ['permission:teams']], function () {
+        Route::get('/teams', 'TeamController@index')->name('teams');
+        Route::get('/teams/create', 'TeamController@create')->middleware('permission:add team');
+        Route::post('/teams', 'TeamController@store')->middleware('permission:add team');
+        Route::get('/teams/{team}/edit', 'TeamController@edit')->middleware('permission:edit team');
+        Route::patch('/teams/{team}', 'TeamController@update')->middleware('permission:edit team');
+        Route::delete('/teams/{team}', 'TeamController@destroy')->middleware('permission:delete team');
+    });
+
+    Route::group(['middleware' => ['permission:positions']], function () {
+        Route::get('/positions', 'PositionController@index')->name('positions');
+        Route::get('/positions/create', 'PositionController@create')->middleware('permission:add position');
+        Route::post('/positions', 'PositionController@store')->middleware('permission:add position');
+        Route::get('/positions/{position}/edit', 'PositionController@edit')->middleware('permission:edit position');
+        Route::patch('/positions/{position}', 'PositionController@update')->middleware('permission:edit position');
+        Route::delete('/positions/{position}', 'PositionController@destroy')->middleware('permission:delete position');
+    });
 
     Route::get('/employees', 'EmployeeController@index')->name('employees');
     Route::get('/employees/create', 'EmployeeController@create')->name('employee-create');
@@ -53,13 +65,15 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/employee/{employee}', 'EmployeeController@show')->name('employee-profile');
     Route::delete('/employee/{employee}', 'EmployeeController@destroy');
 
-    Route::get('/workshifts', 'WorkshiftController@index')->name('workshift');
-    Route::get('/workshifts/create', 'WorkshiftController@create');
-    Route::post('/workshifts', 'WorkshiftController@store');
-    Route::get('/workshifts/{workshift}/edit', 'WorkshiftController@edit');
-    Route::patch('/workshifts/{workshift}', 'WorkshiftController@update');
-    Route::delete('/workshifts/{workshift}', 'WorkshiftController@destroy');
-    Route::get('/workshifts/{workshift}', 'WorkshiftController@show');
+    Route::group(['middleware' => ['permission:workshifts']], function () {
+        Route::get('/workshifts', 'WorkshiftController@index')->name('workshift');
+        Route::get('/workshifts/create', 'WorkshiftController@create')->middleware('permission:add workshift');
+        Route::post('/workshifts', 'WorkshiftController@store')->middleware('permission:add workshift');
+        Route::get('/workshifts/{workshift}/edit', 'WorkshiftController@edit')->middleware('permission:edit workshift');
+        Route::patch('/workshifts/{workshift}', 'WorkshiftController@update')->middleware('permission:edit workshift');
+        Route::delete('/workshifts/{workshift}', 'WorkshiftController@destroy')->middleware('permission:delete workshift');
+        Route::get('/workshifts/{workshift}', 'WorkshiftController@show');
+    });
 
     Route::get('/approved-leaves', 'LeaveController@approved')->name('approved-leaves');
     Route::get('/denied-leaves', 'LeaveController@denied')->name('denied-leaves');
@@ -71,8 +85,20 @@ Route::group(['middleware' => 'auth'], function() {
     Route::patch('/denying-leaves/{leave}', 'LeaveController@denyingLeaves');
     Route::delete('/leaves/{leave}', 'LeaveController@destroy');
 
-    Route::get('/company-calendar', 'HolidayController@index')->name('holiday');
-    Route::post('/company-calendar', 'HolidayController@store');
-    Route::delete('/company-calendar/{holiday}', 'HolidayController@destroy');
-    Route::patch('/company-calendar/{holiday}', 'HolidayController@update');
+    Route::group(['middleware' => ['permission:holidays']], function () {
+        Route::get('/company-calendar', 'HolidayController@index')->name('holiday');
+        Route::post('/company-calendar', 'HolidayController@store')->middleware('permission:add holiday');
+        Route::patch('/company-calendar/{holiday}', 'HolidayController@update')->middleware('permission:edit holiday');
+        Route::delete('/company-calendar/{holiday}', 'HolidayController@destroy')->middleware('permission:delete holiday');
+    });
+
+    Route::group(['middleware' => ['role:superadmin|admin']], function() {
+        Route::get('/roles', 'RoleController@index')->name('roles');
+        Route::post('/roles', 'RoleController@store');
+        Route::patch('/roles/{role}', 'RoleController@update');
+
+        Route::get('/permissions/role/{role}', 'RoleController@edit');
+        Route::patch('/permissions/role/{role}', 'PermissionController@update');
+        Route::delete('/permissions/role/{role}', 'PermissionController@destroy');
+    });
 });

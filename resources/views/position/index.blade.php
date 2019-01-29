@@ -19,9 +19,11 @@
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Positions List</h3>
+                @can('add position')
                 <button type="button" class="btn btn-success pull-right btn-add-department" data-toggle="modal" data-target="#modal-default-add">
                     <i class="fa fa-plus mr05"></i> ADD POSITION
                 </button>
+                @endcan
 
                 <div class="modal fade add-position-modal" id="modal-default-add">
                         <form action="{{ action('PositionController@store') }}" method="POST">
@@ -102,7 +104,11 @@
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $position->name }}</td>
                                 <td>
+                                    @can('edit position')
                                     <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default-edit-{{ $position->id }}"><i class="fa fa-pencil"></i></button>
+                                    @endcan
+
+                                    @can('delete position')
                                     <form style="display: inline-block;" action="/positions/{{ $position->id }}" method="POST">
                                         @method('DELETE')
                                         @csrf
@@ -110,6 +116,7 @@
                                         <i class="fa fa-trash-o"></i>
                                         </button>
                                     </form>
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach

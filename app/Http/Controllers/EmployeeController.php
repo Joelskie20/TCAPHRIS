@@ -7,6 +7,7 @@ use App\{User, Attendance, Gender, Department, Team, Position, Workshift};
 use Auth;
 use Hash;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class EmployeeController extends Controller
 {
@@ -37,7 +38,8 @@ class EmployeeController extends Controller
             'teams' => Team::all(),
             'positions' => Position::all(),
             'workshifts' => Workshift::all(),
-            'employees' => User::all()
+            'employees' => User::all(),
+            'roles' => Role::all()
         ]);
     }
 
@@ -89,7 +91,8 @@ class EmployeeController extends Controller
             'teams' => Team::all(),
             'positions' => Position::all(),
             'workshifts' => Workshift::all(),
-            'user' => $user
+            'user' => $user,
+            'roles' => Role::all()
         ]);
     }
 

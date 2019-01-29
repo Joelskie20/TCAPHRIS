@@ -8,10 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon;
 use Hash;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable, SoftDeletes;
+    use Notifiable, SoftDeletes, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -99,6 +100,7 @@ class User extends Authenticatable
 
         $this->name = $request->last_name . ', ' . $request->first_name . ' ' . $request->middle_name;
         $this->password = Hash::make($request->employee_id);
+        $this->assignRole($request->roles);
 
         $this->save();
     }
@@ -167,6 +169,7 @@ class User extends Authenticatable
 
         $this->name = $request->last_name . ', ' . $request->first_name . ' ' . $request->middle_name;
         $this->status = $request->status;
+        $this->syncRoles($request->roles);
 
         // $this->password = Hash::make($request->employee_id);
 
