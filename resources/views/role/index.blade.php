@@ -111,9 +111,13 @@
                                         <td>{{ ucwords($role->name) }}</td>
                                         <td>{{ $role->users->count() }}</td>
                                         <td>
-                                        @foreach ($role->permissions as $permission)
-                                            {{ ucwords($permission->name) }}@if ( ! $loop->last),@endif
-                                        @endforeach
+                                        @if($role->permissions->count() > 0)
+                                            @foreach ($role->permissions as $permission)
+                                                {{ ucwords($permission->name) }}@if ( ! $loop->last),@endif
+                                            @endforeach
+                                        @else
+                                            <em>No Permissions Set</em>
+                                        @endif
                                         </td>
                                             <td class="data-options">
                                                 <a href="/permissions/role/{{ $role->id }}" class="btn btn-primary btn-xs mr05" title="Permissions" target="_blank"><i class="fa fa-key"></i></a>

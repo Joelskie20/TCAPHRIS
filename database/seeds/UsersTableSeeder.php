@@ -2,9 +2,9 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
+use App\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -16,19 +16,128 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'employee_id' => '2170043',
-            'first_name' => 'Kiel',
-            'middle_name' => 'Legaspi',
-            'last_name' => 'Jose',
-            'base_salary' => 40000.00,
-            'nationality' => 'Filipino',
-            'religion' => 'Christian',
-            'email' => 'kiel.legaspi.jose@gmail.com',
-            'mobile_number' => '09216511870',
-            'landline' => '9902483',
-            'password' => Hash::make('2170043'),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
+            [
+                'name' => null,
+                'email' => 'janszen-kiel.jose@transcosmos.com.ph',
+                'mobile_number' => null,
+                'landline' => null,
+                'password' => Hash::make('2170043'),
+                'employee_id' => '2170043',
+                'position_id' => 3,
+                'department_id' => 1,
+                'team_id' => 1,
+                'base_salary' => 0,
+                'tax_status' => 's',
+                'payment_frequency' => 'monthly',
+                'direct_manager_id' => 0,
+                'workshift_id' => 1,
+                'first_name' => 'Kiel',
+                'middle_name' => 'Legaspi',
+                'last_name' => 'Jose',
+                'gender_id' => 1,
+                'nationality' => 'Filipino',
+                'religion' => 'Roman Catholic',
+                'mobile_number' => '09216511870',
+                'landline' => '9902483',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => null,
+                'email' => 'ryan-michael.reyes@transcosmos.com.ph',
+                'mobile_number' => null,
+                'landline' => null,
+                'password' => Hash::make('2150028'),
+                'employee_id' => '2150028',
+                'position_id' => 4,
+                'department_id' => 1,
+                'team_id' => 1,
+                'base_salary' => 0,
+                'tax_status' => 's1',
+                'payment_frequency' => 'monthly',
+                'direct_manager_id' => 0,
+                'workshift_id' => 1,
+                'first_name' => 'Ryan Michael',
+                'middle_name' => 'Lao',
+                'last_name' => 'Reyes',
+                'gender_id' => 1,
+                'nationality' => 'Filipino',
+                'religion' => 'Roman Catholic',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => null,
+                'email' => 'christian.alde@transcosmos.com.ph',
+                'mobile_number' => null,
+                'landline' => null,
+                'password' => Hash::make('2170052'),
+                'employee_id' => '2170052',
+                'position_id' => 3,
+                'department_id' => 1,
+                'team_id' => 1,
+                'base_salary' => 0,
+                'tax_status' => 's',
+                'payment_frequency' => 'monthly',
+                'direct_manager_id' => 0,
+                'workshift_id' => 1,
+                'first_name' => 'Christian',
+                'middle_name' => 'Viray',
+                'last_name' => 'Alde',
+                'gender_id' => 1,
+                'nationality' => 'Filipino',
+                'religion' => 'Roman Catholic',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => null,
+                'email' => 'janet.bonaagua@transcosmos.com.ph',
+                'mobile_number' => null,
+                'landline' => null,
+                'password' => Hash::make('2170132'),
+                'employee_id' => '2170132',
+                'position_id' => 3,
+                'department_id' => 1,
+                'team_id' => 1,
+                'base_salary' => 0,
+                'tax_status' => 's',
+                'payment_frequency' => 'monthly',
+                'direct_manager_id' => 0,
+                'workshift_id' => 1,
+                'first_name' => 'Janet',
+                'middle_name' => 'Cruz',
+                'last_name' => 'Bonaagua',
+                'gender_id' => 2,
+                'nationality' => 'Filipino',
+                'religion' => 'Roman Catholic',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => null,
+                'email' => 'antonio.aduna@transcosmos.com.ph',
+                'mobile_number' => null,
+                'landline' => null,
+                'password' => Hash::make('2150088'),
+                'employee_id' => '2150088',
+                'position_id' => 4,
+                'department_id' => 1,
+                'team_id' => 1,
+                'base_salary' => 0,
+                'tax_status' => 's',
+                'payment_frequency' => 'monthly',
+                'direct_manager_id' => 0,
+                'workshift_id' => 1,
+                'first_name' => 'Antonio',
+                'middle_name' => null,
+                'last_name' => 'Aduna',
+                'gender_id' => 1,
+                'nationality' => 'Filipino',
+                'religion' => 'Roman Catholic',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
         ]);
     }
 }

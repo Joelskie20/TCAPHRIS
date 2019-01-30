@@ -13,6 +13,11 @@ class PositionsTableSeeder extends Seeder
     {
         DB::table('positions')->insert([
             [
+                'name' => 'President',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
                 'name' => 'Accounting Officer',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -24,11 +29,6 @@ class PositionsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Senior Associate',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ],
-            [
-                'name' => 'Manager',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]

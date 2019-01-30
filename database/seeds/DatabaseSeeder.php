@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             PositionsTableSeeder::class,
             DepartmentsTableSeeder::class,
             TeamsTableSeeder::class,
-            GendersTableSeeder::class
+            GendersTableSeeder::class,
+            WorkshiftsTableSeeder::class
         ]);
     }
 }

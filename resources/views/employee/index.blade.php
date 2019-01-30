@@ -71,6 +71,7 @@ form h5 {
                             <th>Position</th>
                             <th>Team</th>
                             <th>Department</th>
+                            <th>Roles</th>
                             <th>Location</th>
                             <th>Status</th>
                             <th>Last Login</th>
@@ -100,6 +101,11 @@ form h5 {
                             <td {!! ($employee->getPosition() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}>{{ $employee->getPosition() }}</td>
                             <td {!! ($employee->getTeam() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}>{{ $employee->getTeam() }}</td>
                             <td {!! ($employee->getDepartment() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}>{{ $employee->getDepartment() }}</td>
+                            <td>
+                                @foreach($employee->getRoleNames() as $role)
+                                    {{ ucwords($role) }}@if ( ! $loop->last),@endif
+                                @endforeach
+                            </td>
                             <td>-</td>
                             <td><small class="text-{{ ($employee->getStatus() == 'Deactivated') ? 'muted' : 'green' }}">{{ $employee->getStatus() }}</small></td>
                             <td>{{ ($employee->last_login == NULL) ? '-'  : $employee->last_login }}</td>
