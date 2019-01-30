@@ -94,25 +94,27 @@
 				</div>
 					
                 <table id="table" class="table table-bordered table-striped">
-					<colgroup width="5%">
-					<colgroup width="85%">
-					<colgroup width="10%">
+					<colgroup>
+                        <col width="5%">
+                        <col width="85%">
+                        <col width="10%">
+                    </colgroup>
                     <thead>
                         <tr>
                             <th></th>
                             <th>Department Name</th>
-                            <th>Action</th>
+                            <th class="no-sort">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($departments as $key => $department)
                         <tr>
                             <td>{{ ++$key }}</td>
-                            <td class="departmentName">{{ $department->name }}</td>
+                            <td>{{ $department->name }}</td>
                             <td>
                                 <input type="hidden" name="department_id" value="{{ $department->id }}">
                                 @can('edit department')
-                                <button type="button" class="btn btn-success btn-xs btn-edit" data-toggle="modal" data-target="#modal-default-edit"><i class="fa fa-pencil"></i></button>
+                                <button onclick="infoToModal('{{ ++$key }}','{{ $department->name }}')" type="button" class="btn btn-success btn-xs btn-edit" data-toggle="modal" data-target="#modal-default-edit"><i class="fa fa-pencil"></i></button>
                                 @endcan
                                 
                                 @can('delete department')
@@ -143,17 +145,15 @@
 <script>
 $(document).ready(function() {
     $('#table').dataTable({
-        'iDisplayLength': 100
+        'iDisplayLength': 100,
+        'columnDefs': [{'targets': 'no-sort','orderable': false,}]
     });
-
-    $('.btn-edit').click(function(){
-        let id = $(this).closest('tr').find('input[name="department_id"]').val();
-        let departmentName = $(this).closest('tr').find('.departmentName').html();
-        $('#modal-default-edit').find('input[name="name"]').val(departmentName);
-		$('#modal-default-edit form').attr('action', '/departments/' + id);
-    });
-
 });
+
+function infoToModal(id, textVal) {
+	$('#modal-default-edit form').attr('action', '/departments/' + id);
+    $('#modal-default-edit').find('input[name="name"]').val(textVal);
+}
 </script>
 
 <script>
