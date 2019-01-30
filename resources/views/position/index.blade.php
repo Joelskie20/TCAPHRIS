@@ -62,8 +62,39 @@
 
             </div>
             <div class="box-body">
+
+                <div class="modal fade" id="modal-default-edit">
+                    <form action="#" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Edit Position</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group position-name" id="position-name-add">
+                                        <label for="position-name-add-label">Position Name</label>
+                                        <input type="text" class="form-control" name="name" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-update-position">Update Position</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                    </form>
+                    <!-- /.modal-dialog -->
+                </div>
                 
                 <table id="table" class="table table-bordered table-striped">
+                    <colgroup width="5%">
+					<colgroup width="85%">
+					<colgroup width="10%">
                     <thead>
                         <tr>
                             <th></th>
@@ -73,39 +104,13 @@
                     </thead>
                     <tbody>
                         @foreach ($positions as $key => $position)
-                        <div class="modal fade" id="modal-default-edit-{{ $position->id }}">
-                                <form action="{{ action('PositionController@update', ['id' => $position->id]) }}" method="POST">
-                                    @csrf
-                                    @method('PATCH')
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title">Edit Position</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group position-name" id="position-name-add">
-                                                    <label for="position-name-add-label">Position Name</label>
-                                                    <input type="text" class="form-control" name="name" value="{{ $position->name }}" required>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary btn-update-position">Update Position</button>
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                            </div>
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                </form>
-                                <!-- /.modal-dialog -->
-                            </div>
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td>{{ $position->name }}</td>
+                                <td class="positionName">{{ $position->name }}</td>
                                 <td>
                                     @can('edit position')
-                                    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default-edit-{{ $position->id }}"><i class="fa fa-pencil"></i></button>
+                                    <input type="hidden" name="position_id" value="{{ $position->id }}">
+                                    <button type="button" class="btn btn-success btn-xs btn-edit" data-toggle="modal" data-target="#modal-default-edit"><i class="fa fa-pencil"></i></button>
                                     @endcan
 
                                     @can('delete position')
@@ -137,6 +142,13 @@
 $(document).ready(function() {
     $('#table').dataTable({
         'iDisplayLength': 100
+    });
+
+    $('.btn-edit').click(function(){
+        let id = $(this).closest('tr').find('input[name="position_id"]').val();
+        let positionName = $(this).closest('tr').find('.positionName').html();
+        $('#modal-default-edit').find('input[name="name"]').val(positionName);
+		$('#modal-default-edit form').attr('action', '/positions/' + id);
     });
 });
 </script>

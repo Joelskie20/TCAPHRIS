@@ -65,8 +65,38 @@
                 
             </div>
             <div class="box-body">
-                
+
+				<div class="modal fade" id="modal-default-edit">
+					<form action="#" method="POST">
+						@csrf
+						@method('PATCH')
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title">Edit Department</h4>
+								</div>
+								<div class="modal-body">
+									<div class="form-group department-name" id="department-name-add">
+										<label for="department-name-add-label">Department Name</label>
+										<input type="text" class="form-control" name="name" required>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary btn-update-department">Update Department</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+								</div>
+							</div>
+
+						</div>
+					</form>
+				</div>
+					
                 <table id="table" class="table table-bordered table-striped">
+					<colgroup width="5%">
+					<colgroup width="85%">
+					<colgroup width="10%">
                     <thead>
                         <tr>
                             <th></th>
@@ -76,39 +106,13 @@
                     </thead>
                     <tbody>
                         @foreach($departments as $key => $department)
-                        <div class="modal fade" id="modal-default-edit-{{ $department->id }}">
-                            <form action="{{ action('DepartmentController@update', ['id' => $department->id]) }}" method="POST">
-                                @csrf
-                                @method('PATCH')
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title">Edit Department</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-group department-name" id="department-name-add">
-                                                <label for="department-name-add-label">Department Name</label>
-                                                <input type="text" class="form-control" name="name" value="{{ $department->name }}" required>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary btn-update-department">Update Department</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        </div>
-                                    </div>
-                                    <!-- /.modal-content -->
-                                </div>
-                            </form>
-                            <!-- /.modal-dialog -->
-                        </div>
                         <tr>
                             <td>{{ ++$key }}</td>
-                            <td>{{ $department->name }}</td>
+                            <td class="departmentName">{{ $department->name }}</td>
                             <td>
+                                <input type="hidden" name="department_id" value="{{ $department->id }}">
                                 @can('edit department')
-                                <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default-edit-{{ $department->id }}"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-success btn-xs btn-edit" data-toggle="modal" data-target="#modal-default-edit"><i class="fa fa-pencil"></i></button>
                                 @endcan
                                 
                                 @can('delete department')
@@ -141,6 +145,14 @@ $(document).ready(function() {
     $('#table').dataTable({
         'iDisplayLength': 100
     });
+
+    $('.btn-edit').click(function(){
+        let id = $(this).closest('tr').find('input[name="department_id"]').val();
+        let departmentName = $(this).closest('tr').find('.departmentName').html();
+        $('#modal-default-edit').find('input[name="name"]').val(departmentName);
+		$('#modal-default-edit form').attr('action', '/departments/' + id);
+    });
+
 });
 </script>
 
