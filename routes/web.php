@@ -57,13 +57,15 @@ Route::group(['middleware' => 'auth'], function() {
         Route::delete('/positions/{position}', 'PositionController@destroy')->middleware('permission:delete position');
     });
 
-    Route::get('/employees', 'EmployeeController@index')->name('employees');
-    Route::get('/employees/create', 'EmployeeController@create')->name('employee-create');
-    Route::post('/employees/', 'EmployeeController@store');
-    Route::get('/employees/{user}/edit', 'EmployeeController@edit');
-    Route::patch('/employees/{user}', 'EmployeeController@update');
-    Route::get('/employee/{employee}', 'EmployeeController@show')->name('employee-profile');
-    Route::delete('/employee/{employee}', 'EmployeeController@destroy');
+    Route::group(['middleware' => ['permission:employee records']], function () {
+        Route::get('/employees', 'EmployeeController@index')->name('employees');
+        Route::get('/employees/create', 'EmployeeController@create')->name('employee-create')->middleware('permission:add employee');
+        Route::post('/employees/', 'EmployeeController@store')->middleware('permission:add employee');
+        Route::get('/employees/{user}/edit', 'EmployeeController@edit')->middleware('permission:edit employee');
+        Route::patch('/employees/{user}', 'EmployeeController@update')->middleware('permission:edit employee');
+        Route::get('/employee/{employee}', 'EmployeeController@show')->name('employee-profile')->middleware('permission:view employee profile');
+        Route::delete('/employee/{employee}', 'EmployeeController@destroy')->middleware('permission:view employee profile');
+    });
 
     Route::group(['middleware' => ['permission:workshifts']], function () {
         Route::get('/workshifts', 'WorkshiftController@index')->name('workshift');

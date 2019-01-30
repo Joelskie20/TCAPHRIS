@@ -107,23 +107,28 @@
                                             </form>
                                             <!-- /.modal-dialog -->
                                         </div>
+
+                                        @if($role->name === 'superadmin') @continue @endif
+
                                         <tr>
-                                        <td>{{ ucwords($role->name) }}</td>
-                                        <td>{{ $role->users->count() }}</td>
-                                        <td>
-                                        @if($role->permissions->count() > 0)
-                                            @foreach ($role->permissions as $permission)
-                                                {{ ucwords($permission->name) }}@if ( ! $loop->last),@endif
-                                            @endforeach
-                                        @else
-                                            <em>No Permissions Set</em>
-                                        @endif
-                                        </td>
+                                            <td>
+                                                {{ ucwords($role->name) }}
+                                            </td>
+                                            <td>{{ $role->users->count() }}</td>
+                                            <td>
+                                            @if($role->permissions->count() > 0)
+                                                @foreach ($role->permissions as $permission)
+                                                    {{ ucwords($permission->name) }}@if ( ! $loop->last),@endif
+                                                @endforeach
+                                            @else
+                                                <em>No Permission(s) Set</em>
+                                            @endif
+                                            </td>
                                             <td class="data-options">
                                                 <a href="/permissions/role/{{ $role->id }}" class="btn btn-primary btn-xs mr05" title="Permissions" target="_blank"><i class="fa fa-key"></i></a>
                                                 <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default-edit-{{ $role->id }}"><i class="fa fa-pencil"></i></button>
                                             </td>
-                                    </tr>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                                 

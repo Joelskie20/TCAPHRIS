@@ -55,9 +55,11 @@ form h5 {
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Employee List</h3>
+                @can('add employee')
                 <div class="box-tools pull-right">
                     <a href="/employees/create" class="btn btn-success btn-sm"><i class="fa fa-plus mr05"></i> ADD EMPLOYEE</a>
                 </div>
+                @endcan
             </div>
             <div class="box-body">
                 <table id="table" class="table table-bordered table-striped">
@@ -110,10 +112,24 @@ form h5 {
                             <td><small class="text-{{ ($employee->getStatus() == 'Deactivated') ? 'muted' : 'green' }}">{{ $employee->getStatus() }}</small></td>
                             <td>{{ ($employee->last_login == NULL) ? '-'  : $employee->last_login }}</td>
                             <td class="data-row-options-cell">
+
+                                @can('view employee profile')
                                 <a href="/employee/{{ $employee->id }}" class="btn btn-primary btn-xs mr05" title="View Profile"><i class="fa fa-user"></i></a>
+                                @endcan
+
+                                @can('edit employee')
                                 <a href="/employees/{{ $employee->id }}/edit" class="btn btn-success mr05 btn-xs" title="Edit Employee"><i class="fa fa-pencil"></i></a>
+                                @endcan
+
+                                @can('view DTR based on user ID')
                                 <a href="/daily-time-records/{{ $employee->id }}" class="btn btn-warning mr05 btn-xs" title="Time Records" target="_blank"><i class="fa fa-clock-o"></i></a>
+                                @endcan
+
+                                @can('view employee workshifts')
                                 <a href="#" class="btn btn-info mr05 btn-xs" title="Workshifts"><i class="fa fa-calendar"></i></a>
+                                @endcan
+                                
+                                @can('delete employee')
                                 <form style="display: inline-block;" action="/employee/{{ $employee->id }}" method="POST">
                                     @method('DELETE')
                                     @csrf
@@ -121,6 +137,7 @@ form h5 {
                                     <i class="fa fa-trash-o"></i>
                                     </button>
                                 </form>
+                                @endcan
                             </td>
                         </tr>
                         @endforeach

@@ -27,10 +27,12 @@
         </li>
         @endcan
 
+        @can('employee records')
         <!-- EMPLOYEES -->
         <li class="{{ (Route::is('employees') || Route::is('employee-create') || Route::is('employee-profile')) ? 'active' : '' }}">
             <a href="{{ route('employees') }}"><i class="fa fa-users"></i> <span>Employee Records</span></a>
         </li>
+        @endcan
 
         @can('daily time records')
         <!-- DAILY TIME RECORDS -->
@@ -39,10 +41,12 @@
         </li>
         @endcan
 
+        @can('workshifts')
         <!-- WORKSHIFT -->
         <li class="{{ Route::is('workshift') ? 'active' : '' }}">
             <a href="{{ route('workshift') }}"><i class="fa fa-sitemap"></i> <span>Workshift</span></a>
         </li>
+        @endcan
 
         @can('holidays')
         <!-- COMPANY CALENDAR -->
@@ -51,6 +55,7 @@
         </li>
         @endcan
 
+        @can('leaves')
         <!-- LEAVES -->
         <li class="treeview {{ Route::is('approved-leaves') || Route::is('denied-leaves') || Route::is('leaves-for-approval') || Route::is('approving-leaves') ? 'active' : '' }}">
             <a href="#">
@@ -85,12 +90,14 @@
                 
             </ul>
         </li>
+        @endcan
 
         <!-- TEAM SCHEDULE -->
         {{-- <li class="{{ Route::is('team-schedule') ? 'active' : '' }}">
             <a href="{{ route('team-schedule') }}"><i class="fa fa-calendar"></i> <span>Team Schedule</span></a>
         </li> --}}
 
+        @can('system settings')
         <!-- COMPANY -->
         <li class="treeview {{ (Route::is('departments') || Route::is('teams') || Route::is('positions')) ? 'active' : '' }}">
             <a href="#">
@@ -119,6 +126,7 @@
                 @endhasanyrole
             </ul>
         </li>
+        @endcan
 
         <!-- SYSTEM LOG -->
         {{-- <li class="{{ Route::is('system-log') ? 'active' : '' }}">

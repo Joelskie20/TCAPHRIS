@@ -539,7 +539,13 @@
             <!-- ACCOUNT ROLES -->
             <div class="box box-danger">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Account Roles</h3>
+                    <h3 class="box-title">Account Roles
+                        @if($user->hasRole('superadmin'))
+                            <small>The user you're currently viewing is a superadmin</small>
+                        @else
+                            {{ '' }}
+                        @endif
+                    </h3>
                 </div>
                 <div class="box-body">
                     <div class="row">
@@ -548,9 +554,18 @@
                             <div class="checkbox-horizontal">
                                 
                                 @foreach($roles as $role)
-                                <div class="checkbox roles">
-                                    <label><input type="checkbox" class="checkbox-admin" name="roles[]" value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'checked' : '' }}>{{ ucwords($role->name) }}</label>
-                                </div>
+
+                                    @if(Auth::user()->hasRole('superadmin'))
+                                        <div class="checkbox roles">
+                                            <label><input type="checkbox" class="checkbox-admin" name="roles[]" value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'checked' : '' }}>{{ ucwords($role->name) }}</label>
+                                        </div>
+                                    @else
+                                        @if($role->name === 'superadmin') @continue @endif
+                                        <div class="checkbox roles">
+                                            <label><input type="checkbox" class="checkbox-admin" name="roles[]" value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'checked' : '' }}>{{ ucwords($role->name) }}</label>
+                                        </div>
+                                    @endif
+
                                 @endforeach
                                 
                             </div>
