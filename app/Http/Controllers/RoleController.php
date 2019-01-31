@@ -101,8 +101,12 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        //
+        $role->delete();
+
+        Session::flash('message', 'Role has been deleted.');
+
+        return redirect('/roles');
     }
 }

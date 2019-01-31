@@ -126,7 +126,14 @@
                                             </td>
                                             <td class="data-options">
                                                 <a href="/permissions/role/{{ $role->id }}" class="btn btn-primary btn-xs mr05" title="Permissions" target="_blank"><i class="fa fa-key"></i></a>
-                                                <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default-edit-{{ $role->id }}"><i class="fa fa-pencil"></i></button>
+                                                <button type="button" class="btn btn-success btn-xs mr05" data-toggle="modal" data-target="#modal-default-edit-{{ $role->id }}"><i class="fa fa-pencil"></i></button>
+                                                <form style="display: inline-block;" action="/roles/{{ $role->id }}" method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');" title="Delete">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

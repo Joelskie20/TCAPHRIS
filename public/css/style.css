@@ -26,3 +26,5 @@ table.data-list small.icon{display:inline-block;width:12px;text-align:center;}
 .ml05 {
     margin-left: 5px !important;
 }
+
+.navbar-nav>.user-menu>.dropdown-menu>.user-footer .btn-default{padding:6px 1px;}

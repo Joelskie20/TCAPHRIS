@@ -85,7 +85,13 @@
                 @endcan
 
                 @can('can approve leaves')
-                <li><a href="{{ route('approving-leaves') }}"><i class="fa fa-check"></i>For Your Approval</a></li>
+                <li><a href="{{ route('approving-leaves') }}"><i class="fa fa-check"></i>For Your Approval
+                @if(App\Leave::where('direct_manager_id', Auth::id())->where('status', 'forApproval')->get()->count() > 0)
+                        <span class="label label-warning ml05">{{ App\Leave::where('status', 'forApproval')->get()->count() }}</span>
+                    @else
+                        {{ '' }}
+                    @endif
+                </a></li>
                 @endcan
                 
             </ul>
@@ -99,7 +105,7 @@
 
         @can('system settings')
         <!-- COMPANY -->
-        <li class="treeview {{ (Route::is('departments') || Route::is('teams') || Route::is('positions')) ? 'active' : '' }}">
+        <li class="treeview {{ (Route::is('departments') || Route::is('teams') || Route::is('positions') || Route::is('roles')) ? 'active' : '' }}">
             <a href="#">
                 <i class="fa fa-gears"></i>
                 <span>System Settings</span>

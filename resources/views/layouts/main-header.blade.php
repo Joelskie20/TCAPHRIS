@@ -80,18 +80,26 @@
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
-                <div class="pull-left">
-                  <a href="/employee/{{ Auth::user()->id }}" class="btn btn-default btn-flat">Profile</a>
-                </div>
-                <div class="pull-right">
-                  <a class="btn btn-default btn-flat" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
-                  </a>
+                
+              <div class="row">
+                  <div class="col-xs-4 text-center">
+                    <a href="/employee/{{ Auth::user()->id }}" class="btn btn-default btn-flat">Profile</a>
+                  </div>
 
+                  <div class="col-xs-4">
+                    <a href="#" class="btn btn-default btn-flat">Settings</a>
+                  </div>
+
+                  <div class="col-xs-4">
+                    <a class="btn btn-default btn-flat" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                      {{ __('Logout') }}
+                  </a>
+                  </div>
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                       @csrf
                   </form>
-                </div>
+              </div>
+                
               </li>
             </ul>
           </li>

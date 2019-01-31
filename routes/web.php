@@ -100,6 +100,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/roles', 'RoleController@index')->name('roles');
         Route::post('/roles', 'RoleController@store');
         Route::patch('/roles/{role}', 'RoleController@update');
+        Route::delete('/roles/{role}', 'RoleController@destroy');
 
         Route::get('/permissions/role/{role}', 'RoleController@edit');
         Route::patch('/permissions/role/{role}', 'PermissionController@update');
