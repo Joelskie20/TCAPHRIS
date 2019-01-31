@@ -87,7 +87,7 @@
                   </div>
 
                   <div class="col-xs-4">
-                    <a href="#" class="btn btn-default btn-flat">Settings</a>
+                    <a href="/settings" class="btn btn-default btn-flat">Settings</a>
                   </div>
 
                   <div class="col-xs-4">
