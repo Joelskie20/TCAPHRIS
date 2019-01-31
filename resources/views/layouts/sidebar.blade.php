@@ -68,7 +68,7 @@
             <ul class="treeview-menu">
                 @can('leaves for approval')
                 <li><a href="{{ route('leaves-for-approval') }}"><i class="fa fa-calendar-plus-o"></i>Leaves for Approval 
-                    @if(App\Leave::where('status', 'forApproval')->get()->count() > 0)
+                    @if(App\Leave::where('user_id', Auth::id())->where('status', 'forApproval')->get()->count() > 0)
                         <span class="label label-warning ml05">{{ App\Leave::where('status', 'forApproval')->get()->count() }}</span>
                     @else
                         {{ '' }}

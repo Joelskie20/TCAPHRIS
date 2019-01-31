@@ -20,15 +20,8 @@ function startTime(){
 }
 
 startTime();
-
-// $(document).ready(function() {
-// 	$('.treeview-menu li').click(function() {
-// 		$('.treeview').addClass('active');
-// 	});
-// });
 </script>
 <script>
     $('div.alert').delay(3000).fadeOut(300);
-	// $('.select2').select2();
 </script>
 @yield('scripts')

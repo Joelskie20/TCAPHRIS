@@ -135,7 +135,7 @@ class LeaveController extends Controller
         return view('leaves.approved', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
             'users' => User::all(),
-            'leaves' => Leave::where('status', 'approved')->get()
+            'leaves' => Leave::where('user_id', Auth::id())->where('status', 'approved')->get()
 
         ]);
     }
@@ -145,7 +145,7 @@ class LeaveController extends Controller
         return view('leaves.denied', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
             'users' => User::all(),
-            'leaves' => Leave::where('status', 'denied')->get()
+            'leaves' => Leave::where('user_id', Auth::id())->where('status', 'denied')->get()
         ]);
     }
 
@@ -154,7 +154,7 @@ class LeaveController extends Controller
         return view('leaves.forApproval', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
             'users' => User::all(),
-            'leaves' => Leave::where('status', 'forApproval')->get()
+            'leaves' => Leave::where('user_id', Auth::id())->where('status', 'forApproval')->get()
         ]);
     }
 
