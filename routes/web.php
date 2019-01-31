@@ -106,4 +106,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::patch('/permissions/role/{role}', 'PermissionController@update');
         Route::delete('/permissions/role/{role}', 'PermissionController@destroy');
     });
+
+    Route::get('/settings', 'DashboardController@settings');
+    Route::post('/settings/changePassword', 'DashboardController@changePassword');
+
 });
