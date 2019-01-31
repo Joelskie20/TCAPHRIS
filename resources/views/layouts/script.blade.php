@@ -23,5 +23,10 @@ startTime();
 </script>
 <script>
     $('div.alert').delay(3000).fadeOut(300);
+
+		function infoToModal(id, textVal, location) {
+			$('#modal-default-edit form').attr('action', '/' + location +'/' + id);
+			$('#modal-default-edit').find('input[name="name"]').val(textVal);
+		}
 </script>
 @yield('scripts')

@@ -92,14 +92,16 @@
                 </div>
                 
                 <table id="table" class="table table-bordered table-striped">
-                    <colgroup width="5%">
-					<colgroup width="85%">
-					<colgroup width="10%">
+                    <colgroup>
+                        <col width="5%">
+                        <col width="85%">
+                        <col width="10%">
+                    </colgroup>
                     <thead>
                         <tr>
                             <th></th>
                             <th>Position Name</th>
-                            <th>Action</th>
+                            <th class="no-sort"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -108,9 +110,8 @@
                                 <td>{{ ++$key }}</td>
                                 <td class="positionName">{{ $position->name }}</td>
                                 <td>
-                                    @can('edit position')
-                                    <input type="hidden" name="position_id" value="{{ $position->id }}">
-                                    <button type="button" class="btn btn-success btn-xs btn-edit" data-toggle="modal" data-target="#modal-default-edit"><i class="fa fa-pencil"></i></button>
+                                    @can('edit position')                                
+                                    <button onclick="infoToModal('{{ $position->id }}','{{ $position->name }}','positions')" type="button" class="btn btn-success btn-xs btn-edit" data-toggle="modal" data-target="#modal-default-edit"><i class="fa fa-pencil"></i></button>
                                     @endcan
 
                                     @can('delete position')
@@ -141,14 +142,8 @@
 <script>
 $(document).ready(function() {
     $('#table').dataTable({
-        'iDisplayLength': 100
-    });
-
-    $('.btn-edit').click(function(){
-        let id = $(this).closest('tr').find('input[name="position_id"]').val();
-        let positionName = $(this).closest('tr').find('.positionName').html();
-        $('#modal-default-edit').find('input[name="name"]').val(positionName);
-		$('#modal-default-edit form').attr('action', '/positions/' + id);
+        'iDisplayLength': 100,
+        'columnDefs': [{'targets': 'no-sort','orderable': false,}]
     });
 });
 </script>

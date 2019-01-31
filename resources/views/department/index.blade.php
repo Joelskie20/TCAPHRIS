@@ -103,7 +103,7 @@
                         <tr>
                             <th></th>
                             <th>Department Name</th>
-                            <th class="no-sort">Action</th>
+                            <th class="no-sort"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -112,9 +112,8 @@
                             <td>{{ ++$key }}</td>
                             <td>{{ $department->name }}</td>
                             <td>
-                                <input type="hidden" name="department_id" value="{{ $department->id }}">
                                 @can('edit department')
-                                <button onclick="infoToModal('{{ ++$key }}','{{ $department->name }}')" type="button" class="btn btn-success btn-xs btn-edit" data-toggle="modal" data-target="#modal-default-edit"><i class="fa fa-pencil"></i></button>
+                                <button onclick="infoToModal('{{ $department->id }}','{{ $department->name }}','departments')" type="button" class="btn btn-success btn-xs btn-edit" data-toggle="modal" data-target="#modal-default-edit"><i class="fa fa-pencil"></i></button>
                                 @endcan
                                 
                                 @can('delete department')
@@ -149,11 +148,6 @@ $(document).ready(function() {
         'columnDefs': [{'targets': 'no-sort','orderable': false,}]
     });
 });
-
-function infoToModal(id, textVal) {
-	$('#modal-default-edit form').attr('action', '/departments/' + id);
-    $('#modal-default-edit').find('input[name="name"]').val(textVal);
-}
 </script>
 
 <script>
