@@ -92,11 +92,11 @@ class DtrController extends Controller
         //
     }
 
-    public function exportToExcel()
+    public function export()
     {
         $users = User::all();
         $attendances = Attendance::all();
 
-        
+        dd('test');
     }
 }

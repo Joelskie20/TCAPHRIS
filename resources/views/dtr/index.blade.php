@@ -31,10 +31,7 @@
                         </div>
 
                         <div class="pull-right mr05">
-                            <form action="{{ action('DtrController@exportToExcel') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn bnt btn-success"><i class="glyphicon glyphicon-file"></i> Export Data</button>
-                            </form>
+                            <a href="/daily-time-records/export" class="btn bnt btn-success"><i class="glyphicon glyphicon-file"></i> Export Data</a>
                         </div>
                     </div>
                     <div class="box-body">
