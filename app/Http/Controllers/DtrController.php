@@ -91,4 +91,12 @@ class DtrController extends Controller
     {
         //
     }
+
+    public function exportToExcel()
+    {
+        $users = User::all();
+        $attendances = Attendance::all();
+
+        
+    }
 }

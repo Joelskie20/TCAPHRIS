@@ -20,6 +20,7 @@
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title">Timesheet</h3>
+                        
                         <div class="box-options pull-right">
                             <select class="form-control">
                                 <option>201812</option>
@@ -27,6 +28,13 @@
                                 <option>201810</option>
                                 <option>201809</option>
                             </select>
+                        </div>
+
+                        <div class="pull-right mr05">
+                            <form action="{{ action('DtrController@exportToExcel') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn bnt btn-success"><i class="glyphicon glyphicon-file"></i> Export Data</button>
+                            </form>
                         </div>
                     </div>
                     <div class="box-body">
