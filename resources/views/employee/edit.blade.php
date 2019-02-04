@@ -16,7 +16,7 @@
 <div class="content-wrapper">
 
     <section class="content-header">
-        <h1>Edit Employee</h1>
+        <h1>Edit Employee » {{ $user->firstNameFirst() }}</h1>
     </section>
 
     <!-- Main content -->
