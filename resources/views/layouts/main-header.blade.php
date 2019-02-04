@@ -19,13 +19,13 @@
       @if($disabled == false)
       <form method="POST" action="{{ action('DashboardController@store') }}">
         @csrf
-        <button onclick="return confirm('Are you sure you want to Time In?');" class="pull-left btn btn-default btn-sm" style="margin:10px;"><i class="fa fa-clock-o"></i> TIME IN</button>
+        <button class="pull-left btn btn-default btn-sm" style="margin:10px;"><i class="fa fa-clock-o"></i> TIME IN</button>
       </form>
       @else
       <form method="POST" action="{{ action('DashboardController@update', ['id' => Auth::user()->id ]) }}">
         @method('PUT')
         @csrf
-        <button onclick="return confirm('Are you sure you want to Time Out?');" class="pull-left btn btn-default btn-sm" style="margin:10px;"><i class="fa fa-clock-o"></i> TIME OUT</button>
+        <button class="pull-left btn btn-default btn-sm" style="margin:10px;"><i class="fa fa-clock-o"></i> TIME OUT</button>
       </form>
       @endif
       <div class="pull-left" style="margin:15px; color:#fff;">

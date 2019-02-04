@@ -25,15 +25,15 @@
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
-        <div class="col-xs-8">
+        {{-- <div class="col-xs-8">
           <div class="checkbox icheck">
             <label>
               <input type="checkbox" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
             </label>
           </div>
-        </div>
+        </div> --}}
         <!-- /.col -->
-        <div class="col-xs-4">
+        <div class="col-xs-4 pull-right">
           <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
         </div>
         <!-- /.col -->
@@ -48,7 +48,7 @@
         </div>
     @endif
 
-    <a href="{{ route('password.request') }}">I forgot my password</a><br>
+    <a href="{{ route('password.request') }}" style="clear: left;">I forgot my password</a><br>
 
   </div>
   <!-- /.login-box-body -->

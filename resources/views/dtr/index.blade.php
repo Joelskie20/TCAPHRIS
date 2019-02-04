@@ -31,7 +31,10 @@
                         </div>
 
                         <div class="pull-right mr05">
-                            <a href="/daily-time-records/export" class="btn bnt btn-success"><i class="glyphicon glyphicon-file"></i> Export Data</a>
+                            <a href="/daily-time-records/export-second-cutoff" class="btn bnt btn-success"><i class="glyphicon glyphicon-file"></i> Export 2nd cutoff</a>
+                        </div>
+                        <div class="pull-right mr05">
+                            <a href="/daily-time-records/export-first-cutoff" class="btn bnt btn-success"><i class="glyphicon glyphicon-file"></i> Export 1st cutoff</a>
                         </div>
                     </div>
                     <div class="box-body">

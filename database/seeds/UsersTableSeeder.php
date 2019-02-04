@@ -45,7 +45,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => null,
                 'email' => 'ryan-michael.reyes1@trans-cosmos.co.jp',
-                'mobile_number' => 09278540425,
+                'mobile_number' => '09278540425',
                 'landline' => null,
                 'password' => Hash::make('2150028'),
                 'employee_id' => '2150028',

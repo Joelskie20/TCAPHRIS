@@ -26,7 +26,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => ['permission:daily time records']], function() {
         Route::get('/daily-time-records/', 'DtrController@index')->name('dtr');
         Route::get('/daily-time-records/{id}', 'DtrController@show')->where(['id' => '[0-9]+'])->name('dtr-profile')->middleware('permission:view DTR based on user ID');
-        Route::get('/daily-time-records/export', 'DtrController@export');
+        Route::get('/daily-time-records/export-first-cutoff', 'DtrController@exportFirstCutoff');
+        Route::get('/daily-time-records/export-second-cutoff', 'DtrController@exportSecondCutoff');
     });
 
     // Route::get('/team-schedule', 'TeamScheduleController@index')->name('team-schedule');

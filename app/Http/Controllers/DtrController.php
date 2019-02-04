@@ -92,11 +92,19 @@ class DtrController extends Controller
         //
     }
 
-    public function export()
+    public function exportFirstCutoff()
     {
         $users = User::all();
         $attendances = Attendance::all();
 
-        dd('test');
+        dd('first cutoff');
+    }
+
+    public function exportSecondCutOff()
+    {
+        $users = User::all();
+        $attendances = Attendance::all();
+
+        dd('2nd cutoff');
     }
 }
