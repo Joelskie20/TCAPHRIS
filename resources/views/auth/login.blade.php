@@ -16,8 +16,8 @@
       @csrf
 
       <div class="form-group has-feedback">
-        <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Email" required autofocus>
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        <input type="text" id="username" name="username" class="form-control" value="{{ old('username') }}" placeholder="Employee ID..." required autofocus>
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
 
       <div class="form-group has-feedback">
@@ -40,11 +40,11 @@
       </div>
     </form>
 
-    @if ($errors->has('email'))
+    @if ($errors->has('username'))
         <div class="alert alert-danger alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <h4><i class="icon fa fa-ban"></i> Alert!</h4>
-            {{ $errors->first('email') }}
+            {{ $errors->first('username') }}
         </div>
     @endif
 

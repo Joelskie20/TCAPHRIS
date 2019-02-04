@@ -98,7 +98,7 @@ class User extends Authenticatable
 
         // Other Fields
 
-        $this->name = $request->last_name . ', ' . $request->first_name . ' ' . $request->middle_name;
+        $this->username = $request->employee_id;
         $this->password = Hash::make($request->employee_id);
         $this->assignRole($request->roles);
 
