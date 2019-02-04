@@ -15,8 +15,10 @@
 @section('content')
 <div class="content-wrapper">
 
-    <section class="content-header">
-        <h1>Edit Employee » {{ $user->firstNameFirst() }}</h1>
+    <section class="content-header" style="overflow: hidden;">
+        <h1 class="pull-left">Edit Employee » {{ $user->firstNameFirst() }}</h1>
+
+        <a href="/employee/{{ $user->id }}" class="btn btn-success pull-right"><i class="glyphicon glyphicon-user"></i> View Profile</a>
     </section>
 
     <!-- Main content -->
