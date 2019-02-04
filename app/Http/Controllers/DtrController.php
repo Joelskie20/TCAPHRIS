@@ -97,6 +97,7 @@ class DtrController extends Controller
         $users = User::all();
         $attendances = Attendance::all();
 
+        // insert code below and remove dd
         dd('first cutoff');
     }
 
@@ -105,6 +106,7 @@ class DtrController extends Controller
         $users = User::all();
         $attendances = Attendance::all();
 
+        // insert code below and remove dd
         dd('2nd cutoff');
     }
 }
