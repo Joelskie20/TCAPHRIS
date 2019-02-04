@@ -26,6 +26,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => ['permission:daily time records']], function() {
         Route::get('/daily-time-records/', 'DtrController@index')->name('dtr');
         Route::get('/daily-time-records/{id}', 'DtrController@show')->where(['id' => '[0-9]+'])->name('dtr-profile')->middleware('permission:view DTR based on user ID');
+
+
         Route::get('/daily-time-records/export-first-cutoff', 'DtrController@exportFirstCutoff');
         Route::get('/daily-time-records/export-second-cutoff', 'DtrController@exportSecondCutoff');
     });
@@ -67,6 +69,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::patch('/employees/{user}', 'EmployeeController@update')->middleware('permission:edit employee');
         Route::get('/employee/{employee}', 'EmployeeController@show')->name('employee-profile')->middleware('permission:view employee profile');
         Route::delete('/employee/{employee}', 'EmployeeController@destroy')->middleware('permission:view employee profile');
+
+        Route::post('/employees/importEmployees', 'EmployeeController@importEmployees');
     });
 
     Route::group(['middleware' => ['permission:workshifts']], function () {
