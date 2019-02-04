@@ -48,6 +48,11 @@
         </li>
         @endcan
 
+        <!-- Overtime -->
+        <li class="{{ Route::is('overtime') ? 'active' : '' }}">
+            <a href="{{ route('overtime') }}"><i class="fa fa-hourglass"></i> <span>Overtime</span></a>
+        </li>
+
         @can('holidays')
         <!-- COMPANY CALENDAR -->
         <li class="{{ Route::is('holiday') ? 'active' : '' }}">

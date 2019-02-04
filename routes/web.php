@@ -109,6 +109,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::delete('/permissions/role/{role}', 'PermissionController@destroy');
     });
 
+    Route::get('/overtime', 'OvertimeController@index')->name('overtime');
+
     Route::get('/settings', 'DashboardController@settings');
     Route::post('/settings/changePassword', 'DashboardController@changePassword');
 });
