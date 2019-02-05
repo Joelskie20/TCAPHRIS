@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Department;
 use App\Attendance;
-use Session;
-use App\User;
 use Illuminate\Http\Request;
+use Spatie\Activitylog\Models\Activity;
 
-class DepartmentController extends Controller
+class LogController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +15,9 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        return view('department.index', [
+        return view('systemlog.index', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
-            'departments' => Department::all(),
+            'activities' => Activity::latest()->get()
         ]);
     }
 
@@ -41,26 +39,16 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        Department::create($request->validate([
-            'name' => ['required', 'max:255']
-        ]));
-
-        Session::flash('message', 'Department added.');
-
-        // Log the activity
-
-        $user = new User;
-
-        return redirect('/departments');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Department  $department
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Department $department)
+    public function show($id)
     {
         //
     }
@@ -68,10 +56,10 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Department  $department
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Department $department)
+    public function edit($id)
     {
         //
     }
@@ -80,32 +68,22 @@ class DepartmentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Department  $department
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Department $department)
+    public function update(Request $request, $id)
     {
-        $department->update($request->validate([
-            'name' => ['required']
-        ]));
-
-        Session::flash('message', 'Department has been updated.');
-
-        return redirect('/departments');
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Department  $department
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Department $department)
+    public function destroy($id)
     {
-        $department->delete();
-
-        Session::flash('message', 'Department has been deleted.');
-
-        return redirect('/departments');
+        //
     }
 }

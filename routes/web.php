@@ -117,4 +117,8 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/settings', 'DashboardController@settings');
     Route::post('/settings/changePassword', 'DashboardController@changePassword');
+
+    Route::group(['middleware' => ['permission:system log']], function() {
+        Route::get('/system-log', 'LogController@index')->name('system-log');
+    });
 });

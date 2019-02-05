@@ -32,7 +32,7 @@
                         <div class="col-md-6 col-lg-3">
                             <div class="form-group">
                                 <label for="workshiftCode">Workshift Code <small class="label label-danger">Required</small></label>
-                                <input type="text" maxlength="200" class="form-control" id="workshiftCode" name="workshift_code" data-inputmask="&quot;mask&quot;: &quot;9999999&quot;" data-mask="" required="">
+                                <input type="text" maxlength="200" class="form-control" id="workshiftCode" name="code" data-inputmask="&quot;mask&quot;: &quot;9999999&quot;" data-mask="" required="">
                             </div>
                         </div>
 
@@ -40,7 +40,7 @@
                         <div class="col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label for="workshiftName">Workshift Name <small class="label label-danger">Required</small></label>
-                                <input type="text" maxlength="200" class="form-control" id="workshiftName" name="workshift_name" data-inputmask="&quot;mask&quot;: &quot;9999999&quot;" data-mask="" required="">
+                                <input type="text" maxlength="200" class="form-control" id="workshiftName" name="name" data-inputmask="&quot;mask&quot;: &quot;9999999&quot;" data-mask="" required="">
                             </div>
                         </div>
 
