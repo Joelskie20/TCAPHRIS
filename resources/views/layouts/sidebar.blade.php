@@ -139,10 +139,12 @@
         </li>
         @endcan
 
+        @can('system log')
         <!-- SYSTEM LOG -->
-        {{-- <li class="{{ Route::is('system-log') ? 'active' : '' }}">
-            <a href="{{ route('system-log') }}"><i class="fa fa-book"></i> <span>System Log</span></a>
-        </li> --}}
+        <li class="{{ Route::is('system-log') ? 'active' : '' }}">
+                <a href="{{ route('system-log') }}"><i class="fa fa-book"></i> <span>System Log</span></a>
+            </li>
+        @endcan
 
     </ul>
 </section>

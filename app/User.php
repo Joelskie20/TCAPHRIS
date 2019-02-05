@@ -167,7 +167,6 @@ class User extends Authenticatable
 
         // Other Fields
 
-        $this->name = $request->last_name . ', ' . $request->first_name . ' ' . $request->middle_name;
         $this->status = $request->status;
         $this->syncRoles($request->roles);
 
