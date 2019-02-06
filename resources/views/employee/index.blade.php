@@ -106,7 +106,7 @@ form h5 {
                     <tbody>
                         @foreach($employees as $employee)
                             <tr id="e3" data-id="3">
-                            <td class="profile-image"><img alt="{{ $employee->name }}" src="{{ ($employee->getGender() == "Male") ? asset('dist/img/default-male.png') : asset('dist/img/default-female.png') }}"></td>
+                            <td class="profile-image"><img alt="{{ $employee->firstNameFirst() }}" src="{{ ($employee->getGender() == "Male") ? asset('dist/img/default-male.png') : asset('dist/img/default-female.png') }}"></td>
                             <td class="text-center {{ $employee->employee_id <= 0 ? 'apply-opacity' : '' }}">
                                 @if($employee->employee_id <= 0) 
                                     {{ 'Unassigned' }}
@@ -190,7 +190,7 @@ form h5 {
 <script>
 $(document).ready(function() {
     $('#table').dataTable({
-        'iDisplayLength': 100,
+        'iDisplayLength': 10,
         'ordering': false
     });
 });

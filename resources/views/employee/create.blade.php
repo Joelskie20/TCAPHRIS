@@ -125,7 +125,7 @@
                                     <option value="0">-- To Follow --</option>
                                     @foreach($employees as $employee)
                                         @if($employee->hasRole('manager'))
-                                            <option value="{{ $employee->id }}">[{{ $employee->employee_id }}] {{ $employee->name }} ({{ $employee->getTeam() }})</option>
+                                            <option value="{{ $employee->id }}">[{{ $employee->employee_id }}] {{ $employee->lastNameFirst() }} ({{ $employee->getTeam() }})</option>
                                         @endif
                                     @endforeach
                                 </select>
