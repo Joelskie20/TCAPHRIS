@@ -274,9 +274,12 @@ class User extends Authenticatable
         return $this->where('id', $this->direct_manager_id)->pluck('employee_id')->first() ?? 'Unassigned';
     }
 
-    public function getManagerFirstName()
+    public function getManagerName()
     {
-        return $this->where('id', $this->direct_manager_id)->pluck('first_name')->first() ?? 'Unassigned';
+        $firstName = $this->where('id', $this->direct_manager_id)->pluck('first_name')->first();
+        $lastName = $this->where('id', $this->direct_manager_id)->pluck('last_name')->first();
+
+        return $firstName . ' ' . $lastName;
     }
 
     public function getManagerLastName()
