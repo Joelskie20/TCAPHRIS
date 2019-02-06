@@ -1,17 +1,9 @@
+/* OVERRIDES */
+.navbar-nav>.user-menu>.dropdown-menu>.user-footer .btn-default{padding:6px 1px;}
+
 /* Personal Stylesheet */
-.email-box {
-    width: 60%;
-    margin: 7% auto;
-}
-
-p.display-time {
-    display: inline-block;
-    margin: 0;
-}
-
-.mr05 {
-    margin-right: 5px !important;
-}
+.email-box{width:60%;margin: 7% auto;}
+p.display-time{display:inline-block;margin:0;}
 
 .workshift-form .row{margin-bottom:10px;padding-bottom:5px;border-bottom:1px dotted #ccc;}
 .workshift-form .row:last-child{border-bottom:0;}
@@ -19,12 +11,9 @@ label.text-bold{font-weight:700 !important;}
 table.data-list small.icon{display:inline-block;width:12px;text-align:center;}
 .day-overlap{display:none;}
 
-.apply-opacity {
-    opacity: .50;
-}
+.apply-opacity{opacity:.50;}
 
-.ml05 {
-    margin-left: 5px !important;
-}
-
-.navbar-nav>.user-menu>.dropdown-menu>.user-footer .btn-default{padding:6px 1px;}
+/* MARGIN CLASSES */
+.mt10{margin-top:10px !important;}
+.mr05{margin-right:5px !important;}
+.ml05{margin-left:5px !important;}
