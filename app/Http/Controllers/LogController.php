@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Dtr;
-use App\User;
 use App\Attendance;
 use Illuminate\Http\Request;
+use Spatie\Activitylog\Models\Activity;
 
-class DtrController extends Controller
+class LogController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +15,9 @@ class DtrController extends Controller
      */
     public function index()
     {
-        return view('dtr.index', [
+        return view('systemlog.index', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
-            'attendances' => Attendance::latest()->get()
+            'activities' => Activity::latest()->get()
         ]);
     }
 
@@ -46,25 +45,21 @@ class DtrController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Dtr  $dtr
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return view('dtr.show', [
-            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
-            'attendances' => Attendance::where('user_id', '=', $id)->latest()->get(),
-            'employee' => User::findOrFail($id)
-        ]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Dtr  $dtr
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Dtr $dtr)
+    public function edit($id)
     {
         //
     }
@@ -73,10 +68,10 @@ class DtrController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Dtr  $dtr
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dtr $dtr)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -84,29 +79,11 @@ class DtrController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Dtr  $dtr
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Dtr $dtr)
+    public function destroy($id)
     {
         //
-    }
-
-    public function exportFirstCutoff()
-    {
-        $users = User::all();
-        $attendances = Attendance::all();
-
-        // insert code below and remove dd
-        dd('first cutoff');
-    }
-
-    public function exportSecondCutOff()
-    {
-        $users = User::all();
-        $attendances = Attendance::all();
-
-        // insert code below and remove dd
-        dd('2nd cutoff');
     }
 }

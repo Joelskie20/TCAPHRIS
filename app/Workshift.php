@@ -3,15 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Workshift extends Model
 {
+    use LogsActivity;
+
     protected $guarded = [];
 
     public function createWorkshift($request)
     {
-        $this->code = $request->workshift_code;
-        $this->name = $request->workshift_name;
+        $this->code = $request->code;
+        $this->name = $request->name;
 
         $this->monday_workshift = ($request->monday_rest_day != 'RD') ? $request->monday_time_in . '-' . $request->monday_time_out . ',' . $request->monday_work_hours : 'RD';
         $this->tuesday_workshift = ($request->tuesday_rest_day != 'RD') ? $request->tuesday_time_in . '-' . $request->tuesday_time_out . ',' . $request->tuesday_work_hours : 'RD';
@@ -26,8 +29,8 @@ class Workshift extends Model
 
     public function updateWorkshift($request, $workshift)
     {
-        $this->code = $request->workshift_code;
-        $this->name = $request->workshift_name;
+        $this->code = $request->code;
+        $this->name = $request->name;
 
         $this->monday_workshift = ($request->monday_rest_day != 'RD') ? $request->monday_time_in . '-' . $request->monday_time_out . ',' . $request->monday_work_hours : 'RD';
         $this->tuesday_workshift = ($request->tuesday_rest_day != 'RD') ? $request->tuesday_time_in . '-' . $request->tuesday_time_out . ',' . $request->tuesday_work_hours : 'RD';

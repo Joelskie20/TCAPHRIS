@@ -75,8 +75,8 @@
 								@foreach($workshifts as $key => $workshift)
 									<tr id="w2" data-id="2">
 										<td>{{ ++$key }}</td>
-										<td><a title="{{ $workshift->code }}" href="#">{{ $workshift->code }}</a></td>
-										<td><a title="{{ $workshift->name }}" href="#"">{{ $workshift->name }}</a></td>
+										<td><a title="{{ $workshift->code }}" href="/workshifts/{{ $workshift->id }}/edit">{{ $workshift->code }}</a></td>
+										<td><a title="{{ $workshift->name }}" href="/workshifts/{{ $workshift->id }}/edit"">{{ $workshift->name }}</a></td>
 
 										@if($workshift->monday_workshift == 'RD')
 											<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>

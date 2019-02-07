@@ -6,6 +6,10 @@
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 <!-- bootstrap datepicker -->
 <script src="{{ asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+<!-- FAST CLICK -->
+<script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+<!-- bootstrap timepicker -->
+<script src="{{ asset('plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
 <!-- Multiple -->
 <script src="{{ asset('bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <!-- Moment.js -->
@@ -22,11 +26,15 @@ function startTime(){
 startTime();
 </script>
 <script>
-    $('div.alert').delay(3000).fadeOut(300);
 
-		function infoToModal(id, textVal, location) {
-			$('#modal-default-edit form').attr('action', '/' + location +'/' + id);
-			$('#modal-default-edit').find('input[name="name"]').val(textVal);
-		}
+  function infoToModal(id, textVal, location) {
+		$('#modal-default-edit form').attr('action', '/' + location +'/' + id);
+		$('#modal-default-edit').find('input[name="name"]').val(textVal);
+	}
+
+	$(function() {
+		$('div.alert').delay(3000).fadeOut(300);
+		FastClick.attach(document.body);
+	});
 </script>
 @yield('scripts')

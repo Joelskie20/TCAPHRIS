@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Department;
 use App\Attendance;
 use Session;
+use App\User;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -45,6 +46,10 @@ class DepartmentController extends Controller
         ]));
 
         Session::flash('message', 'Department added.');
+
+        // Log the activity
+
+        $user = new User;
 
         return redirect('/departments');
     }

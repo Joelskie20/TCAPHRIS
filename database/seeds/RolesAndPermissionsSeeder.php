@@ -58,6 +58,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'edit holiday']);
         Permission::create(['name' => 'delete holiday']);
         Permission::create(['name' => 'system settings']);
+        Permission::create(['name' => 'system log']);
 
         // create the superadmin role and assign all permissions
         $role = Role::create(['name' => 'superadmin']);
@@ -71,6 +72,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Role::create(['name' => 'manager']);
         Role::create(['name' => 'coder']);
         Role::create(['name' => 'bridge director']);
+        Role::create(['name' => 'TBD']);
 
         
 

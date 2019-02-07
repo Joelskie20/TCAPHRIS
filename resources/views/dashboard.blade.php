@@ -29,7 +29,7 @@
 										@can('time in')
 										<form method="POST" action="{{ action('DashboardController@store') }}">
 												@csrf
-												<button onclick="return confirm('Are you sure you want to Time In?');" class="btn btn-primary btn-block btn-lg"	{{ ($disabled) ? 'disabled' : '' }}>TIME IN</button>
+												<button class="btn btn-primary btn-block btn-lg"	{{ ($disabled) ? 'disabled' : '' }}>TIME IN</button>
 										</form>
 										@endcan
 									</div>
@@ -38,7 +38,7 @@
 										<form method="POST" action="{{ action('DashboardController@update', ['id' => Auth::user()->id]) }}">
 											@method('PUT')
 											@csrf
-											<button onclick="return confirm('Are you sure you want to Time Out?');" class="btn btn-primary btn-block btn-lg" {{ ($disabled) ? '' : 'disabled' }}>TIME OUT</button>
+											<button class="btn btn-primary btn-block btn-lg" {{ ($disabled) ? '' : 'disabled' }}>TIME OUT</button>
 										</form>
 										@endcan
 									</div>

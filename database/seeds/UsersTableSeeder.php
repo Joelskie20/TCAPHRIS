@@ -17,8 +17,8 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'name' => null,
-                'email' => 'janszen-kiel.jose@transcosmos.com.ph',
+                'username' => '2170043',
+                'email' => 'janszen-kiel.jose1@trans-cosmos.co.jp',
                 'mobile_number' => null,
                 'landline' => null,
                 'password' => Hash::make('2170043'),
@@ -43,9 +43,9 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => null,
-                'email' => 'ryan-michael.reyes@transcosmos.com.ph',
-                'mobile_number' => null,
+                'username' => '2150028',
+                'email' => 'ryan-michael.reyes1@trans-cosmos.co.jp',
+                'mobile_number' => '09278540425',
                 'landline' => null,
                 'password' => Hash::make('2150028'),
                 'employee_id' => '2150028',
@@ -67,8 +67,8 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => null,
-                'email' => 'christian.alde@transcosmos.com.ph',
+                'username' => '2170052',
+                'email' => 'christian.alde1@trans-cosmos.co.jp',
                 'mobile_number' => null,
                 'landline' => null,
                 'password' => Hash::make('2170052'),
@@ -91,8 +91,8 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => null,
-                'email' => 'janet.bonaagua@transcosmos.com.ph',
+                'username' => '2170132',
+                'email' => 'bonaagua.janet1@trans-cosmos.co.jp	',
                 'mobile_number' => null,
                 'landline' => null,
                 'password' => Hash::make('2170132'),
@@ -115,8 +115,8 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => null,
-                'email' => 'antonio.aduna@transcosmos.com.ph',
+                'username' => '2150088',
+                'email' => 'antonio.aduna1@trans-cosmos.co.jp',
                 'mobile_number' => null,
                 'landline' => null,
                 'password' => Hash::make('2150088'),

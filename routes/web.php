@@ -25,7 +25,11 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::group(['middleware' => ['permission:daily time records']], function() {
         Route::get('/daily-time-records/', 'DtrController@index')->name('dtr');
-        Route::get('/daily-time-records/{id}', 'DtrController@show')->name('dtr-profile')->middleware('permission:view DTR based on user ID');
+        Route::get('/daily-time-records/{id}', 'DtrController@show')->where(['id' => '[0-9]+'])->name('dtr-profile')->middleware('permission:view DTR based on user ID');
+
+
+        Route::get('/daily-time-records/export-first-cutoff', 'DtrController@exportFirstCutoff');
+        Route::get('/daily-time-records/export-second-cutoff', 'DtrController@exportSecondCutoff');
     });
 
     // Route::get('/team-schedule', 'TeamScheduleController@index')->name('team-schedule');
@@ -65,6 +69,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::patch('/employees/{user}', 'EmployeeController@update')->middleware('permission:edit employee');
         Route::get('/employee/{employee}', 'EmployeeController@show')->name('employee-profile')->middleware('permission:view employee profile');
         Route::delete('/employee/{employee}', 'EmployeeController@destroy')->middleware('permission:view employee profile');
+
+        Route::post('/employees/importEmployees', 'EmployeeController@importEmployees');
     });
 
     Route::group(['middleware' => ['permission:workshifts']], function () {
@@ -107,7 +113,22 @@ Route::group(['middleware' => 'auth'], function() {
         Route::delete('/permissions/role/{role}', 'PermissionController@destroy');
     });
 
+    Route::get('/overtime', 'OvertimeController@index')->name('overtime');
+
     Route::get('/settings', 'DashboardController@settings');
     Route::post('/settings/changePassword', 'DashboardController@changePassword');
 
+    Route::group(['middleware' => ['permission:system log']], function() {
+        Route::get('/system-log', 'LogController@index')->name('system-log');
+    });
+
+
+    Route::get('/overtimes-for-approval', 'OvertimeController@forApproval')->name('overtimes-for-approval');
+    Route::get('/approved-overtimes', 'OvertimeController@approved')->name('approved-overtimes');
+    Route::get('/denied-overtimes', 'OvertimeController@denied')->name('denied-overtimes');
+    Route::get('/approving-overtimes', 'OvertimeController@index')->name('approving-overtimes');
+    Route::post('/overtimes', 'OvertimeController@store');
+    Route::patch('/overtimes/{overtime}', 'OvertimeController@update');
+    Route::patch('/approving-overtimes/{overtime}', 'OvertimeController@approvingOvertimes');
+    Route::patch('/denying-overtimes/{overtime}', 'OvertimeController@denyingOvertimes');
 });

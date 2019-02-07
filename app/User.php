@@ -98,7 +98,7 @@ class User extends Authenticatable
 
         // Other Fields
 
-        $this->name = $request->last_name . ', ' . $request->first_name . ' ' . $request->middle_name;
+        $this->username = $request->employee_id;
         $this->password = Hash::make($request->employee_id);
         $this->assignRole($request->roles);
 
@@ -167,7 +167,6 @@ class User extends Authenticatable
 
         // Other Fields
 
-        $this->name = $request->last_name . ', ' . $request->first_name . ' ' . $request->middle_name;
         $this->status = $request->status;
         $this->syncRoles($request->roles);
 
@@ -277,7 +276,15 @@ class User extends Authenticatable
 
     public function getManagerName()
     {
-        return $this->where('id', $this->direct_manager_id)->pluck('name')->first() ?? 'Unassigned';
+        $firstName = $this->where('id', $this->direct_manager_id)->pluck('first_name')->first();
+        $lastName = $this->where('id', $this->direct_manager_id)->pluck('last_name')->first();
+
+        return $firstName . ' ' . $lastName;
+    }
+
+    public function getManagerLastName()
+    {
+        return $this->where('id', $this->direct_manager_id)->pluck('last_name')->first() ?? 'Unassigned';
     }
 
     public function leaves()
@@ -288,5 +295,10 @@ class User extends Authenticatable
     public function attendances()
     {
         return $this->hasMany('App\Attendance');
+    }
+
+    public function overtimes()
+    {
+        $this->hasMany('App\Overtime');
     }
 }

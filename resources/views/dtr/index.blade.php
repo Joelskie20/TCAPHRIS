@@ -20,6 +20,7 @@
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title">Timesheet</h3>
+                        
                         <div class="box-options pull-right">
                             <select class="form-control">
                                 <option>201812</option>
@@ -27,6 +28,13 @@
                                 <option>201810</option>
                                 <option>201809</option>
                             </select>
+                        </div>
+
+                        <div class="pull-right mr05">
+                            <a href="/daily-time-records/export-second-cutoff" class="btn bnt btn-success"><i class="glyphicon glyphicon-file"></i> Export 2nd cutoff</a>
+                        </div>
+                        <div class="pull-right mr05">
+                            <a href="/daily-time-records/export-first-cutoff" class="btn bnt btn-success"><i class="glyphicon glyphicon-file"></i> Export 1st cutoff</a>
                         </div>
                     </div>
                     <div class="box-body">
@@ -39,11 +47,9 @@
                                     <th class="text-center">Time<br>In</th>
                                     <th class="text-center">Time<br>Out</th>
                                     <th class="text-center">Work<br>Hours</th>
-                                    <th class="text-center">Night Diff<br>Hours</th>
                                     <th class="text-center">Late</th>
                                     <th class="text-center">Undertime</th>
                                     <th class="text-center">Overtime</th>
-                                    <th class="text-center">Overtime<br>Excess</th>
                                     <th class="text-center">Leave Type</th>
                                     <th class="text-center">Leave Days</th>
                                 </tr>
@@ -63,8 +69,6 @@
                                             {{ ($attendance->time_out == NULL) ? '' : date('g:i:s a', $attendance->time_out) }} <br><span style="font-size: 80%; opacity: .50"> {{ ($attendance->time_out == NULL) ? '' : '('. date('m/d', $attendance->time_out) .')' }}</span>
                                         </td>
                                         <td>{{ ($attendance->time_out == NULL) ? '' : App\Dtr::timeDiff($attendance->time_out, $attendance->time_in) }}</td>
-                                        <td>-</td>
-                                        <td>-</td>
                                         <td>-</td>
                                         <td>-</td>
                                         <td>-</td>

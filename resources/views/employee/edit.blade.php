@@ -15,8 +15,10 @@
 @section('content')
 <div class="content-wrapper">
 
-    <section class="content-header">
-        <h1>Edit Employee</h1>
+    <section class="content-header" style="overflow: hidden;">
+        <h1 class="pull-left">Edit Employee » {{ $user->firstNameFirst() }}</h1>
+
+        <a href="/employee/{{ $user->id }}" class="btn btn-success pull-right"><i class="glyphicon glyphicon-user"></i> View Profile</a>
     </section>
 
     <!-- Main content -->
@@ -130,7 +132,7 @@
                                     <option value="0">-- To Follow --</option>
                                     @foreach($employees as $employee)
                                         @if($employee->hasRole('manager'))
-                                            <option value="{{ $employee->id }}" {{ $employee->id == $user->direct_manager_id ? 'selected' : '' }}>[{{ $employee->employee_id }}] {{ $employee->name }} ({{ $employee->getTeam() }})</option>
+                                            <option value="{{ $employee->id }}" {{ $employee->id == $user->direct_manager_id ? 'selected' : '' }}>[{{ $employee->employee_id }}] {{ $employee->lastNameFirst() }} ({{ $employee->getTeam() }})</option>
                                         @endif
                                     @endforeach
                                 </select>

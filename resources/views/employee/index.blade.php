@@ -38,6 +38,25 @@ form h5 {
 .permanent-address {
     display: none;
 }
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;   
+    cursor: inherit;
+    display: block;
+}
 </style>
 @endsection
 
@@ -57,7 +76,11 @@ form h5 {
                 <h3 class="box-title">Employee List</h3>
                 @can('add employee')
                 <div class="box-tools pull-right">
-                    <a href="/employees/create" class="btn btn-success btn-sm"><i class="fa fa-plus mr05"></i> ADD EMPLOYEE</a>
+                    {{-- <a href="/employees/importEmployees" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-download-alt mr05"></i>IMPORT</a> --}}
+                    <span class="btn btn-success btn-file btn-sm">
+                        <input type="file" name="employees" class="btn btn-success">IMPORT</input>
+                    </span>
+                    <a href="/employees/create" class="btn btn-success btn-sm"><i class="fa fa-plus mr05"></i>ADD EMPLOYEE</a>
                 </div>
                 @endcan
             </div>
@@ -83,7 +106,7 @@ form h5 {
                     <tbody>
                         @foreach($employees as $employee)
                             <tr id="e3" data-id="3">
-                            <td class="profile-image"><img alt="{{ $employee->name }}" src="{{ ($employee->getGender() == "Male") ? asset('dist/img/default-male.png') : asset('dist/img/default-female.png') }}"></td>
+                            <td class="profile-image"><img alt="{{ $employee->firstNameFirst() }}" src="{{ ($employee->getGender() == "Male") ? asset('dist/img/default-male.png') : asset('dist/img/default-female.png') }}"></td>
                             <td class="text-center {{ $employee->employee_id <= 0 ? 'apply-opacity' : '' }}">
                                 @if($employee->employee_id <= 0) 
                                     {{ 'Unassigned' }}
@@ -167,7 +190,7 @@ form h5 {
 <script>
 $(document).ready(function() {
     $('#table').dataTable({
-        'iDisplayLength': 100,
+        'iDisplayLength': 10,
         'ordering': false
     });
 });

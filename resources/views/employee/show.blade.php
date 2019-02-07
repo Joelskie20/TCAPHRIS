@@ -311,7 +311,7 @@ table tr.rest-day{background:#98fb98 !important;}
 												<tr>
 													<th>Direct Manager</th>
 													@if ($employee->direct_manager_id == 0)
-														<td>Unassigned</td>
+														<td class="apply-opacity">Unassigned</td>
 													@else
 														<td><a href="/employee/{{ $employee->getManagerId() }}">[{{ $employee->getManagerEmployeeId() }}] {{ $employee->getManagerName() }}</a></td>
 													@endif

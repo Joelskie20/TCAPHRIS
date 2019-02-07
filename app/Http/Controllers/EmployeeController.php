@@ -131,5 +131,10 @@ class EmployeeController extends Controller
         Session::flash('message', 'User has been deleted.');
 
         return redirect('/employees');
-    }    
+    }
+
+    public function importEmployees(Request $request)
+    {
+        dd('file');
+    }
 }

@@ -125,7 +125,7 @@
                                     <option value="0">-- To Follow --</option>
                                     @foreach($employees as $employee)
                                         @if($employee->hasRole('manager'))
-                                            <option value="{{ $employee->id }}">[{{ $employee->employee_id }}] {{ $employee->name }} ({{ $employee->getTeam() }})</option>
+                                            <option value="{{ $employee->id }}">[{{ $employee->employee_id }}] {{ $employee->lastNameFirst() }} ({{ $employee->getTeam() }})</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -539,12 +539,12 @@
 
                                     @if(Auth::user()->hasRole('superadmin'))
                                         <div class="checkbox roles">
-                                            <label><input type="checkbox" class="checkbox-admin" name="roles[]" value="{{ $role->name }}">{{ ucwords($role->name) }}</label>
+                                            <label><input type="checkbox" class="checkbox-admin" name="roles[]" value="{{ $role->name }}" {{ ($role->name == 'TBD') ? 'checked' : '' }}>{{ ucwords($role->name) }}</label>
                                         </div>
                                     @else
                                         @if($role->name === 'superadmin') @continue @endif
                                         <div class="checkbox roles">
-                                            <label><input type="checkbox" class="checkbox-admin" name="roles[]" value="{{ $role->name }}">{{ ucwords($role->name) }}</label>
+                                            <label><input type="checkbox" class="checkbox-admin" name="roles[]" value="{{ $role->name }}" {{ ($role->name == 'TBD') ? 'checked' : '' }}>{{ ucwords($role->name) }}</label>
                                         </div>
                                     @endif
 
