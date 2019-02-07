@@ -8,6 +8,8 @@
 <script src="{{ asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 <!-- FAST CLICK -->
 <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+<!-- bootstrap timepicker -->
+<script src="{{ asset('plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
 <!-- Multiple -->
 <script src="{{ asset('bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <!-- Moment.js -->

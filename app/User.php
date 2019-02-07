@@ -296,4 +296,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Attendance');
     }
+
+    public function overtimes()
+    {
+        $this->hasMany('App\Overtime');
+    }
 }

@@ -121,4 +121,14 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => ['permission:system log']], function() {
         Route::get('/system-log', 'LogController@index')->name('system-log');
     });
+
+
+    Route::get('/overtimes-for-approval', 'OvertimeController@forApproval')->name('overtimes-for-approval');
+    Route::get('/approved-overtimes', 'OvertimeController@approved')->name('approved-overtimes');
+    Route::get('/denied-overtimes', 'OvertimeController@denied')->name('denied-overtimes');
+    Route::get('/approving-overtimes', 'OvertimeController@index')->name('approving-overtimes');
+    Route::post('/overtimes', 'OvertimeController@store');
+    Route::patch('/overtimes/{overtime}', 'OvertimeController@update');
+    Route::patch('/approving-overtimes/{overtime}', 'OvertimeController@approvingOvertimes');
+    Route::patch('/denying-overtimes/{overtime}', 'OvertimeController@denyingOvertimes');
 });

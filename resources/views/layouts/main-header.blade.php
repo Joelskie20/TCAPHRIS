@@ -60,7 +60,7 @@
           </li> --}}
 
           <!-- User Account Menu -->
-          <li class="dropdown user user-menu">
+          <li class="dropdown user user-menu pull-right">
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->

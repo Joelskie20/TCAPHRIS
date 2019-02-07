@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Overtime;
 use App\Attendance;
+use App\User;
+use Carbon;
+use Auth;
+use Session;
+use Illuminate\Http\Request;
 
 class OvertimeController extends Controller
 {
@@ -14,9 +19,13 @@ class OvertimeController extends Controller
      */
     public function index()
     {
-        return view('overtime.index', [
+        return view('overtime.approving-overtimes', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
-
+            'users' => User::all(),
+            'overtimes' => Overtime::where([
+                'status' => 'forApproval',
+                'direct_manager_id' => Auth::id()
+            ])->get()
         ]);
     }
 
@@ -38,16 +47,35 @@ class OvertimeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'overtime_date' => 'required',
+            'time_in' => 'required',
+            'time_out' => 'required'
+        ]);
+
+        Overtime::create([
+            'user_id' => $request->employee_id,
+            'date' => Carbon::parse($request->overtime_date),
+            'time_in' => strtotime($request->time_in),
+            'time_out' => strtotime($request->time_out),
+            'filing_date' => Carbon::now(),
+            'direct_manager_id' => User::where('id', $request->employee_id)->value('direct_manager_id'),
+            'remarks' => $request->remarks
+        ]);
+
+        Session::flash('message', 'Leave added.');
+
+        return redirect('/overtimes-for-approval');
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Overtime  $overtime
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Overtime $overtime)
     {
         //
     }
@@ -55,10 +83,10 @@ class OvertimeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Overtime  $overtime
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Overtime $overtime)
     {
         //
     }
@@ -67,22 +95,85 @@ class OvertimeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Overtime  $overtime
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Overtime $overtime)
     {
-        //
+        $overtime->update([
+            'user_id' => $request->employee_id,
+            'date' => Carbon::parse($request->overtime_date),
+            'time_in' => strtotime($request->time_in),
+            'time_out' => strtotime($request->time_out),
+            'remarks' => $request->remarks
+        ]);
+
+        Session::flash('message', 'Leave updated.');
+
+        return redirect('/overtimes-for-approval');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Overtime  $overtime
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Overtime $overtime)
     {
         //
     }
+
+    public function forApproval()
+    {
+        return view('overtime.forApproval', [
+           'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
+           'users' => User::all(),
+           'overtimes' => Overtime::where('user_id', Auth::id())->where('status', 'forApproval')->get()
+        ]);
+    }
+
+    public function approved()
+    {
+        return view('overtime.approved', [
+           'disabled' => (Attendance::checkAttendanceStatus()) ? true : false, 
+           'users' => User::all(),
+           'overtimes' => Overtime::where('user_id', Auth::id())->where('status', 'approved')->get()
+        ]);
+    }
+
+    public function denied()
+    {
+        return view('overtime.denied', [
+           'disabled' => (Attendance::checkAttendanceStatus()) ? true : false, 
+           'users' => User::all(),
+           'overtimes' => Overtime::where('user_id', Auth::id())->where('status', 'denied')->get()
+        ]);
+    }
+
+    public function approvingOvertimes(Overtime $overtime)
+    {
+        $overtime->update([
+            'status' => 'approved',
+            'date_approved' => Carbon::now()
+        ]);
+
+        Session::flash('message', 'Overtime approved.');
+
+        return redirect('/approving-overtimes');
+    }
+
+    public function denyingOvertimes(Overtime $overtime)
+    {
+        $overtime->update([
+            'status' => 'denied',
+            'date_denied' => Carbon::now()
+        ]);
+
+        Session::flash('message', 'Overtime denied.');
+
+        return redirect('/approving-overtimes');
+    }
+
+
 }

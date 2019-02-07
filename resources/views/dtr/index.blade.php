@@ -47,11 +47,9 @@
                                     <th class="text-center">Time<br>In</th>
                                     <th class="text-center">Time<br>Out</th>
                                     <th class="text-center">Work<br>Hours</th>
-                                    <th class="text-center">Night Diff<br>Hours</th>
                                     <th class="text-center">Late</th>
                                     <th class="text-center">Undertime</th>
                                     <th class="text-center">Overtime</th>
-                                    <th class="text-center">Overtime<br>Excess</th>
                                     <th class="text-center">Leave Type</th>
                                     <th class="text-center">Leave Days</th>
                                 </tr>
@@ -71,8 +69,6 @@
                                             {{ ($attendance->time_out == NULL) ? '' : date('g:i:s a', $attendance->time_out) }} <br><span style="font-size: 80%; opacity: .50"> {{ ($attendance->time_out == NULL) ? '' : '('. date('m/d', $attendance->time_out) .')' }}</span>
                                         </td>
                                         <td>{{ ($attendance->time_out == NULL) ? '' : App\Dtr::timeDiff($attendance->time_out, $attendance->time_in) }}</td>
-                                        <td>-</td>
-                                        <td>-</td>
                                         <td>-</td>
                                         <td>-</td>
                                         <td>-</td>
