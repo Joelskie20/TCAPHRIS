@@ -128,7 +128,7 @@
 
         @can('system settings')
         <!-- COMPANY -->
-        <li class="treeview {{ (Route::is('departments') || Route::is('teams') || Route::is('positions') || Route::is('roles') || Route::is('holiday')) ? 'active' : '' }}">
+        <li class="treeview {{ (Route::is('divisions') || Route::is('teams') || Route::is('positions') || Route::is('roles') || Route::is('accounts') || Route::is('holiday') || Route::is('job-codes')) ? 'active' : '' }}">
             <a href="#">
                 <i class="fa fa-gears"></i>
                 <span>System Settings</span>
@@ -137,14 +137,15 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                {{-- <li><a href="#"><i class="fa fa-calendar"></i>Calendar</a></li> --}}
-                @can('departments')
-                <li><a href="{{ route('departments') }}"><i class="fa fa-briefcase"></i>Departments</a></li>
-                @endcan
+
+                <li><a href="{{ route('divisions') }}"><i class="fa fa-briefcase"></i>Divisions</a></li>
                 
                 @can('teams')
                 <li><a href="{{ route('teams') }}"><i class="fa fa-users"></i>Teams</a></li>
                 @endcan
+
+                <li><a href="{{ route('accounts') }}"><i class="fa fa-user"></i>Accounts</a></li>
+                <li><a href="{{ route('job-codes') }}"><i class="fa fa-user"></i>Job Codes</a></li>
 
                 @can('positions')
                 <li><a href="{{ route('positions') }}"><i class="fa fa-black-tie"></i>Positions</a></li>

@@ -3,21 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Activitylog\Traits\LogsActivity;
 
 class Team extends Model
 {
+    protected $fillable = ['division_id', 'name'];
 
-    use LogsActivity;
-    
-    protected $fillable = ['name'];
-
-    protected static $logAttributes = ['name'];
-
-    protected static $logName = 'Team';
-
-    public function getDescriptionForEvent(string $eventName): string
+    public function division()
     {
-        return "{$eventName} the team";
+        return $this->belongsTo(Division::class);
+    }
+
+    public function accounts()
+    {
+        return $this->hasMany(Account::class);
     }
 }

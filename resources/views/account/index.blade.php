@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Teams')
+@section('title', 'Accounts')
 
 @section('styles')
 <!-- DataTables -->
@@ -11,7 +11,7 @@
 <div class="content-wrapper">
     
     <section class="content-header">
-	    <h1>Teams</h1>
+	    <h1>Accounts</h1>
     </section>
     <div class="content">
         @if (Session::has('message'))
@@ -20,8 +20,8 @@
         <div class="box">
             
             <div class="box-header with-border">
-                <h3 class="box-title">Teams List</h3>
-                <a href="/teams/create" class="btn btn-success pull-right"><i class="fa fa-plus mr05"></i> ADD TEAM</a>
+                <h3 class="box-title">Accounts List</h3>
+                <a href="/accounts/create" class="btn btn-success pull-right"><i class="fa fa-plus mr05"></i> ADD ACCOUNT</a>
             </div>
             
             <div class="box-body">
@@ -31,20 +31,22 @@
                         <tr>
                             <th></th>
                             <th>Division Name</th>
+                            <th>Team Name</th>
                             <th>Name</th>
                             <th class="no-sort"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($teams as $key => $team)
+                        @foreach($accounts as $key => $account)
                         <tr>
                             <td>{{ ++$key }}</td>
-                            <td>{{ $team->division->name }}</td>
-                            <td>{{ $team->name }}</td>
+                            <td>{{ $account->team->division->name }}</td>
+                            <td>{{ $account->team->name }}</td>
+                            <td>{{ $account->name }}</td>
                             <td>
-                                <a href="/teams/{{ $team->id }}/edit" class="btn btn-success btn-xs btn-edit"><i class="fa fa-pencil"></i></a>
+                                <a href="/accounts/{{ $account->id }}/edit" class="btn btn-success btn-xs btn-edit"><i class="fa fa-pencil"></i></a>
                                 
-                                <form style="display: inline-block;" action="/teams/{{ $team->id }}" method="POST">
+                                <form style="display: inline-block;" action="/accounts/{{ $account->id }}" method="POST">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');" title="Delete"><i class="fa fa-trash-o"></i></button>

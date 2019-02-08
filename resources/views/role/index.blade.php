@@ -129,7 +129,7 @@
                                                     {{ ucwords($permission->name) }}@if ( ! $loop->last),@endif
                                                 @endforeach
                                             @else
-                                                <em>No Permission(s) Set</em>
+                                                <em>No Permission Set</em>
                                             @endif
                                             </td>
                                             <td class="data-options">

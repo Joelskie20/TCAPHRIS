@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Team;
+use App\JobCode;
 use App\Division;
+use App\Team;
+use App\Account;
 use App\Attendance;
 use Illuminate\Http\Request;
 
-class TeamController extends Controller
+class JobCodeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +18,9 @@ class TeamController extends Controller
      */
     public function index()
     {
-        return view('team.index', [
+        return view('jobcode.index', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
-            'teams' => Team::all()
+            'job_codes' => JobCode::all()
         ]);
     }
 
@@ -29,9 +31,12 @@ class TeamController extends Controller
      */
     public function create()
     {
-        return view('team.create', [
+        return view('jobcode.create', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
-            'divisions' => Division::all()
+            'divisions' => Division::all(),
+            'teams' => Team::all(),
+            'accounts' => Account::all(),
+            'job_codes' => JobCode::all()
         ]);
     }
 
@@ -44,23 +49,24 @@ class TeamController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'code' => 'required',
             'name' => 'required'
         ]);
 
-        Team::create($request->all());
+        JobCode::create($request->all());
 
-        session()->flash('message', 'Team added.');
+        session()->flash('message', 'Job Code added.');
 
-        return redirect('/teams');
+        return redirect('/job-codes');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Team  $team
+     * @param  \App\JobCode  $jobCode
      * @return \Illuminate\Http\Response
      */
-    public function show(Team $team)
+    public function show(JobCode $jobCode)
     {
         //
     }
@@ -68,16 +74,18 @@ class TeamController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Team  $team
+     * @param  \App\JobCode  $jobCode
      * @return \Illuminate\Http\Response
      */
-    public function edit(Team $team)
+    public function edit(JobCode $jobCode)
     {
-        return view('team.edit', [
+        return view('jobcode.edit', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
             'divisions' => Division::all(),
-            'team' => $team
-            
+            'teams' => Team::all(),
+            'accounts' => Account::all(),
+            'job_codes' => JobCode::all(),
+            'job_code' => $jobCode
         ]);
     }
 
@@ -85,34 +93,35 @@ class TeamController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Team  $team
+     * @param  \App\JobCode  $jobCode
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Team $team)
+    public function update(Request $request, JobCode $jobCode)
     {
         $request->validate([
+            'code' => 'required',
             'name' => 'required'
         ]);
 
-        $team->update($request->all());
+        $jobCode->update($request->all());
 
-        session()->flash('message', 'Team updated.');
+        session()->flash('message', 'Job Code updated.');
 
-        return redirect('/teams');
+        return redirect('/job-codes');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Team  $team
+     * @param  \App\JobCode  $jobCode
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Team $team)
+    public function destroy(JobCode $jobCode)
     {
-        $team->delete();
+        $jobCode->delete();
 
-        session()->flash('message', 'Team deleted.');
+        session()->flash('message', 'Job Code deleted.');
 
-        return redirect('/teams');
+        return redirect('/job-codes');
     }
 }
