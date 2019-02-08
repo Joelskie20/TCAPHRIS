@@ -113,8 +113,6 @@ Route::group(['middleware' => 'auth'], function() {
         Route::delete('/permissions/role/{role}', 'PermissionController@destroy');
     });
 
-    Route::get('/overtime', 'OvertimeController@index')->name('overtime');
-
     Route::get('/settings', 'DashboardController@settings');
     Route::post('/settings/changePassword', 'DashboardController@changePassword');
 
@@ -131,4 +129,30 @@ Route::group(['middleware' => 'auth'], function() {
     Route::patch('/overtimes/{overtime}', 'OvertimeController@update');
     Route::patch('/approving-overtimes/{overtime}', 'OvertimeController@approvingOvertimes');
     Route::patch('/denying-overtimes/{overtime}', 'OvertimeController@denyingOvertimes');
+
+    Route::get('/divisions', 'DivisionController@index')->name('divisions');
+    Route::get('/divisions/create', 'DivisionController@create');
+    Route::post('/divisions', 'DivisionController@store');
+    Route::get('/divisions/{division}/edit', 'DivisionController@edit');
+    Route::patch('/divisions/{division}', 'DivisionController@update');
+    Route::delete('/divisions/{division}', 'DivisionController@destroy');
+
+
+
+
+
+    Route::get('/accounts', 'AccountController@index')->name('accounts');
+    Route::get('/accounts/create', 'AccountController@create');
+    Route::post('/accounts', 'AccountController@store');
+    Route::get('/accounts/{account}/edit', 'AccountController@edit');
+    Route::patch('/accounts/{account}', 'AccountController@update');
+    Route::delete('/accounts/{account}', 'AccountController@destroy');
+
+    Route::get('/job-codes', 'JobCodeController@index')->name('job-codes');
+    Route::post('/job-codes', 'JobCodeController@store');
+    Route::get('/job-codes/create', 'JobCodeController@create');
+    Route::get('/job-codes/{jobCode}/edit', 'JobCodeController@edit');
+    Route::patch('/job-codes/{jobCode}', 'JobCodeController@update');
+    Route::delete('/job-codes/{jobCode}', 'JobCodeController@destroy');
+
 });

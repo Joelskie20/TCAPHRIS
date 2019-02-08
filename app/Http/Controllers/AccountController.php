@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Account;
 use App\Team;
 use App\Division;
 use App\Attendance;
 use Illuminate\Http\Request;
 
-class TeamController extends Controller
+class AccountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +17,9 @@ class TeamController extends Controller
      */
     public function index()
     {
-        return view('team.index', [
+        return view('account.index', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
-            'teams' => Team::all()
+            'accounts' => Account::all(),
         ]);
     }
 
@@ -29,9 +30,10 @@ class TeamController extends Controller
      */
     public function create()
     {
-        return view('team.create', [
+        return view('account.create', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
-            'divisions' => Division::all()
+            'divisions' => Division::all(),
+            'teams' => Team::all()
         ]);
     }
 
@@ -47,20 +49,20 @@ class TeamController extends Controller
             'name' => 'required'
         ]);
 
-        Team::create($request->all());
+        Account::create($request->all());
 
-        session()->flash('message', 'Team added.');
+        session()->flash('message', 'Account added.');
 
-        return redirect('/teams');
+        return redirect('/accounts');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Team  $team
+     * @param  \App\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function show(Team $team)
+    public function show(Account $account)
     {
         //
     }
@@ -68,16 +70,16 @@ class TeamController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Team  $team
+     * @param  \App\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function edit(Team $team)
+    public function edit(Account $account)
     {
-        return view('team.edit', [
+        return view('account.edit', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
             'divisions' => Division::all(),
-            'team' => $team
-            
+            'teams' => Team::all(),
+            'account' => $account
         ]);
     }
 
@@ -85,34 +87,34 @@ class TeamController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Team  $team
+     * @param  \App\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Team $team)
+    public function update(Request $request, Account $account)
     {
         $request->validate([
             'name' => 'required'
         ]);
 
-        $team->update($request->all());
+        $account->update($request->all());
 
-        session()->flash('message', 'Team updated.');
+        session()->flash('message', 'Account updated.');
 
-        return redirect('/teams');
+        return redirect('/accounts');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Team  $team
+     * @param  \App\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Team $team)
+    public function destroy(Account $account)
     {
-        $team->delete();
+        $account->delete();
 
-        session()->flash('message', 'Team deleted.');
+        session()->flash('message', 'Account deleted.');
 
-        return redirect('/teams');
+        return redirect('/accounts');
     }
 }

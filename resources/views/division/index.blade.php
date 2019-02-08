@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Teams')
+@section('title', 'Divisions')
 
 @section('styles')
 <!-- DataTables -->
@@ -11,7 +11,7 @@
 <div class="content-wrapper">
     
     <section class="content-header">
-	    <h1>Teams</h1>
+	    <h1>Divisions</h1>
     </section>
     <div class="content">
         @if (Session::has('message'))
@@ -20,8 +20,8 @@
         <div class="box">
             
             <div class="box-header with-border">
-                <h3 class="box-title">Teams List</h3>
-                <a href="/teams/create" class="btn btn-success pull-right"><i class="fa fa-plus mr05"></i> ADD TEAM</a>
+                <h3 class="box-title">Divisions List</h3>
+                <a href="/divisions/create" class="btn btn-success pull-right"><i class="fa fa-plus mr05"></i> ADD DIVISION</a>
             </div>
             
             <div class="box-body">
@@ -30,21 +30,19 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Division Name</th>
                             <th>Name</th>
                             <th class="no-sort"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($teams as $key => $team)
+                        @foreach($divisions as $key => $division)
                         <tr>
                             <td>{{ ++$key }}</td>
-                            <td>{{ $team->division->name }}</td>
-                            <td>{{ $team->name }}</td>
+                            <td>{{ $division->name }}</td>
                             <td>
-                                <a href="/teams/{{ $team->id }}/edit" class="btn btn-success btn-xs btn-edit"><i class="fa fa-pencil"></i></a>
+                                <a href="/divisions/{{ $division->id }}/edit" class="btn btn-success btn-xs btn-edit"><i class="fa fa-pencil"></i></a>
                                 
-                                <form style="display: inline-block;" action="/teams/{{ $team->id }}" method="POST">
+                                <form style="display: inline-block;" action="/divisions/{{ $division->id }}" method="POST">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');" title="Delete"><i class="fa fa-trash-o"></i></button>

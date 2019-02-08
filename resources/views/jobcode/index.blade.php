@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Teams')
+@section('title', 'Job Codes')
 
 @section('styles')
 <!-- DataTables -->
@@ -11,7 +11,7 @@
 <div class="content-wrapper">
     
     <section class="content-header">
-	    <h1>Teams</h1>
+	    <h1>Job Codes</h1>
     </section>
     <div class="content">
         @if (Session::has('message'))
@@ -20,8 +20,8 @@
         <div class="box">
             
             <div class="box-header with-border">
-                <h3 class="box-title">Teams List</h3>
-                <a href="/teams/create" class="btn btn-success pull-right"><i class="fa fa-plus mr05"></i> ADD TEAM</a>
+                <h3 class="box-title">Job Codes' List</h3>
+                <a href="/job-codes/create" class="btn btn-success pull-right"><i class="fa fa-plus mr05"></i> ADD Job Code</a>
             </div>
             
             <div class="box-body">
@@ -31,20 +31,26 @@
                         <tr>
                             <th></th>
                             <th>Division Name</th>
+                            <th>Team Name</th>
+                            <th>Account Name</th>
+                            <th>Code</th>
                             <th>Name</th>
                             <th class="no-sort"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($teams as $key => $team)
+                        @foreach($job_codes as $key => $job_code)
                         <tr>
                             <td>{{ ++$key }}</td>
-                            <td>{{ $team->division->name }}</td>
-                            <td>{{ $team->name }}</td>
+                            <td>{{ $job_code->account->team->division->name }}</td>
+                            <td>{{ $job_code->account->team->name }}</td>
+                            <td>{{ $job_code->account->name }}</td>
+                            <td>{{ $job_code->code }}</td>
+                            <td>{{ $job_code->name }}</td>
                             <td>
-                                <a href="/teams/{{ $team->id }}/edit" class="btn btn-success btn-xs btn-edit"><i class="fa fa-pencil"></i></a>
+                                <a href="/job-codes/{{ $job_code->id }}/edit" class="btn btn-success btn-xs btn-edit"><i class="fa fa-pencil"></i></a>
                                 
-                                <form style="display: inline-block;" action="/teams/{{ $team->id }}" method="POST">
+                                <form style="display: inline-block;" action="/job-codes/{{ $job_code->id }}" method="POST">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');" title="Delete"><i class="fa fa-trash-o"></i></button>
