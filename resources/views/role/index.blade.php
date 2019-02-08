@@ -65,48 +65,56 @@
                     </form>
                     <!-- /.modal-dialog -->
                 </div>
+
+                <div class="modal fade" id="modal-default-edit">
+                    <form action="#" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Edit Role</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group role-name" id="role-name-add">
+                                        <label for="role-name-add-label">Role Name</label>
+                                        <input type="text" class="form-control" name="name" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-update-role">Update Role</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                    </form>
+                    <!-- /.modal-dialog -->
+                </div>
+
                 <div id="data-table_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                     
                     <div class="row">
                         <div class="col-sm-12">
                             <table id="table" class="table table-bordered table-hover table-striped dataTable" role="grid" aria-describedby="data-table_info">
+                                <colgroup>
+                                    <col width="10%">
+                                    <col width="3%">
+                                    <col width="77%">
+                                    <col width="10%">
+                                </colgroup>
                                 <thead>
                                     <tr>
                                         <th style="width: 80px;">Role Name</th>
                                         <th style="width: 55px;">Members</th>
                                         <th style="width: 801px;">Permissions</th>
-                                        <th></th>
+                                        <th class="no-sort"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($roles as $role)
-                                        <div class="modal fade" id="modal-default-edit-{{ $role->id }}">
-                                            <form action="{{ action('RoleController@update', ['id' => $role->id]) }}" method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span></button>
-                                                            <h4 class="modal-title">Edit Role</h4>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="form-group role-name" id="role-name-add">
-                                                                <label for="role-name-add-label">Role Name</label>
-                                                                <input type="text" class="form-control" name="name" value="{{ $role->name }}" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-primary btn-update-role">Update Role</button>
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                                        </div>
-                                                    </div>
-                                                    <!-- /.modal-content -->
-                                                </div>
-                                            </form>
-                                            <!-- /.modal-dialog -->
-                                        </div>
 
                                         @if($role->name === 'superadmin') @continue @endif
 
@@ -126,7 +134,7 @@
                                             </td>
                                             <td class="data-options">
                                                 <a href="/permissions/role/{{ $role->id }}" class="btn btn-primary btn-xs mr05" title="Permissions" target="_blank"><i class="fa fa-key"></i></a>
-                                                <button type="button" class="btn btn-success btn-xs mr05" data-toggle="modal" data-target="#modal-default-edit-{{ $role->id }}"><i class="fa fa-pencil"></i></button>
+                                                <button onclick="infoToModal('{{ $role->id }}','{{ ucwords($role->name) }}')" type="button" class="btn btn-success btn-xs mr05" data-toggle="modal" data-target="#modal-default-edit"><i class="fa fa-pencil"></i></button>
                                                 <form style="display: inline-block;" action="/roles/{{ $role->id }}" method="POST">
                                                     @method('DELETE')
                                                     @csrf
@@ -159,9 +167,16 @@
 <script>
 $(document).ready(function() {
     $('#table').dataTable({
-        'iDisplayLength': 100
+        'iDisplayLength': 100,
+        'columnDefs': [{'targets': 'no-sort','orderable': false,}]
     });
 });
+
+function infoToModal(id, textVal) {
+	$('#modal-default-edit form').attr('action', '/roles/' + id);
+    $('#modal-default-edit').find('input[name="name"]').val(textVal);
+}
+
 </script>
 <script>
     @if(count($errors) > 0)

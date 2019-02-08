@@ -93,25 +93,26 @@
                 </div>
                 
                 <table id="table" class="table table-bordered table-striped">
-                    <colgroup width="5%">
-					<colgroup width="85%">
-					<colgroup width="10%">
+                    <colgroup>
+                        <col width="5%">
+                        <col width="85%">
+                        <col width="10%">
+                    </colgroup>
                     <thead>
                         <tr>
                             <th></th>
                             <th>Team Name</th>
-                            <th>Action</th>
+                            <th class="no-sort"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($teams as $key => $team)
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td class="teamName">{{ $team->name }}</td>
+                                <td>{{ $team->name }}</td>
                                 <td>
                                     @can('edit team')
-                                    <input type="hidden" name="team_id" value="{{ $team->id }}">
-                                    <button type="button" class="btn btn-success btn-xs btn-edit" data-toggle="modal" data-target="#modal-default-edit"><i class="fa fa-pencil"></i></button>
+                                    <button onclick="infoToModal('{{ $team->id }}','{{ $team->name }}','teams')" type="button" class="btn btn-success btn-xs btn-edit" data-toggle="modal" data-target="#modal-default-edit"><i class="fa fa-pencil"></i></button>
                                     @endcan
 
                                     @can('delete team')
@@ -142,14 +143,8 @@
 <script>
 $(document).ready(function() {
     $('#table').dataTable({
-        'iDisplayLength': 100
-    });
-
-    $('.btn-edit').click(function(){
-        let id = $(this).closest('tr').find('input[name="team_id"]').val();
-        let teamName = $(this).closest('tr').find('.teamName').html();
-        $('#modal-default-edit').find('input[name="name"]').val(teamName);
-		$('#modal-default-edit form').attr('action', '/teams/' + id);
+        'iDisplayLength': 100,
+        'columnDefs': [{'targets': 'no-sort','orderable': false,}]
     });
 });
 </script>

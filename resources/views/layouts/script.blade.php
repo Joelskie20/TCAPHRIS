@@ -26,6 +26,12 @@ function startTime(){
 startTime();
 </script>
 <script>
+
+  function infoToModal(id, textVal, location) {
+		$('#modal-default-edit form').attr('action', '/' + location +'/' + id);
+		$('#modal-default-edit').find('input[name="name"]').val(textVal);
+	}
+
 	$(function() {
 		$('div.alert').delay(3000).fadeOut(300);
 		FastClick.attach(document.body);
