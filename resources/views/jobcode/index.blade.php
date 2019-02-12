@@ -30,11 +30,11 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Division Name</th>
-                            <th>Team Name</th>
-                            <th>Account Name</th>
-                            <th>Code</th>
-                            <th>Name</th>
+                            <th>Division</th>
+                            <th>Team</th>
+                            <th>Account</th>
+                            <th>Job Code</th>
+                            <th>Job Name</th>
                             <th class="no-sort"></th>
                         </tr>
                     </thead>

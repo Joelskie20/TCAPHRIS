@@ -30,8 +30,8 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Division Name</th>
-                            <th>Name</th>
+                            <th>Division</th>
+                            <th>Team Name</th>
                             <th class="no-sort"></th>
                         </tr>
                     </thead>
@@ -39,7 +39,7 @@
                         @foreach($teams as $key => $team)
                         <tr>
                             <td>{{ ++$key }}</td>
-                            <td>{{ $team->division->name }}</td>
+                            <td>@isset($team->division->name) {{ $team->division->name }} @endisset</td>
                             <td>{{ $team->name }}</td>
                             <td>
                                 <a href="/teams/{{ $team->id }}/edit" class="btn btn-success btn-xs btn-edit"><i class="fa fa-pencil"></i></a>

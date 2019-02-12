@@ -30,7 +30,7 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Name</th>
+                            <th>Division Name</th>
                             <th class="no-sort"></th>
                         </tr>
                     </thead>

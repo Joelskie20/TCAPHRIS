@@ -12,4 +12,9 @@ class Division extends Model
     {
         return $this->hasMany(Team::class);
     }
+
+    public function accounts()
+    {
+        return $this->hasManyThrough(Account::class, Team::class);
+    }
 }

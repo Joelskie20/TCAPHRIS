@@ -37,9 +37,8 @@ class User extends Authenticatable
     protected $dates = ['deleted_at'];
 
     public function createUser($request)
-    {
-        // Employee Details
-
+    {        
+        // Employee Detail
         $this->employee_id = $request->employee_id;
         $this->position_id = $request->position_id;
         $this->department_id = $request->department_id;

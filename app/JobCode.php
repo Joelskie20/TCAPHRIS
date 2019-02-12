@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class JobCode extends Model
 {
-    public $fillable = ['division_id', 'team_id', 'account_id', 'name', 'code'];
+    public $fillable = ['account_id', 'name', 'code'];
 
     public function account()
     {
