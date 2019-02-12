@@ -28,9 +28,18 @@
         <button class="pull-left btn btn-default btn-sm" style="margin:10px;"><i class="fa fa-clock-o"></i> TIME OUT</button>
       </form>
       @endif
-      <div class="pull-left" style="margin:15px; color:#fff;">
-        <i style="margin-right: 5px;" class="fa fa-calendar"></i>{{  Carbon::parse(Carbon::now())->format('F d, Y') }}
-        <i class="fa fa-clock-o" style="margin-left: 15px; margin-right: 5px;"></i><p class="display-time"></p></div>
+      <div class="pull-left" style="color:#fff;margin:15px 0;">
+        {{-- <i style="margin-right: 5px;" class="fa fa-calendar"></i>{{  Carbon::parse(Carbon::now())->format('F d, Y') }} --}}
+        {{-- <i class="fa fa-clock-o" style="margin-left: 15px; margin-right: 5px;"></i><p class="display-time"></p> --}}
+        {{-- <p>You timed in at: {{ Carbon::createFromTimestamp(Auth::user()->attendances()->orderBy('created_at', 'desc')->first()->time_in)->format('g:i:s A') }}</p> --}}
+
+        @if (Auth::user()->attendances()->orderBy('created_at', 'desc')->first()->created_at->isToday() && empty(Auth::user()->attendances()->orderBy('created_at', 'desc')->first()->time_out))
+          <p style="margin:0;">You timed in at: {{ Carbon::createFromTimestamp(Auth::user()->attendances()->orderBy('created_at', 'desc')->first()->time_in)->format('g:i:s A') }}</p>
+        @else
+          <i style="margin-right: 5px;" class="fa fa-calendar"></i>{{  Carbon::parse(Carbon::now())->format('F d, Y') }}
+          <i class="fa fa-clock-o" style="margin-left: 15px; margin-right: 5px;"></i><p class="display-time"></p>
+        @endif
+      </div>
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
