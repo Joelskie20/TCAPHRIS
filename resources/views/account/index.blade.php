@@ -30,9 +30,9 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Division Name</th>
-                            <th>Team Name</th>
-                            <th>Name</th>
+                            <th>Division</th>
+                            <th>Team</th>
+                            <th>Account Name</th>
                             <th class="no-sort"></th>
                         </tr>
                     </thead>

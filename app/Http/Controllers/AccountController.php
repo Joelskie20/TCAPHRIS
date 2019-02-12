@@ -6,6 +6,7 @@ use App\Account;
 use App\Team;
 use App\Division;
 use App\Attendance;
+use Response;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -33,7 +34,7 @@ class AccountController extends Controller
         return view('account.create', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
             'divisions' => Division::all(),
-            'teams' => Team::all()
+            'teams' => Team::all(),
         ]);
     }
 
@@ -116,5 +117,13 @@ class AccountController extends Controller
         session()->flash('message', 'Account deleted.');
 
         return redirect('/accounts');
+    }
+
+    public function getTeams()
+    {
+        $divisions = Division::all();
+        $teams = Team::all();
+
+        return $teams;
     }
 }

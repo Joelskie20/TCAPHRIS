@@ -155,4 +155,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::patch('/job-codes/{jobCode}', 'JobCodeController@update');
     Route::delete('/job-codes/{jobCode}', 'JobCodeController@destroy');
 
+    Route::get('/getAllTeams', 'AccountController@getTeams');
+
 });

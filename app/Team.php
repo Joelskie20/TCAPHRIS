@@ -12,9 +12,4 @@ class Team extends Model
     {
         return $this->belongsTo(Division::class);
     }
-
-    public function accounts()
-    {
-        return $this->hasMany(Account::class);
-    }
 }

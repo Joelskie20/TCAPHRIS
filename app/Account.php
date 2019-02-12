@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Division;
 
 class Account extends Model
 {
@@ -13,7 +14,7 @@ class Account extends Model
         return $this->belongsTo(Team::class);
     }
 
-    public function job_codes()
+    public function jobCodes()
     {
         return $this->hasMany(JobCode::class);
     }

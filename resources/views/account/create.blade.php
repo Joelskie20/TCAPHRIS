@@ -23,7 +23,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="account-name">Division Name</label>
-                        <select name="division_id">
+                        <select class="division" id="division-option">
                             @foreach($divisions as $division)
                                 <option value="{{ $division->id }}">{{ $division->name }}</option>
                             @endforeach
@@ -32,11 +32,12 @@
 
                     <div class="form-group">
                         <label for="account-name">Team Name</label>
-                        <select name="team_id">
-                            @foreach($teams as $team)
+                        <select name="team_id" id="team-option">
+                            {{-- @foreach($teams as $team)
                                 <option value="{{ $team->id }}">{{ $team->name }}</option>
-                            @endforeach
+                            @endforeach --}}
                         </select>
+
                     </div>
 
                     <div class="form-group">
@@ -77,6 +78,28 @@ $(document).ready(function() {
         'iDisplayLength': 10,
         'columnDefs': [{'targets': 'no-sort','orderable': false,}]
     });
+
+    let team = {
+        "details": {!! $teams !!}
+    };
+
+    $('#division-option').change(function () {
+        changeTeamSet($(this).find(':selected').val());
+    });
+
+    changeTeamSet($('#division-option').find(':selected').val());
+
+    function changeTeamSet(div_id) {
+        let selectOption = "";
+        for (let i = 0; i < team.details.length; i++) {
+            if (team.details[i].division_id == div_id) {
+                selectOption += '<option value="' + team.details[i].id + '">' + team.details[i].name + '</option>';
+            }
+        }
+        $('#team-option').empty().append(selectOption);
+    }
 });
+
+
 </script>
 @endsection

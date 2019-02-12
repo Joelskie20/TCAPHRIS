@@ -23,7 +23,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="account-name">Division Name</label>
-                        <select name="division_id">
+                        <select>
                             @foreach($divisions as $division)
                                 <option value="{{ $division->id }}">{{ $division->name }}</option>
                             @endforeach
@@ -32,7 +32,7 @@
 
                     <div class="form-group">
                         <label for="account-name">Team Name</label>
-                        <select name="team_id">
+                        <select>
                             @foreach($teams as $team)
                                 <option value="{{ $team->id }}">{{ $team->name }}</option>
                             @endforeach
