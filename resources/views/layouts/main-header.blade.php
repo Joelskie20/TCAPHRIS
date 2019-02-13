@@ -33,12 +33,17 @@
         {{-- <i class="fa fa-clock-o" style="margin-left: 15px; margin-right: 5px;"></i><p class="display-time"></p> --}}
         {{-- <p>You timed in at: {{ Carbon::createFromTimestamp(Auth::user()->attendances()->orderBy('created_at', 'desc')->first()->time_in)->format('g:i:s A') }}</p> --}}
 
-        @if (Auth::user()->attendances()->orderBy('created_at', 'desc')->first()->created_at->isToday() && empty(Auth::user()->attendances()->orderBy('created_at', 'desc')->first()->time_out))
+        
+        @if (Auth::user()->attendances->isEmpty())
+          <i style="margin-right: 5px;" class="fa fa-calendar"></i>{{  Carbon::parse(Carbon::now())->format('F d, Y') }}
+          <i class="fa fa-clock-o" style="margin-left: 15px; margin-right: 5px;"></i><p class="display-time"></p>
+        @elseif(Auth::user()->attendances()->orderBy('created_at', 'desc')->first()->created_at->isToday() && empty(Auth::user()->attendances()->orderBy('created_at', 'desc')->first()->time_out))
           <p style="margin:0;">You timed in at: {{ Carbon::createFromTimestamp(Auth::user()->attendances()->orderBy('created_at', 'desc')->first()->time_in)->format('g:i:s A') }}</p>
         @else
           <i style="margin-right: 5px;" class="fa fa-calendar"></i>{{  Carbon::parse(Carbon::now())->format('F d, Y') }}
           <i class="fa fa-clock-o" style="margin-left: 15px; margin-right: 5px;"></i><p class="display-time"></p>
         @endif
+        
       </div>
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
