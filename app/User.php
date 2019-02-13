@@ -41,8 +41,10 @@ class User extends Authenticatable
         // Employee Detail
         $this->employee_id = $request->employee_id;
         $this->position_id = $request->position_id;
-        $this->department_id = $request->department_id;
+        $this->division_id = $request->division_id;
         $this->team_id = $request->team_id;
+        $this->account_id = $request->account_id;
+        $this->job_code_id = $request->job_code_id;
         $this->base_salary = floatval(str_replace(',', '', $request->base_salary));
         $this->tax_status = $request->tax_status;
         $this->payment_frequency = $request->payment_frequency;
@@ -110,8 +112,10 @@ class User extends Authenticatable
 
         $this->employee_id = $request->employee_id;
         $this->position_id = $request->position_id;
-        $this->department_id = $request->department_id;
+        $this->division_id = $request->division_id;
         $this->team_id = $request->team_id;
+        $this->account_id = $request->account_id;
+        $this->job_code_id = $request->job_code_id;
         $this->base_salary = floatval(str_replace(',', '', $request->base_salary));
         $this->tax_status = $request->tax_status;
         $this->payment_frequency = $request->payment_frequency;
@@ -221,6 +225,16 @@ class User extends Authenticatable
         return $this->position->name ?? 'Unassigned';
     }
 
+    public function division()
+    {
+        return $this->hasOne('App\Division', 'id', 'division_id');
+    }
+
+    public function getDivision()
+    {
+        return $this->division->name ?? 'Unassigned';
+    }
+
     public function team()
     {
         return $this->hasOne('App\Team', 'id', 'team_id');
@@ -231,14 +245,29 @@ class User extends Authenticatable
         return $this->team->name ?? 'Unassigned';
     }
 
-    public function department()
+    public function account()
     {
-        return $this->hasOne('App\Department', 'id', 'department_id');
+        return $this->hasOne('App\Account', 'id', 'account_id');
     }
 
-    public function getDepartment()
+    public function getAccount()
     {
-        return $this->department->name ?? 'Unassigned';
+        return $this->account->name ?? 'Unassigned';
+    }
+
+    public function jobCode()
+    {
+        return $this->hasOne('App\JobCode', 'id', 'job_code_id');
+    }
+
+    public function getJobCode()
+    {
+        return $this->jobCode->code ?? 'Unassigned';
+    }
+
+    public function getJobCodeName()
+    {
+        return $this->jobCode->name ?? 'Unassigned';
     }
 
     public function workshift()

@@ -29,21 +29,21 @@
 
         @can('employee records')
         <!-- EMPLOYEES -->
-        <li class="{{ (Route::is('employees') || Route::is('employee-create') || Route::is('employee-profile')) ? 'active' : '' }}">
+        <li class="{{ Request::is('employee*') ? 'active' : '' }}">
             <a href="{{ route('employees') }}"><i class="fa fa-users"></i> <span>Employee Records</span></a>
         </li>
         @endcan
 
         @can('daily time records')
         <!-- DAILY TIME RECORDS -->
-        <li class="{{ (Route::is('dtr') || Route::is('dtr-profile')) ? 'active' : '' }}">
+        <li class="{{ Request::is('daily-time-records*') ? 'active' : '' }}">
             <a href="{{ route('dtr') }}"><i class="fa fa-clock-o"></i> <span>Daily Time Records</span></a>
         </li>
         @endcan
 
         @can('workshifts')
         <!-- WORKSHIFT -->
-        <li class="{{ Route::is('workshift') ? 'active' : '' }}">
+        <li class="{{ Request::is('workshift*') ? 'active' : '' }}">
             <a href="{{ route('workshift') }}"><i class="fa fa-sitemap"></i> <span>Workshift</span></a>
         </li>
         @endcan

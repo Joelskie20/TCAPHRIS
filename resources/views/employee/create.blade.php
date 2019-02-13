@@ -50,14 +50,14 @@
                             </div>
                         </div>
 
-                        <!-- DEPARTMENT -->
+                        <!-- DIVISION -->
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
-                                <label for="departmentID">Department <small class="label label-success">Required</small></label>
-                                <select class="form-control" id="departmentID" name="department_id" >
+                                <label for="divisionID">Division <small class="label label-success">Required</small></label>
+                                <select class="form-control" id="divisionID" name="division_id" >
                                     <option value="0">-- None --</option>
-                                    @foreach($departments as $department)
-                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                    @foreach($divisions as $division)
+                                        <option value="{{ $division->id }}">{{ $division->name }}</option>
                                     @endforeach										
                                 </select>
                             </div>
@@ -71,6 +71,32 @@
                                     <option value="0" class="opt-none">-- None --</option>
                                     @foreach($teams as $team)
                                         <option value="{{ $team->id }}">{{ $team->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- ACCCOUNT -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="teamID">Account <small class="label label-success">Required</small></label>
+                                <select class="form-control" id="teamID" name="account_id" >
+                                    <option value="0" class="opt-none">-- None --</option>
+                                    @foreach($accounts as $account)
+                                        <option value="{{ $account->id }}">{{ $account->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- JOB CODE -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="teamID">Job Code <small class="label label-success">Required</small></label>
+                                <select class="form-control" id="teamID" name="job_code_id" >
+                                    <option value="0" class="opt-none">-- None --</option>
+                                    @foreach($job_codes as $job_code)
+                                        <option value="{{ $job_code->id }}">{{ $job_code->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -132,12 +158,7 @@
                             </div>
                         </div>
 
-                    </div>
-                        
-
-                        <div class="row">
-
-                            <!-- WORKSHIFT -->
+                        <!-- WORKSHIFT -->
                             <div class="col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label for="workshift">Workshift <small class="label label-success">Required</small></label>
@@ -149,7 +170,8 @@
                                 </div>
                             </div>
 
-                        </div>
+                    </div>
+            
                         
                         <div class="row workshift-selected">
                             <div class="col-xs-12 table-responsive">

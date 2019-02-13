@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Session;
-use App\{User, Attendance, Gender, Department, Team, Position, Workshift};
+use App\{User, Attendance, Gender, Division, Team, Account, JobCode, Position, Workshift};
 use Auth;
 use Hash;
 use Illuminate\Http\Request;
@@ -34,8 +34,10 @@ class EmployeeController extends Controller
         return view('employee.create', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
             'genders' => Gender::all(),
-            'departments' => Department::all(),
+            'divisions' => Division::all(),
             'teams' => Team::all(),
+            'accounts' => Account::all(),
+            'job_codes' => JobCode::all(),
             'positions' => Position::all(),
             'workshifts' => Workshift::all(),
             'employees' => User::all(),
@@ -87,8 +89,11 @@ class EmployeeController extends Controller
             'employees' => User::all(),
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
             'genders' => Gender::all(),
-            'departments' => Department::all(),
+            // 'departments' => Department::all(),
+            'divisions' => Division::all(),
             'teams' => Team::all(),
+            'accounts' => Account::all(),
+            'job_codes' => JobCode::all(),
             'positions' => Position::all(),
             'workshifts' => Workshift::all(),
             'user' => $user,

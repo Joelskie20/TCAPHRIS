@@ -56,14 +56,14 @@
                             </div>
                         </div>
 
-                        <!-- DEPARTMENT -->
+                        <!-- DIVISION -->
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
-                                <label for="departmentID">Department <small class="label label-success">Required</small></label>
-                                <select class="form-control" id="departmentID" name="department_id" >
+                                <label for="divisionID">Division <small class="label label-success">Required</small></label>
+                                <select class="form-control" id="divisionID" name="division_id" >
                                     <option value="0">-- None --</option>
-                                    @foreach($departments as $department)
-                                        <option value="{{ $department->id }}" {{ $department->id == $user->department_id ? 'selected' : '' }}>{{ $department->name }}</option>
+                                    @foreach($divisions as $division)
+                                        <option value="{{ $division->id }}" {{ $division->id == $user->division_id ? 'selected' : '' }}>{{ $division->name }}</option>
                                     @endforeach										
                                 </select>
                             </div>
@@ -77,6 +77,32 @@
                                     <option value="0" class="opt-none">-- None --</option>
                                     @foreach($teams as $team)
                                         <option value="{{ $team->id }}" {{ $team->id == $user->team_id ? 'selected' : '' }}>{{ $team->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- ACCOUNT -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="accountID">Account <small class="label label-success">Required</small></label>
+                                <select class="form-control" id="accountID" name="account_id" >
+                                    <option value="0" class="opt-none">-- None --</option>
+                                    @foreach($accounts as $account)
+                                        <option value="{{ $account->id }}" {{ $account->id == $user->account_id ? 'selected' : '' }}>{{ $account->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- JOB CODE -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="accountID">Job Code <small class="label label-success">Required</small></label>
+                                <select class="form-control" id="accountID" name="job_code_id" >
+                                    <option value="0" class="opt-none">-- None --</option>
+                                    @foreach($job_codes as $job_code)
+                                        <option value="{{ $job_code->id }}" {{ $job_code->id == $user->job_code_id ? 'selected' : '' }}>{{ $job_code->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -139,19 +165,19 @@
                             </div>
                         </div>
 
+                        <!-- USER STATUS -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="paymentFrequency">Status <small class="label label-success">Required</small></label>
+                                <select class="form-control" id="userStatus" name="status" >
+                                    <option value="1" {{ $user->status == 1 ? 'selected' : '' }}>Active</option>
+                                    <option value="0" {{ $user->status == 0 ? 'selected' : '' }}>Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
                         <div class="row">
-
-                            <!-- USER STATUS -->
-                            <div class="col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label for="paymentFrequency">Status <small class="label label-success">Required</small></label>
-                                    <select class="form-control" id="userStatus" name="status" >
-                                        <option value="1" {{ $user->status == 1 ? 'selected' : '' }}>Active</option>
-                                        <option value="0" {{ $user->status == 0 ? 'selected' : '' }}>Inactive</option>
-                                    </select>
-                                </div>
-                            </div>
 
                             <!-- WORKSHIFT -->
                             <div class="col-md-6 col-lg-4">

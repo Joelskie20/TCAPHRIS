@@ -94,8 +94,10 @@ form h5 {
                             <th style="width:150px;">Workshift</th>
                             <th>Gender</th>
                             <th>Position</th>
+                            <th>Division</th>
                             <th>Team</th>
-                            <th>Department</th>
+                            <th>Account</th>
+                            <th>Job Code</th>
                             <th>Roles</th>
                             <th>Location</th>
                             <th>Status</th>
@@ -124,8 +126,10 @@ form h5 {
                             <td {!! ($employee->getWorkshiftCode() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}><span title="{{ ($employee->getWorkshiftCode() == 'Unassigned') ? 'Unassigned' : $employee->getWorkshiftName() }}">{{ $employee->getWorkshiftCode() }}</span></td>
                             <td {!! ($employee->getGender() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}>{{ $employee->getGender() }}</td>
                             <td {!! ($employee->getPosition() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}>{{ $employee->getPosition() }}</td>
+                            <td {!! ($employee->getDivision() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}>{{ $employee->getDivision() }}</td>
                             <td {!! ($employee->getTeam() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}>{{ $employee->getTeam() }}</td>
-                            <td {!! ($employee->getDepartment() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}>{{ $employee->getDepartment() }}</td>
+                            <td {!! ($employee->getAccount() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}>{{ $employee->getAccount() }}</td>
+                            <td {!! ($employee->getJobCode() == 'Unassigned') ? 'class="apply-opacity"' : '' !!}><span title="{{ $employee->getJobCode() == 'Unassigned' ? 'Unassigned' : $employee->getJobCodeName() }}">{{ $employee->getJobCode() }}</span></td>
                             <td>
                                 @foreach($employee->getRoleNames() as $role)
                                     {{ ucwords($role) }}@if ( ! $loop->last),@endif

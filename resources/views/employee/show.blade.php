@@ -67,10 +67,10 @@ table tr.rest-day{background:#98fb98 !important;}
 										<b>Employee ID</b> <a class="pull-right">{{ $employee->employee_id }}</a>
 									</li>
 									<li class="list-group-item">
-										<b>Team</b> <a class="pull-right">{{ $employee->getTeam() }}</a>
+										<b>Division</b> <a class="pull-right">{{ $employee->getDivision() }}</a>
 									</li>
 									<li class="list-group-item">
-										<b>Department</b> <a class="pull-right">{{ $employee->getDepartment() }}</a>
+										<b>Team</b> <a class="pull-right">{{ $employee->getTeam() }}</a>
 									</li>
 									<li class="list-group-item">
 										<b>Account Status</b>
@@ -237,7 +237,7 @@ table tr.rest-day{background:#98fb98 !important;}
 											<tbody>
 												<tr>
 													<th>Full Name</th>
-													<td>{{ $employee->lastNameFirst() }}</td>
+													<td {{ str_contains($employee->lastNameFirst(), 'Unassigned') ? 'class=apply-opacity' : '' }}>{{ $employee->lastNameFirst() }}</td>
 												</tr>
 												<tr>
 													<th>Birth Date</th>
@@ -249,11 +249,11 @@ table tr.rest-day{background:#98fb98 !important;}
 												</tr>
 												<tr>
 													<th>Nationality</th>
-													<td>{{ $employee->nationality }}</td>
+													<td {{ $employee->nationality == NULL ? 'class=apply-opacity' : '' }}>{{ $employee->nationality == NULL ? 'Unassigned' : $employee->nationality }}</td>
 												</tr>
 												<tr>
 													<th>Religion</th>
-													<td>{{ $employee->religion }}</td>
+													<td {{ $employee->religion == NULL ? 'class=apply-opacity' : '' }}>{{ $employee->religion == NULL ? 'Unassigned' : $employee->religion }}</td>
 												</tr>
 											</tbody>
 										</table>
@@ -271,15 +271,15 @@ table tr.rest-day{background:#98fb98 !important;}
 												</tr>
 												<tr>
 													<th>Email</th>
-													<td>{{ $employee->email }}</td>
+													<td {{ $employee->email == NULL ? 'class=apply-opacity' : '' }}>{{ $employee->email == NULL ? 'Unassigned' : $employee->email }}</td>
 												</tr>
 												<tr>
 													<th>Mobile</th>
-													<td>{{ $employee->mobile_number }}</td>
+													<td {{ $employee->mobile_number == NULL ? 'class=apply-opacity' : '' }}>{{ $employee->mobile_number == NULL ? 'Unassigned' : $employee->mobile_number }}</td>
 												</tr>
 												<tr>
 													<th>Landline</th>
-													<td>{{ $employee->landline }}</td>
+													<td {{ $employee->landline == NULL ? 'class=apply-opacity' : '' }}>{{ $employee->landline == NULL ? 'Unassigned' : $employee->landline }}</td>
 												</tr>
 											</tbody>
 										</table>
@@ -294,19 +294,27 @@ table tr.rest-day{background:#98fb98 !important;}
 											<tbody>
 												<tr>
 													<th>Employee ID</th>
-													<td>{{ $employee->employee_id }}</td>
+													<td {{ $employee->employee_id == NULL ? 'class=apply-opacity' : '' }}>{{ empty($employee->employee_id) ? 'Unassigned' : $employee->employee_id }}</td>
 												</tr>
 												<tr>
 													<th>Position</th>
-													<td>{{ $employee->getPosition() }}</td>
+													<td {{ str_contains($employee->getPosition(), 'Unassigned') ? 'class=apply-opacity' : '' }}>{{ $employee->getPosition() }}</td>
+												</tr>
+												<tr>
+													<th>Division</th>
+													<td {{ str_contains($employee->getDivision(), 'Unassigned') ? 'class=apply-opacity' : '' }}>{{ $employee->getDivision() }}</td>
 												</tr>
 												<tr>
 													<th>Team</th>
-													<td>{{ $employee->getTeam() }}</td>
+													<td {{ str_contains($employee->getTeam(), 'Unassigned') ? 'class=apply-opacity' : '' }}>{{ $employee->getTeam() }}</td>
 												</tr>
 												<tr>
-													<th>Department</th>
-													<td>{{ $employee->getDepartment() }}</td>
+													<th>Account</th>
+													<td {{ str_contains($employee->getAccount(), 'Unassigned') ? 'class=apply-opacity' : '' }}>{{ $employee->getAccount() }}</td>
+												</tr>
+												<tr>
+													<th>Job Code</th>
+													<td {{ str_contains($employee->getJobCode(), 'Unassigned') ? 'class=apply-opacity' : '' }}><span title="{{ str_contains($employee->getJobCode(), 'Unassigned') ? 'Unassigned' : $employee->getJobCodeName() }}">{{ $employee->getJobCode() }}</span></td>
 												</tr>
 												<tr>
 													<th>Direct Manager</th>
