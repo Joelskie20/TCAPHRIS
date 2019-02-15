@@ -8,6 +8,7 @@ use App\User;
 use Carbon\Carbon;
 use Auth;
 use Session;
+use DB;
 use Illuminate\Http\Request;
 
 class LeaveController extends Controller
@@ -19,13 +20,11 @@ class LeaveController extends Controller
      */
     public function index()
     {
+
         return view('leaves.approving-leaves', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
             'users' => User::all(),
-            'leaves' => Leave::where([
-                'status' => 'forApproval',
-                'direct_manager_id' => Auth::user()->id
-            ])->get()
+            'leaves' => Leave::where('status', 'forApproval')->get()
         ]);
     }
 
@@ -57,7 +56,9 @@ class LeaveController extends Controller
             'leave_type' => $request->leave_type,
             'day_count' => $request->day_count,
             'filing_date' => Carbon::now(),
-            'direct_manager_id' => User::where('id', $request->employee_id)->value('direct_manager_id'),
+            // 'direct_manager_id' => User::where('id', $request->employee_id)->value('direct_manager_id'),
+            // 'direct_manager_id_two' => User::where('id', $request->employee_id)->value('direct_manager_id_two'),
+            // 'direct_manager_id_three' => User::where('id', $request->employee_id)->value('direct_manager_id_three'),
             'approval_remarks' => $request->approval_remarks
         ]);
 
@@ -106,7 +107,7 @@ class LeaveController extends Controller
             'leave_date' => Carbon::parse($request->leave_date),
             'leave_type' => $request->leave_type,
             'day_count' => $request->day_count,
-            'direct_manager_id' => User::where('id', $request->employee_id)->value('direct_manager_id'),
+            // 'direct_manager_id' => User::where('id', $request->employee_id)->value('direct_manager_id'),
             'approval_remarks' => $request->approval_remarks
         ]);
 
@@ -130,6 +131,15 @@ class LeaveController extends Controller
         return redirect('/leaves-for-approval');
     }
 
+    public function forApproval()
+    {
+        return view('leaves.forApproval', [
+            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
+            'users' => User::all(),
+            'leaves' => Leave::where('user_id', Auth::id())->where('status', 'forApproval')->get()
+        ]);
+    }
+
     public function approved()
     {
         return view('leaves.approved', [
@@ -149,12 +159,12 @@ class LeaveController extends Controller
         ]);
     }
 
-    public function forApproval()
+    public function cancelled()
     {
-        return view('leaves.forApproval', [
+        return view('leaves.cancelled', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
             'users' => User::all(),
-            'leaves' => Leave::where('user_id', Auth::id())->where('status', 'forApproval')->get()
+            'leaves' => Leave::where('user_id', Auth::id())->where('status', 'cancelled')->get()
         ]);
     }
 
@@ -162,7 +172,8 @@ class LeaveController extends Controller
     {
         $leave->update([
             'status' => 'approved',
-            'date_approved' => Carbon::now()
+            'date_approved' => Carbon::now(),
+            'approved_by' => Auth::user()->id
         ]);
 
         Session::flash('message', 'Leave approved.');
@@ -174,12 +185,26 @@ class LeaveController extends Controller
     {
         $leave->update([
             'status' => 'denied',
-            'date_denied' => Carbon::now()
+            'date_denied' => Carbon::now(),
+            'denied_by' => Auth::user()->id
         ]);
 
         Session::flash('message', 'Leave disapproved.');
 
         return redirect('/approving-leaves');
+    }
+
+    public function cancellingLeaves(Request $request, Leave $leave)
+    {
+        $leave->update([
+            'status' => 'cancelled',
+            'date_cancelled' => Carbon::now(),
+            'cancelled_by' => Auth::user()->id
+        ]);
+
+        Session::flash('message', 'Leave cancelled.');
+
+        return redirect('/leaves-for-approval');
     }
 
 }

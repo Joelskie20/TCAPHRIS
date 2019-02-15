@@ -317,12 +317,16 @@ table tr.rest-day{background:#98fb98 !important;}
 													<td {{ str_contains($employee->getJobCode(), 'Unassigned') ? 'class=apply-opacity' : '' }}><span title="{{ str_contains($employee->getJobCode(), 'Unassigned') ? 'Unassigned' : $employee->getJobCodeName() }}">{{ $employee->getJobCode() }}</span></td>
 												</tr>
 												<tr>
-													<th>Direct Manager</th>
-													@if ($employee->direct_manager_id == 0)
-														<td class="apply-opacity">Unassigned</td>
-													@else
-														<td><a href="/employee/{{ $employee->getManagerId() }}">[{{ $employee->getManagerEmployeeId() }}] {{ $employee->getManagerName() }}</a></td>
-													@endif
+													<th>Direct Managers</th>
+													<td>
+														@foreach($employee->managers() as $manager)
+															@if(! empty($manager))
+																<a href="/employee/{{ $manager->id }}" target="_blank">{{ $manager->firstAndLastName() }}</a><br>
+															@else
+																{{ '' }}
+															@endif
+														@endforeach
+													</td>
 												</tr>
 												<tr>
 													<th>Hire Date</th>

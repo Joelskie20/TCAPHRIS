@@ -86,6 +86,7 @@ class EmployeeController extends Controller
     {
         // dd('edit: ' . $user->id);
         return view('employee.edit', [
+            'user' => $user,
             'employees' => User::all(),
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
             'genders' => Gender::all(),
@@ -96,7 +97,6 @@ class EmployeeController extends Controller
             'job_codes' => JobCode::all(),
             'positions' => Position::all(),
             'workshifts' => Workshift::all(),
-            'user' => $user,
             'roles' => Role::all()
         ]);
     }
@@ -114,9 +114,9 @@ class EmployeeController extends Controller
 
         $user->updateUser($request, $user);
 
-        $user->leaves()->update([
-            'direct_manager_id' => $request->direct_manager_id
-        ]);
+        // $user->leaves()->update([
+        //     'direct_manager_id' => $request->direct_manager_id
+        // ]);
 
         Session::flash('message', 'User has been updated.');
 

@@ -47,6 +47,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach($overtimes as $key => $overtime)
+                                    @if($overtime->user->getManagersId()->contains(Auth::user()->id))
                                     <div class="modal fade" id="modal-default-edit-{{ $overtime->id }}">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -164,6 +165,7 @@
                                             </form>
                                         </td>
                                     </tr>
+                                    @endif
                                     @endforeach
                                 </tbody>
                             </table>

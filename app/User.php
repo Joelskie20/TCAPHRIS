@@ -50,6 +50,8 @@ class User extends Authenticatable
         $this->payment_frequency = $request->payment_frequency;
         $this->hire_date = Carbon::parse($request->hire_date);
         $this->direct_manager_id = $request->direct_manager_id;
+        $this->direct_manager_id_two = $request->direct_manager_id_two;
+        $this->direct_manager_id_three = $request->direct_manager_id_three;
         $this->workshift_id = $request->workshift_id;
 
         // Personal Information
@@ -121,6 +123,8 @@ class User extends Authenticatable
         $this->payment_frequency = $request->payment_frequency;
         $this->hire_date = Carbon::parse($request->hire_date);
         $this->direct_manager_id = $request->direct_manager_id;
+        $this->direct_manager_id_two = $request->direct_manager_id_two;
+        $this->direct_manager_id_three = $request->direct_manager_id_three;
         $this->workshift_id = $request->workshift_id;
 
         // Personal Information
@@ -291,6 +295,41 @@ class User extends Authenticatable
     }
 
     // Delete soon
+
+    public function managers()
+    {
+        return collect([$this->direct_manager_id, $this->direct_manager_id_two, $this->direct_manager_id_three])->map(function ($id) {
+            return $this->where('id', $id)->first();
+        });
+    }
+
+    public function getManagersId()
+    {
+        return $this->managers()->map(function ($user) {
+            return $user->id;
+        });
+    }
+
+    public function getManagersEmployeeId()
+    {
+        return $this->managers()->map(function ($user) {
+            return $user->employee_id;
+        });
+    }
+
+    public function getManagersEmail()
+    {
+        return $this->managers()->map(function ($user) {
+            return $user->email;
+        });
+    }
+
+    public function getManagersName()
+    {
+        return $this->managers()->map(function ($user) {
+            return $user->firstAndLastName();
+        });
+    }
 
     public function getManagerId()
     {

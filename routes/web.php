@@ -93,6 +93,9 @@ Route::group(['middleware' => 'auth'], function() {
         Route::patch('/approving-leaves/{leave}', 'LeaveController@approvingLeaves')->middleware('permission:can approve leaves');
         Route::patch('/denying-leaves/{leave}', 'LeaveController@denyingLeaves')->middleware('permission:can approve leaves');
         Route::delete('/leaves/{leave}', 'LeaveController@destroy')->middleware('permission:delete leave');
+
+        Route::get('/cancelled-leaves', 'LeaveController@cancelled')->name('cancelled-leaves');
+        Route::patch('/cancelling-leaves/{leave}', 'LeaveController@cancellingLeaves');
     });
 
     Route::group(['middleware' => ['permission:holidays']], function () {

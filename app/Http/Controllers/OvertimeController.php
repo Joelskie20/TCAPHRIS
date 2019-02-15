@@ -22,10 +22,7 @@ class OvertimeController extends Controller
         return view('overtime.approving-overtimes', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
             'users' => User::all(),
-            'overtimes' => Overtime::where([
-                'status' => 'forApproval',
-                'direct_manager_id' => Auth::id()
-            ])->get()
+            'overtimes' => Overtime::where('status', 'forApproval')->get()
         ]);
     }
 
@@ -59,7 +56,7 @@ class OvertimeController extends Controller
             'time_in' => strtotime($request->time_in),
             'time_out' => strtotime($request->time_out),
             'filing_date' => Carbon::now(),
-            'direct_manager_id' => User::where('id', $request->employee_id)->value('direct_manager_id'),
+            // 'direct_manager_id' => User::where('id', $request->employee_id)->value('direct_manager_id'),
             'remarks' => $request->remarks
         ]);
 
@@ -129,7 +126,7 @@ class OvertimeController extends Controller
         return view('overtime.forApproval', [
            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
            'users' => User::all(),
-           'overtimes' => Overtime::where('user_id', Auth::id())->where('status', 'forApproval')->get()
+           'overtimes' => Overtime::where('user_id', Auth::user()->id)->where('status', 'forApproval')->get()
         ]);
     }
 
@@ -155,7 +152,8 @@ class OvertimeController extends Controller
     {
         $overtime->update([
             'status' => 'approved',
-            'date_approved' => Carbon::now()
+            'date_approved' => Carbon::now(),
+            'approved_by' => Auth::user()->id
         ]);
 
         Session::flash('message', 'Overtime approved.');
@@ -167,7 +165,8 @@ class OvertimeController extends Controller
     {
         $overtime->update([
             'status' => 'denied',
-            'date_denied' => Carbon::now()
+            'date_denied' => Carbon::now(),
+            'denied_by' => Auth::user()->id
         ]);
 
         Session::flash('message', 'Overtime denied.');
