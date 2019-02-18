@@ -130,6 +130,51 @@
                             </div>
                         </div>
 
+                        <!-- DIRECT MANAGER -->
+                        <div class="col-md-12 col-lg-4">
+                            <div class="form-group">
+                                <label for="managerID">Direct Manager</label>
+                                <select class="form-control select2 w100p" id="direct_manager_id" name="direct_manager_id">
+                                    <option value="0">-- To Follow --</option>
+                                    @foreach($employees as $employee)
+                                        @if($employee->hasRole('manager'))
+                                            <option value="{{ $employee->id }}" class="opt-{{ $employee->id }}">[{{ $employee->employee_id }}] {{ $employee->lastNameFirst() }} ({{ $employee->getTeam() }})</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- DIRECT MANAGER TWO -->
+                        <div class="col-md-12 col-lg-4">
+                            <div class="form-group">
+                                <label for="managerID">Direct Manager 2</label>
+                                <select class="form-control select2 w100p" id="direct_manager_id_two" name="direct_manager_id_two">
+                                    <option value="0">-- To Follow --</option>
+                                    @foreach($employees as $employee)
+                                        @if($employee->hasRole('manager'))
+                                            <option value="{{ $employee->id }}" class="opt-{{ $employee->id }}">[{{ $employee->employee_id }}] {{ $employee->lastNameFirst() }} ({{ $employee->getTeam() }})</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- DIRECT MANAGER THREE -->
+                        <div class="col-md-12 col-lg-4">
+                            <div class="form-group">
+                                <label for="managerID">Direct Manager 3</label>
+                                <select class="form-control select2 w100p" id="direct_manager_id_three" name="direct_manager_id_three">
+                                    <option value="0">-- To Follow --</option>
+                                    @foreach($employees as $employee)
+                                        @if($employee->hasRole('manager'))
+                                            <option value="{{ $employee->id }}" id="opt-{{ $employee->id }}">[{{ $employee->employee_id }}] {{ $employee->lastNameFirst() }} ({{ $employee->getTeam() }})</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
                         <!-- HIRE DATE -->
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
@@ -140,21 +185,6 @@
                                     </div>
                                     <input type="text" id="hiredate" name="hire_date" placeholder="mm/dd/yyyy" class="form-control pull-right datepicker" >
                                 </div>
-                            </div>
-                        </div>
-
-                        <!-- DIRECT MANAGER -->
-                        <div class="col-md-12 col-lg-4">
-                            <div class="form-group">
-                                <label for="managerID">Direct Manager</label>
-                                <select class="form-control select2 w100p" id="managerID" name="direct_manager_id">
-                                    <option value="0">-- To Follow --</option>
-                                    @foreach($employees as $employee)
-                                        @if($employee->hasRole('manager'))
-                                            <option value="{{ $employee->id }}">[{{ $employee->employee_id }}] {{ $employee->lastNameFirst() }} ({{ $employee->getTeam() }})</option>
-                                        @endif
-                                    @endforeach
-                                </select>
                             </div>
                         </div>
 
@@ -683,5 +713,13 @@
         });
 
     });
+</script>
+<script>
+$(document).ready(function() {
+    // $('#direct_manager_id').change(function() {
+    //     var val = parseInt($(this).val());
+    //     $("#direct_manager_id_two option[value='" + val + "']").hide();
+    // });
+});
 </script>
 @endsection

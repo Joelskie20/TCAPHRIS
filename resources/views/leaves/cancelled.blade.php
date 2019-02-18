@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Approved Leaves')
+@section('title', 'Cancelled Leaves')
 
 @section('styles')
 <!-- DataTables -->
@@ -11,7 +11,7 @@
 <div class="content-wrapper">
 
     <section class="content-header" style="overflow: hidden">
-        <h1 class="pull-left">Approved Leaves</h1>
+        <h1 class="pull-left">Cancelled Leaves</h1>
     </section>
 
     <!-- MAIN CONTENT -->
@@ -39,8 +39,8 @@
                                         <th>Leave Type</th>
                                         <th>Day Count</th>
                                         <th>Filing Date</th>
-                                        <th>Approved By</th>
-                                        <th>Date Approved</th>
+                                        <th>Cancelled By</th>
+                                        <th>Date Cancelled</th>
                                         {{-- <th>Remarks</th> --}}
                                     </tr>
                                 </thead>
@@ -57,11 +57,11 @@
                                             @if($leave->user->getManagerName() == 'Unassigned')
                                                 {{ 'Unassigned' }}
                                             @else
-                                                <a href="/employee/{{ $leave->approved_by }}">{{ App\User::where('id', $leave->approved_by)->first()->firstAndLastName() }}</a>
+                                                <a href="/employee/{{ $leave->cancelled_by }}">{{ App\User::where('id', $leave->cancelled_by)->first()->firstAndLastName() }}</a>
                                             @endif
                                         </td>
-                                        <td>{{ Carbon::parse($leave->date_approved)->format('F d, Y - g:i:s A') }}</td>
-                                        {{-- <td>{{ $leave->approved_remarks }}</td> --}}
+                                        <td>{{ Carbon::parse($leave->date_cancelled)->format('F d, Y - g:i:s A') }}</td>
+                                        {{-- <td>{{ $leave->cancelled_remarks }}</td> --}}
                                     </tr>
                                     @endforeach
                                 </tbody>

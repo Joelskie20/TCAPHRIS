@@ -47,30 +47,42 @@
                                 </thead>
                                 <tbody>
                                     @foreach($leaves as $key => $leave)
-                                    <tr>
-                                        <td>{{ ++$key }}</td>
-                                        <td><a href="/employee/{{ $leave->user->id }}">{{ $leave->user->firstNameFirst() }}</a></td>
-                                        <td>{{ Carbon::parse($leave->leave_date)->format('F d, Y') }}</td>
-                                        <td>{{ $leave->leave_type }}</td>
-                                        <td>{{ $leave->day_count }}</td>
-                                        <td>{{ Carbon::parse($leave->filing_date)->format('F d, Y - g:i:s A') }}</td>
-                                        <td>
-                                            <form style="display: inline-block;" action="{{ action('LeaveController@approvingLeaves', ['id' => $leave->id]) }}" method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button type="submit" class="btn btn-success btn-xs" title="Approve">
-                                                    <i class="fa fa-check"></i>
-                                                </button>
-                                            </form>
-                                            <form style="display: inline-block;" action="{{ action('LeaveController@denyingLeaves', ['id' => $leave->id]) }}" method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button type="submit" class="btn btn-danger btn-xs" title="Disapprove">
-                                                    <i class="fa fa-remove"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
+                                        @if($leave->user->getManagersId()->contains(Auth::user()->id))
+                                        <tr>
+                                            <td>{{ ++$key }}</td>
+                                            <td><a href="/employee/{{ $leave->user->id }}">{{ $leave->user->firstNameFirst() }}</a></td>
+                                            <td>{{ Carbon::parse($leave->leave_date)->format('F d, Y') }}</td>
+                                            <td>{{ $leave->leave_type }}</td>
+                                            <td>{{ $leave->day_count }}</td>
+                                            <td>{{ Carbon::parse($leave->filing_date)->format('F d, Y - g:i:s A') }}</td>
+                                            <td>
+                                                <form style="display: inline-block;" action="{{ action('LeaveController@approvingLeaves', ['id' => $leave->id]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="btn btn-success btn-xs" title="Approve">
+                                                        <i class="fa fa-check"></i>
+                                                    </button>
+                                                </form>
+                                                <form style="display: inline-block;" action="{{ action('LeaveController@denyingLeaves', ['id' => $leave->id]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="btn btn-danger btn-xs" title="Disapprove">
+                                                        <i class="fa fa-remove"></i>
+                                                    </button>
+                                                </form>
+                                                <form style="display: inline-block;" action="{{ action('LeaveController@cancellingLeaves', ['id' => $leave->id]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="btn btn-warning btn-xs" title="Cancel">
+                                                        <i class="fa fa-ban"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
                             </table>

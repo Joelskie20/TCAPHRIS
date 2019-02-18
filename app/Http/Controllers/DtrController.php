@@ -98,7 +98,7 @@ class DtrController extends Controller
         $attendances = Attendance::all();
 
         // insert code below and remove dd
-        dd('first cutoff');
+        dd('download first cutoff excel - WIP');
     }
 
     public function exportSecondCutOff()
@@ -107,6 +107,6 @@ class DtrController extends Controller
         $attendances = Attendance::all();
 
         // insert code below and remove dd
-        dd('2nd cutoff');
+        dd('download 2nd cutoff excel - WIP');
     }
 }

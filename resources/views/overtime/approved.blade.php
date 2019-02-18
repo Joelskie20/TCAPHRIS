@@ -144,7 +144,7 @@
                                         <td>{{ Carbon::parse(date('g:i A', $overtime->time_in))->format('g:i A') }}</td>
                                         <td>{{ Carbon::parse(date('g:i A', $overtime->time_out))->format('g:i A') }}</td>
                                         <td>{{ Carbon::parse($overtime->filing_date)->format('F j, Y - g:i:s A') }}</td>
-                                        <td><a href="/employee/{{ $overtime->user->getManagerId() }}">{{ $overtime->user->getManagerName() }}</a></td>
+                                        <td><a href="/employee/{{ $overtime->approved_by }}">{{ App\User::where('id', $overtime->approved_by)->first()->firstAndLastName() }}</a></td>
                                         <td>{{ Carbon::parse($overtime->date_approved)->format('F j, Y - g:i:s A') }}</td>
                                         {{-- <td>
                                             <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default-edit-{{ $overtime->id }}">

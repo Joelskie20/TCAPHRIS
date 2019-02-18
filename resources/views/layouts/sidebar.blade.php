@@ -22,35 +22,35 @@
 
         @can('dashboard')
         <!-- DASHBOARD --> 
-        <li class="{{ Route::is('dashboard') ? 'active' : '' }}">
+        <li class="{{ set_active('dashboard') }}">
             <a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
         </li>
         @endcan
 
         @can('employee records')
         <!-- EMPLOYEES -->
-        <li class="{{ Request::is('employee*') ? 'active' : '' }}">
+        <li class="{{ set_active('employee*') }}">
             <a href="{{ route('employees') }}"><i class="fa fa-users"></i> <span>Employee Records</span></a>
         </li>
         @endcan
 
         @can('daily time records')
         <!-- DAILY TIME RECORDS -->
-        <li class="{{ Request::is('daily-time-records*') ? 'active' : '' }}">
+        <li class="{{ set_active('daily-time-records*') }}">
             <a href="{{ route('dtr') }}"><i class="fa fa-clock-o"></i> <span>Daily Time Records</span></a>
         </li>
         @endcan
 
         @can('workshifts')
         <!-- WORKSHIFT -->
-        <li class="{{ Request::is('workshift*') ? 'active' : '' }}">
+        <li class="{{ set_active('workshift*') }}">
             <a href="{{ route('workshift') }}"><i class="fa fa-sitemap"></i> <span>Workshift</span></a>
         </li>
         @endcan
 
         @can('leaves')
         <!-- LEAVES -->
-        <li class="treeview {{ Route::is('approved-leaves') || Route::is('denied-leaves') || Route::is('leaves-for-approval') || Route::is('approving-leaves') ? 'active' : '' }}">
+        <li class="treeview {{ set_active('*leaves*') }}">
             <a href="#">
                 <i class="fa fa-calendar"></i>
                 <span>Leaves</span>
@@ -60,13 +60,7 @@
             </a>
             <ul class="treeview-menu">
                 @can('leaves for approval')
-                <li><a href="{{ route('leaves-for-approval') }}"><i class="fa fa-calendar-plus-o"></i>Leaves for Approval 
-                    @if(App\Leave::where('user_id', Auth::id())->where('status', 'forApproval')->get()->count() > 0)
-                        <span class="label label-warning ml05">{{ App\Leave::where('user_id', Auth::id())->where('status', 'forApproval')->get()->count() }}</span>
-                    @else
-                        {{ '' }}
-                    @endif
-                </a></li>
+                <li><a href="{{ route('leaves-for-approval') }}"><i class="fa fa-calendar-plus-o"></i>Leaves for Approval</a></li>
                 @endcan
 
                 @can('approved leaves')
@@ -77,22 +71,20 @@
                 <li><a href="{{ route('denied-leaves') }}"><i class="fa fa-calendar-times-o"></i>Denied</a></li>
                 @endcan
 
-                @can('can approve leaves')
-                <li><a href="{{ route('approving-leaves') }}"><i class="fa fa-check"></i>For Your Approval
-                    @if(App\Leave::where('direct_manager_id', Auth::id())->where('status', 'forApproval')->get()->count() > 0)
-                        <span class="label label-warning ml05">{{ App\Leave::where('user_id', Auth::id())->where('status', 'forApproval')->get()->count() }}</span>
-                    @else
-                        {{ '' }}
-                    @endif
-                </a></li>
-                @endcan
+                <li><a href="{{ route('cancelled-leaves') }}"><i class="fa fa-ban"></i>Cancelled</a></li>
+
+                @hasrole('manager')
+                    @can('can approve leaves')
+                        <li><a href="{{ route('approving-leaves') }}"><i class="fa fa-check"></i>For Your Approval</a></li>
+                    @endcan
+                @endhasrole
                 
             </ul>
         </li>
         @endcan
 
         <!-- OVERTIME -->
-        <li class="treeview {{ Route::is('approved-overtimes') || Route::is('denied-overtimes') || Route::is('overtimes-for-approval') || Route::is('approving-overtimes') ? 'active' : '' }}">
+        <li class="treeview {{ set_active('*overtimes*') }}">
             <a href="#">
                 <i class="fa fa-calendar"></i>
                 <span>Overtime</span>
@@ -101,22 +93,12 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{ route('overtimes-for-approval') }}"><i class="fa fa-calendar-plus-o"></i>For Approval 
-                    @if(App\Overtime::where('user_id', Auth::id())->where('status', 'forApproval')->get()->count() > 0)
-                        <span class="label label-warning ml05">{{ App\Overtime::where('user_id', Auth::id())->where('status', 'forApproval')->get()->count() }}</span>
-                    @else
-                        {{ '' }}
-                    @endif
-                </a></li>
+                <li><a href="{{ route('overtimes-for-approval') }}"><i class="fa fa-calendar-plus-o"></i>For Approval</a></li>
                 <li><a href="{{ route('approved-overtimes') }}"><i class="fa fa-calendar-check-o"></i>Approved</a></li>
                 <li><a href="{{ route('denied-overtimes') }}"><i class="fa fa-calendar-times-o"></i>Denied</a></li>
-                <li><a href="{{ route('approving-overtimes') }}"><i class="fa fa-check"></i>For Your Approval 
-                    @if(App\Overtime::where('direct_manager_id', Auth::id())->where('status', 'forApproval')->get()->count() > 0)
-                        <span class="label label-warning ml05">{{ App\Overtime::where('direct_manager_id', Auth::id())->where('status', 'forApproval')->get()->count() }}</span>
-                    @else
-                        {{ '' }}
-                    @endif
-                </a></li>
+                @hasrole('manager')
+                <li><a href="{{ route('approving-overtimes') }}"><i class="fa fa-check"></i>For Your Approval</a></li>
+                @endhasrole
                 
             </ul>
         </li>

@@ -137,28 +137,45 @@
                             </div>
                         </div>
 
-                        <!-- HIRE DATE -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label for="hiredate">Hire Date <small class="label label-danger">Required</small></label>
-                                <div class="input-group date" data-provide="datepicker">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    <input type="text" id="hiredate" name="hire_date" placeholder="mm/dd/yyyy" class="form-control pull-right datepicker" value="{{ Carbon::parse($user->hire_date)->format('m/d/Y') }}">
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- DIRECT MANAGER -->
                         <div class="col-md-12 col-lg-4">
                             <div class="form-group">
                                 <label for="managerID">Direct Manager</label>
-                                <select class="form-control select2 w100p" id="managerID" name="direct_manager_id">
+                                <select class="form-control select2 w100p" id="direct_manager_id" name="direct_manager_id">
                                     <option value="0">-- To Follow --</option>
                                     @foreach($employees as $employee)
                                         @if($employee->hasRole('manager'))
-                                            <option value="{{ $employee->id }}" {{ $employee->id == $user->direct_manager_id ? 'selected' : '' }}>[{{ $employee->employee_id }}] {{ $employee->lastNameFirst() }} ({{ $employee->getTeam() }})</option>
+                                            <option value="{{ $employee->id }}" {{ $user->direct_manager_id === $employee->id ? 'selected' : ''  }}>[{{ $employee->employee_id }}] {{ $employee->lastNameFirst() }} ({{ $employee->getTeam() }})</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- DIRECT MANAGER TWO -->
+                        <div class="col-md-12 col-lg-4">
+                            <div class="form-group">
+                                <label for="managerID">Direct Manager 2</label>
+                                <select class="form-control select2 w100p" id="direct_manager_id_two" name="direct_manager_id_two">
+                                    <option value="0">-- To Follow --</option>
+                                    @foreach($employees as $employee)
+                                        @if($employee->hasRole('manager'))
+                                            <option value="{{ $employee->id }}" {{ $user->direct_manager_id_two === $employee->id ? 'selected' : ''  }}>[{{ $employee->employee_id }}] {{ $employee->lastNameFirst() }} ({{ $employee->getTeam() }})</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- DIRECT MANAGER THREE -->
+                        <div class="col-md-12 col-lg-4">
+                            <div class="form-group">
+                                <label for="managerID">Direct Manager 3</label>
+                                <select class="form-control select2 w100p" id="direct_manager_id_three" name="direct_manager_id_three">
+                                    <option value="0">-- To Follow --</option>
+                                    @foreach($employees as $employee)
+                                        @if($employee->hasRole('manager'))
+                                            <option value="{{ $employee->id }}" {{ $user->direct_manager_id_three === $employee->id ? 'selected' : '' }}>[{{ $employee->employee_id }}] {{ $employee->lastNameFirst() }} ({{ $employee->getTeam() }})</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -176,23 +193,32 @@
                             </div>
                         </div>
 
-                    </div>
-                        <div class="row">
+                        <!-- WORKSHIFT -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="workshift">Workshift <small class="label label-success">Required</small></label>
+                                <select class="form-control" id="workshift" name="workshift_id" >
+                                @foreach($workshifts as $workshift)
+                                    <option value="{{ $workshift->id }}" {{ $workshift->id == $user->workshift_id ? 'selected' : '' }}>[{{ $workshift->code }}] {{ $workshift->name }}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                        </div>
 
-                            <!-- WORKSHIFT -->
-                            <div class="col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label for="workshift">Workshift <small class="label label-success">Required</small></label>
-                                    <select class="form-control" id="workshift" name="workshift_id" >
-                                    @foreach($workshifts as $workshift)
-                                        <option value="{{ $workshift->id }}" {{ $workshift->id == $user->workshift_id ? 'selected' : '' }}>[{{ $workshift->code }}] {{ $workshift->name }}</option>
-                                    @endforeach
-                                    </select>
+                        <!-- HIRE DATE -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="hiredate">Hire Date <small class="label label-danger">Required</small></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" id="hiredate" name="hire_date" placeholder="mm/dd/yyyy" class="form-control pull-right datepicker" value="{{ Carbon::parse($user->hire_date)->format('m/d/Y') }}">
                                 </div>
                             </div>
-
                         </div>
-                        
+
+                    </div>
                         <div class="row workshift-selected">
                             <div class="col-xs-12 table-responsive">
                             <table id="employeeTable" class="table table-bordered table-striped data-list" role="grid">

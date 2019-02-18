@@ -149,6 +149,14 @@
                                             </button>
                                             @endcan
 
+                                            <form style="display: inline-block;" action="{{ action('LeaveController@cancellingLeaves', ['id' => $leave->id]) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-warning btn-xs" title="Cancel">
+                                                    <i class="fa fa-ban"></i>
+                                                </button>
+                                            </form>
+
                                             @can('delete leave')
                                             <form style="display: inline-block;" action="/leaves/{{ $leave->id }}" method="POST">
                                                 @method('DELETE')
@@ -158,6 +166,8 @@
                                                 </button>
                                             </form>
                                             @endcan
+
+                                            
                                         </td>
                                     </tr>
                                     @endforeach
