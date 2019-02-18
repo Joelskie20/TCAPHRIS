@@ -22,35 +22,35 @@
 
         @can('dashboard')
         <!-- DASHBOARD --> 
-        <li class="{{ Route::is('dashboard') ? 'active' : '' }}">
+        <li class="{{ set_active('dashboard') }}">
             <a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
         </li>
         @endcan
 
         @can('employee records')
         <!-- EMPLOYEES -->
-        <li class="{{ Request::is('employee*') ? 'active' : '' }}">
+        <li class="{{ set_active('employee*') }}">
             <a href="{{ route('employees') }}"><i class="fa fa-users"></i> <span>Employee Records</span></a>
         </li>
         @endcan
 
         @can('daily time records')
         <!-- DAILY TIME RECORDS -->
-        <li class="{{ Request::is('daily-time-records*') ? 'active' : '' }}">
+        <li class="{{ set_active('daily-time-records*') }}">
             <a href="{{ route('dtr') }}"><i class="fa fa-clock-o"></i> <span>Daily Time Records</span></a>
         </li>
         @endcan
 
         @can('workshifts')
         <!-- WORKSHIFT -->
-        <li class="{{ Request::is('workshift*') ? 'active' : '' }}">
+        <li class="{{ set_active('workshift*') }}">
             <a href="{{ route('workshift') }}"><i class="fa fa-sitemap"></i> <span>Workshift</span></a>
         </li>
         @endcan
 
         @can('leaves')
         <!-- LEAVES -->
-        <li class="treeview {{ Route::is('approved-leaves') || Route::is('denied-leaves') || Route::is('leaves-for-approval') || Route::is('approving-leaves') ? 'active' : '' }}">
+        <li class="treeview {{ set_active('*leaves*') }}">
             <a href="#">
                 <i class="fa fa-calendar"></i>
                 <span>Leaves</span>
@@ -84,7 +84,7 @@
         @endcan
 
         <!-- OVERTIME -->
-        <li class="treeview {{ Route::is('approved-overtimes') || Route::is('denied-overtimes') || Route::is('overtimes-for-approval') || Route::is('approving-overtimes') ? 'active' : '' }}">
+        <li class="treeview {{ set_active('*overtimes*') }}">
             <a href="#">
                 <i class="fa fa-calendar"></i>
                 <span>Overtime</span>
