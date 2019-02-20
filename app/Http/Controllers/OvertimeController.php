@@ -174,5 +174,27 @@ class OvertimeController extends Controller
         return redirect('/approving-overtimes');
     }
 
+    public function cancelled()
+    {
+        return view('overtime.cancelled', [
+            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false, 
+            'users' => User::all(),
+            'overtimes' => Overtime::where('user_id', Auth::id())->where('status', 'cancelled')->get()
+        ]);
+    }
+
+    public function cancellingOvertimes(Request $request, Overtime $overtime)
+    {
+        $overtime->update([
+            'status' => 'cancelled',
+            'date_cancelled' => Carbon::now(),
+            'cancelled_by' => Auth::user()->id
+        ]);
+
+        Session::flash('message', 'Overtime cancelled.');
+
+        return redirect('/leaves-for-approval');
+    }
+
 
 }

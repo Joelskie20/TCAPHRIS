@@ -133,6 +133,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::patch('/approving-overtimes/{overtime}', 'OvertimeController@approvingOvertimes');
     Route::patch('/denying-overtimes/{overtime}', 'OvertimeController@denyingOvertimes');
 
+    Route::get('cancelled-overtimes', 'OvertimeController@cancelled')->name('cancelled-overtimes');
+    Route::patch('/cancelling-overtimes/{overtime}', 'OvertimeController@cancellingOvertimes');
+
+
     Route::get('/divisions', 'DivisionController@index')->name('divisions');
     Route::get('/divisions/create', 'DivisionController@create');
     Route::post('/divisions', 'DivisionController@store');
