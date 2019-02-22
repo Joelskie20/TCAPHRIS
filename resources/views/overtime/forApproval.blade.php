@@ -152,9 +152,17 @@
                                                 <i class="fa fa-pencil"></i>
                                             </button>
 
-                                            <form style="display: inline-block;" action="#" method="POST">
-                                                @method('DELETE')
+                                            <form style="display: inline-block;" action="{{ action('OvertimeController@cancellingOvertimes', ['id' => $overtime->id]) }}" method="POST">
                                                 @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-warning btn-xs" title="Cancel">
+                                                    <i class="fa fa-ban"></i>
+                                                </button>
+                                            </form>
+
+                                            <form style="display: inline-block;" action="/overtimes/{{ $overtime->id }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');" title="Delete">
                                                     <i class="fa fa-trash-o"></i>
                                                 </button>

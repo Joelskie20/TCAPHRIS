@@ -53,6 +53,10 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'employee_id' => 'required'
+        ]);
+
         $user = new User;
 
         $user->createUser($request);

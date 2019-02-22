@@ -6,7 +6,7 @@
 <div class="content-wrapper">
 
     <section class="content-header">
-        <h1>Daily Time Records &raquo; Carbon::parse($month, $year)</h1>
+        <h1>Daily Time Records &raquo; 201902</h1>
     </section>
 
     <!-- Main content -->

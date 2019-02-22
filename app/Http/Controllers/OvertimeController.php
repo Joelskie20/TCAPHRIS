@@ -118,7 +118,11 @@ class OvertimeController extends Controller
      */
     public function destroy(Overtime $overtime)
     {
-        //
+        $overtime->delete();
+
+        Session::flash('message', 'Overtime has been deleted.');
+
+        return redirect('/overtimes-for-approval');
     }
 
     public function forApproval()

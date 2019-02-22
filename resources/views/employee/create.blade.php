@@ -189,16 +189,30 @@
                         </div>
 
                         <!-- WORKSHIFT -->
-                            <div class="col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label for="workshift">Workshift <small class="label label-success">Required</small></label>
-                                    <select class="form-control" id="workshift" name="workshift_id" >
-                                    @foreach($workshifts as $workshift)
-                                        <option value="{{ $workshift->id }}">[{{ $workshift->code }}] {{ $workshift->name }}</option>
-                                    @endforeach
-                                    </select>
-                                </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="workshift">Workshift <small class="label label-success">Required</small></label>
+                                <select class="form-control" id="workshift" name="workshift_id" >
+                                @foreach($workshifts as $workshift)
+                                    <option value="{{ $workshift->id }}">[{{ $workshift->code }}] {{ $workshift->name }}</option>
+                                @endforeach
+                                </select>
                             </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                            <label>Workshift Range</label>
+
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="workshift-sched-range" name="workshift_schedule_range">
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        </div>
 
                     </div>
             
@@ -644,8 +658,11 @@
         }
 
         $('.datepicker').datepicker({
-            format: 'mm/dd/yyyy'
+            format: 'mm/dd/yyyy',
+            autoclose: true
         });
+
+        $("#workshift-sched-range").daterangepicker()
 
         $('#workshift').change(function() {
             console.log($(this).find(':selected').val());
@@ -707,19 +724,6 @@
                 return moment(initialTime, "HH:mm").format("HH:mm");
             }          
         }
-
-        $('.datepicker').datepicker({
-            autoclose: true,
-        });
-
     });
-</script>
-<script>
-$(document).ready(function() {
-    // $('#direct_manager_id').change(function() {
-    //     var val = parseInt($(this).val());
-    //     $("#direct_manager_id_two option[value='" + val + "']").hide();
-    // });
-});
 </script>
 @endsection
