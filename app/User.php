@@ -115,9 +115,7 @@ class User extends Authenticatable
                 'user_id' => DB::table('users')->where('employee_id', $request->employee_id)->first()->id,
                 'workshift_id' => $request->workshift_id,
                 'date_from' => Carbon::parse($from)->format('Ymd'),
-                'date_to' => Carbon::parse($to)->format('Ymd'),
-                'created_at' => now(),
-                'updated_at' => now()
+                'date_to' => Carbon::parse($to)->format('Ymd')
             ]
         ]);
     }
@@ -194,6 +192,19 @@ class User extends Authenticatable
         // $this->password = Hash::make($request->employee_id);
 
         $this->save();
+
+        list($from, $to) = explode(' - ', $request->workshift_schedule_range);
+
+        $user->workshiftSchedules()->updateOrInsert(
+            [
+                'user_id' => $user->id,
+            ],
+            [
+                'workshift_id' => $request->workshift_id,
+                'date_from' => Carbon::parse($from)->format('Ymd'),
+                'date_to' => Carbon::parse($to)->format('Ymd')
+            ]
+        );
     }
 
     public function lastNameFirst()

@@ -205,6 +205,25 @@
                             </div>
                         </div>
 
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                            <label>Workshift Range</label>
+
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @if(!empty($user->workshiftSchedules()->first()->date_from) && !empty($user->workshiftSchedules()->first()->date_from))
+                                    <input type="text" class="form-control pull-right" id="workshift-sched-range" name="workshift_schedule_range" value="{{ Carbon::parse($user->workshiftSchedules()->first()->date_from)->format('m/d/y') }} - {{ Carbon::parse($user->workshiftSchedules()->first()->date_to)->format('m/d/y') }}">
+                                @else
+                                    <input type="text" class="form-control pull-right" id="workshift-sched-range" name="workshift_schedule_range">
+                                @endif
+                                
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        </div>
+
                         <!-- HIRE DATE -->
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
@@ -668,6 +687,8 @@
         $('.datepicker').datepicker({
             format: 'mm/dd/yyyy'
         });
+
+        $("#workshift-sched-range").daterangepicker();
 
         $('#workshift').change(function() {
             console.log($(this).find(':selected').val());
