@@ -2,6 +2,11 @@
 
 @section('title', 'Daily Time Records')
 
+@section('styles')
+<!-- DataTables -->
+<link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+@endsection
+
 @section('content')
 <div class="content-wrapper">
 
@@ -32,7 +37,7 @@
                     <div class="box-body">
                         
                         
-                        <table class="table table-bordered table-striped table-hover table-dtr">
+                        <table id="table" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th class="text-center">Date</th>
@@ -40,16 +45,36 @@
                                     <th class="text-center">Time<br>In</th>
                                     <th class="text-center">Time<br>Out</th>
                                     <th class="text-center">Work<br>Hours</th>
-                                    <th class="text-center">Night Diff<br>Hours</th>
                                     <th class="text-center">Late</th>
                                     <th class="text-center">Undertime</th>
                                     <th class="text-center">Overtime</th>
-                                    <th class="text-center">Overtime<br>Excess</th>
                                     <th class="text-center">Leave Type</th>
                                     <th class="text-center">Leave Days</th>
                                 </tr>
                             </thead>
                             <tbody>
+                            
+                            @foreach($employee->leaves()->where('status', 'approved')->get() as $approved)
+                            <tr style="text-align:center; background-color:#20bf6b; color:#333">
+                                <td>{{ Carbon::parse($approved->leave_date)->format("m/d/Y") }}</td>
+                                <td> - </td>
+                                <td> - </td>
+                                <td> - </td>
+                                <td> - </td>
+                                <td> - </td>
+                                <td> - </td>
+                                <td> - </td>
+                                <td>
+                                    @if($approved->leave_type === 'Vacation Leave')
+                                        {{ 'VL' }}
+                                    @elseif($approved->leave_type === 'Sick Leave')
+                                        {{ 'SL' }}
+                                    @endif
+                                </td>
+                                <td>{{ $approved->day_count }}</td>
+                            </tr>
+                            @endforeach
+                            
                             @if($attendances->count() > 0)
                                 @foreach ($attendances as $attendance)
                                     <tr style="text-align: center;">
@@ -63,8 +88,6 @@
                                             {{ ($attendance->time_out == NULL) ? '' : date('g:i:s a', $attendance->time_out) }} <br><span style="font-size: 80%; opacity: .50"> {{ ($attendance->time_out == NULL) ? '' : '('. date('m/d', $attendance->time_out) .')' }}</span>
                                         </td>
                                         <td>{{ ($attendance->time_out == NULL) ? '' : App\Dtr::timeDiff($attendance->time_out, $attendance->time_in) }}</td>
-                                        <td>-</td>
-                                        <td>-</td>
                                         <td>-</td>
                                         <td>-</td>
                                         <td>-</td>
@@ -92,4 +115,18 @@
     </section>
     <!-- /.content -->
 </div>
+@endsection
+
+@section('scripts')
+<!-- DataTables -->
+<script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script>
+$(document).ready(function() {
+    $('#table').dataTable({
+        'iDisplayLength': 50,
+        'order': [[ 0, "desc" ]]
+    });
+});
+</script>
 @endsection

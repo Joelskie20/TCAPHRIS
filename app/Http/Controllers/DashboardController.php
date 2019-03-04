@@ -30,13 +30,16 @@ class DashboardController extends Controller
 
     public function store(Request $request)
     {
+        if ( Auth::user()->attendances()->latest()->first()->time_out != NULL ) {
+            
+            Attendance::create([
+                'user_id' => auth()->id(),
+                'time_in' => strtotime(Carbon::now())
+            ]);
 
-        Attendance::create([
-            'user_id' => auth()->id(),
-            'time_in' => strtotime(Carbon::now())
-        ]);
-
-        Session::flash('message', 'Time In: ' . Carbon::now()->format('h:i A, F d, Y'));
+            Session::flash('message', 'Time In: ' . Carbon::now()->format('h:i A, F d, Y'));
+        }
+        
         return back();
     }
 

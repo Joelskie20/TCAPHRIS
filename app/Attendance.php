@@ -18,6 +18,16 @@ class Attendance extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(User::class);
+    }
+
+    public function approvedLeaves()
+    {
+        return $this->user->leaves()->where('status', 'approved')->get();
+    }
+
+    public function leaveDates()
+    {
+        return $this->user->leaves()->where('status', 'approved')->pluck('leave_date');
     }
 }
