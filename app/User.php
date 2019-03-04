@@ -391,7 +391,7 @@ class User extends Authenticatable
 
     public function overtimes()
     {
-        $this->hasMany('App\Overtime');
+        return $this->hasMany(Overtime::class);
     }
 
     public function workshiftSchedules()

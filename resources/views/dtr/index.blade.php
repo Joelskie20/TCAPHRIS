@@ -43,7 +43,7 @@
                     </div>
                     <div class="box-body">
                         
-                        <table id="table" class="table table-bordered table-striped">
+                        <table id="table" class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th class="text-center">Date</th>
@@ -52,18 +52,22 @@
                                     <th class="text-center">Time<br>Out</th>
                                     <th class="text-center">Work<br>Hours</th>
                                     <th class="text-center">Late</th>
-                                    <th class="text-center">Undertime</th>
-                                    <th class="text-center">Overtime</th>
-                                    <th class="text-center">Leave Type</th>
-                                    <th class="text-center">Leave Days</th>
+                                    <th class="text-center">UT</th>
+                                    <th class="text-center">OT Time<br>In</th>
+                                    <th class="text-center">OT Time<br>Out</th>
+                                    <th class="text-center">OT<br>Hours</th>
+                                    <th class="text-center">Leave<br>Type</th>
+                                    <th class="text-center">Leave<br>Count</th>
                                 </tr>
                             </thead>
                             <tbody>
 
                             @if($user->id === Auth::id())
                                 @foreach($user->leaves()->where('status', 'approved')->get() as $approved)
-                                <tr style="text-align:center; background-color:#20bf6b; color:#333">
+                                <tr style="text-align:center;">
                                     <td>{{ Carbon::parse($approved->leave_date)->format("m/d/Y") }}</td>
+                                    <td> - </td>
+                                    <td> - </td>
                                     <td> - </td>
                                     <td> - </td>
                                     <td> - </td>
@@ -78,7 +82,13 @@
                                             {{ 'SL' }}
                                         @endif
                                     </td>
-                                    <td>{{ $approved->day_count }}</td>
+                                    <td>
+                                        @if($approved->day_count === 'Whole Day')
+                                            {{ '1.0' }}
+                                        @elseif($approved->day_count === '1st Half' || $approved->day_count === '2nd Half')
+                                            {{ '0.5' }}
+                                        @endif
+                                    </td>
                                 </tr>
                                 @endforeach
                             @endif
@@ -96,6 +106,8 @@
                                     {{ ($attendance->time_out == NULL) ? '' : date('g:i:s a', $attendance->time_out) }} <br><span style="font-size: 80%; opacity: .50"> {{ ($attendance->time_out == NULL) ? '' : '('. date('m/d', $attendance->time_out) .')' }}</span>
                                 </td>
                                 <td>{{ ($attendance->time_out == NULL) ? '' : App\Dtr::timeDiff($attendance->time_out, $attendance->time_in) }}</td>
+                                <td>-</td>
+                                <td>-</td>
                                 <td>-</td>
                                 <td>-</td>
                                 <td>-</td>
@@ -127,8 +139,8 @@
 $(document).ready(function() {
     $('#table').dataTable({
         'iDisplayLength': 50,
-        'order': [[ 0, "desc" ]]
+        'order': [ [ 0, "desc" ] ]
     });
 });
 </script>
-@endsection
+@endsection 
