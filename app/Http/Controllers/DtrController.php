@@ -19,7 +19,8 @@ class DtrController extends Controller
     {
         return view('dtr.index', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
-            'attendances' => Attendance::where('user_id', Auth::id())->get(),
+            // 'attendances' => Attendance::where('user_id', Auth::id())->get(),
+            // 'attendances' => User::where('id', Auth::id())->attendances()->latest()->get(),
             'user' => User::where('id', Auth::id())->first()
         ]);
     }

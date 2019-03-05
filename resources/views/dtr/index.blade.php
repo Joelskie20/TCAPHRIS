@@ -65,7 +65,7 @@
                             @if($user->id === Auth::id())
                                 @foreach($user->leaves()->where('status', 'approved')->get() as $approved)
                                 <tr style="text-align:center;">
-                                    <td>{{ Carbon::parse($approved->leave_date)->format("m/d/Y") }}</td>
+                                    <td>{{ Carbon::parse($approved->leave_date)->format('m/d/Y') }}</td>
                                     <td> - </td>
                                     <td> - </td>
                                     <td> - </td>
@@ -75,7 +75,7 @@
                                     <td> - </td>
                                     <td> - </td>
                                     <td> - </td>
-                                    <td>
+                                    <td style="background-color:green;color:white;">
                                         @if($approved->leave_type === 'Vacation Leave')
                                             {{ 'VL' }}
                                         @elseif($approved->leave_type === 'Sick Leave')
@@ -94,7 +94,7 @@
                             @endif
 
                             
-                            @foreach ($attendances as $attendance)
+                            @foreach ($user->attendances()->latest()->get() as $attendance)
                             <tr style="text-align: center;">
                                 <td>{{ date('m/d/Y', $attendance->time_in) }}</td>
                                 <td>{{ $attendance->user->workshift->code }}</td>
@@ -108,9 +108,27 @@
                                 <td>{{ ($attendance->time_out == NULL) ? '' : App\Dtr::timeDiff($attendance->time_out, $attendance->time_in) }}</td>
                                 <td>-</td>
                                 <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
+                                <td>
+                                    @foreach($user->overtimes()->where('status', 'approved')->get() as $overtime)
+                                        @if(date('Y-m-d', $attendance->time_in) === $overtime->date)
+                                            {{ date('g:i a', $overtime->time_in) }}
+                                        @endif
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach($user->overtimes()->where('status', 'approved')->get() as $overtime)
+                                        @if(date('Y-m-d', $attendance->time_in) === $overtime->date)
+                                            {{ date('g:i a', $overtime->time_out) }}
+                                        @endif
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach($user->overtimes()->where('status', 'approved')->get() as $overtime)
+                                        @if(date('Y-m-d', $attendance->time_in) === $overtime->date)
+                                            {{ App\Dtr::timeDiff($overtime->time_out, $overtime->time_in) }}
+                                        @endif
+                                    @endforeach
+                                </td>
                                 <td>-</td>
                                 <td>-</td>
                             </tr>
