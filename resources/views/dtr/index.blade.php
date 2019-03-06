@@ -106,8 +106,15 @@
                                     {{ ($attendance->time_out == NULL) ? '' : date('g:i:s a', $attendance->time_out) }} <br><span style="font-size: 80%; opacity: .50"> {{ ($attendance->time_out == NULL) ? '' : '('. date('m/d', $attendance->time_out) .')' }}</span>
                                 </td>
                                 <td>{{ ($attendance->time_out == NULL) ? '' : App\Dtr::timeDiff($attendance->time_out, $attendance->time_in) }}</td>
-                                <td>-</td>
-                                <td>-</td>
+                                <td> {{ App\Dtr::checkIfLate( $user, $attendance, Carbon::createFromTimestamp($attendance->time_in)->dayOfWeek ) }}
+                                </td>
+                                <td>
+                                    @if($attendance->time_out == NULL || ( date('m/d', $attendance->time_out) != date('m/d', $attendance->time_in) ) )
+                                        {{ '' }}
+                                    @else
+                                        {{ App\Dtr::checkIfUndertime( $user, $attendance, Carbon::createFromTimestamp($attendance->time_in)->dayOfWeek ) }}
+                                    @endif
+                                </td>
                                 <td>
                                     @foreach($user->overtimes()->where('status', 'approved')->get() as $overtime)
                                         @if(date('Y-m-d', $attendance->time_in) === $overtime->date)
