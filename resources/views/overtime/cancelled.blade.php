@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Overtime')
+@section('title', 'Cancelled Overtimes')
 
 @section('styles')
 <!-- DataTables -->
@@ -11,7 +11,7 @@
 <div class="content-wrapper" style="min-height: 697px;">
 
     <section class="content-header" style="overflow: hidden">
-        <h1 class="pull-left">Overtime For Your Approval</h1>
+        <h1 class="pull-left">Cancelled Overtimes</h1>
     </section>
 
     <!-- MAIN CONTENT -->
@@ -21,7 +21,7 @@
         @endif
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title pull-left">Overtime Filed</h3>
+                <h3 class="box-title pull-left">Overtime Denied</h3>
                 <div class="box-options pull-right">
                     <button type="button" class="btn btn-success btn-sm btn-add-leave pull-right" data-toggle="modal" data-target="#modal-default-add"><i class="fa fa-plus mr05"></i> ADD OVERTIME</button>
                 </div>
@@ -40,14 +40,12 @@
                                         <th>Time In</th>
                                         <th>Time Out</th>
                                         <th>Filing Date</th>
-                                        <th>Direct Manager</th>
-                                        <th>Remarks</th>
-                                        <th></th>
+                                        <th>Cancelled by</th>
+                                        <th>Date Cancelled</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($overtimes as $key => $overtime)
-                                    @if($overtime->user->getManagersId()->contains(Auth::user()->id))
                                     <div class="modal fade" id="modal-default-edit-{{ $overtime->id }}">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -146,33 +144,31 @@
                                         <td>{{ Carbon::parse(date('g:i A', $overtime->time_in))->format('g:i A') }}</td>
                                         <td>{{ Carbon::parse(date('g:i A', $overtime->time_out))->format('g:i A') }}</td>
                                         <td>{{ Carbon::parse($overtime->filing_date)->format('F j, Y - g:i:s A') }}</td>
-                                        <td><a href="/employee/{{ $overtime->user->getManagerID() }}">{{ $overtime->user->getManagerName() }}</a></td>
-                                        <td>{{ $overtime->remarks }}</td>
+
                                         <td>
-                                            <form style="display: inline-block;" action="{{ action('OvertimeController@approvingOvertimes', ['id' => $overtime->id]) }}" method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button type="submit" class="btn btn-success btn-xs" title="Approve">
-                                                    <i class="fa fa-check"></i>
-                                                </button>
-                                            </form>
-                                            <form style="display: inline-block;" action="{{ action('OvertimeController@denyingOvertimes', ['id' => $overtime->id]) }}" method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button type="submit" class="btn btn-danger btn-xs" title="Deny">
-                                                    <i class="fa fa-remove"></i>
-                                                </button>
-                                            </form>
-                                            <form style="display: inline-block;" action="{{ action('OvertimeController@cancellingOvertimes', ['id' => $overtime->id]) }}" method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button type="submit" class="btn btn-warning btn-xs" title="Cancel">
-                                                    <i class="fa fa-ban"></i>
-                                                </button>
-                                            </form>
+                                            @if($overtime->user->getManagerName() == 'Unassigned')
+                                                {{ 'Unassigned' }}
+                                            @else
+                                                <a href="/employee/{{ $overtime->cancelled_by }}">{{ App\User::where('id', $overtime->cancelled_by)->first()->firstAndLastName() }}</a>
+                                            @endif
                                         </td>
+
+                                        <td>{{ Carbon::parse($overtime->date_cancelled)->format('F d, Y - g:i:s A') }}</td>
+                                        {{-- <td>
+                                            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default-edit-{{ $overtime->id }}">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+
+                                            <form style="display: inline-block;" action="#" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');" title="Delete">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </button>
+                                            </form>
+                                            
+                                        </td> --}}
                                     </tr>
-                                    @endif
                                     @endforeach
                                 </tbody>
                             </table>

@@ -11,6 +11,11 @@ class Workshift extends Model
 
     protected $guarded = [];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function createWorkshift($request)
     {
         $this->code = $request->code;

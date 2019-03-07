@@ -132,6 +132,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::patch('/overtimes/{overtime}', 'OvertimeController@update');
     Route::patch('/approving-overtimes/{overtime}', 'OvertimeController@approvingOvertimes');
     Route::patch('/denying-overtimes/{overtime}', 'OvertimeController@denyingOvertimes');
+    ROute::delete('/overtimes/{overtime}', 'OvertimeController@destroy');
+
+    Route::get('cancelled-overtimes', 'OvertimeController@cancelled')->name('cancelled-overtimes');
+    Route::patch('/cancelling-overtimes/{overtime}', 'OvertimeController@cancellingOvertimes');
+
 
     Route::get('/divisions', 'DivisionController@index')->name('divisions');
     Route::get('/divisions/create', 'DivisionController@create');

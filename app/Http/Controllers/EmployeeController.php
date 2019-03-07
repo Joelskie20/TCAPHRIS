@@ -53,6 +53,10 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'employee_id' => 'required'
+        ]);
+
         $user = new User;
 
         $user->createUser($request);
@@ -113,10 +117,6 @@ class EmployeeController extends Controller
         $user = User::findOrFail($user->id);
 
         $user->updateUser($request, $user);
-
-        // $user->leaves()->update([
-        //     'direct_manager_id' => $request->direct_manager_id
-        // ]);
 
         Session::flash('message', 'User has been updated.');
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Dtr;
 use App\User;
 use App\Attendance;
@@ -18,7 +19,9 @@ class DtrController extends Controller
     {
         return view('dtr.index', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
-            'attendances' => Attendance::latest()->get()
+            // 'attendances' => Attendance::where('user_id', Auth::id())->get(),
+            // 'attendances' => User::where('id', Auth::id())->attendances()->latest()->get(),
+            'user' => User::where('id', Auth::id())->first(),
         ]);
     }
 
@@ -53,8 +56,9 @@ class DtrController extends Controller
     {
         return view('dtr.show', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
-            'attendances' => Attendance::where('user_id', '=', $id)->latest()->get(),
-            'employee' => User::findOrFail($id)
+            // 'attendances' => Attendance::where('user_id', Auth::id())->get(),
+            // 'attendances' => User::where('id', Auth::id())->attendances()->latest()->get(),
+            'user' => User::where('id', $id)->first(),
         ]);
     }
 

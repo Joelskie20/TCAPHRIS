@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css') }}">
 <!-- bootstrap timepicker -->
 <link rel="stylesheet" href="{{ asset('plugins/timepicker/bootstrap-timepicker.min.css') }}">
+<!-- daterange picker -->
+<link rel="stylesheet" href="{{ asset('bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
 <!-- Select2 -->
 {{-- <link rel="stylesheet" href="{{ asset('/bower_components/select2/dist/css/select2.min.css') }}"> --}}
 

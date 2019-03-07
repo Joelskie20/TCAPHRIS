@@ -12,6 +12,9 @@
 <script src="{{ asset('plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
 <!-- Multiple -->
 <script src="{{ asset('bower_components/select2/dist/js/select2.full.min.js') }}"></script>
+<!-- date-range-picker -->
+<script src="{{ asset('bower_components/moment/min/moment.min.js') }}"></script>
+<script src="{{ asset('bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <!-- Moment.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js">
 moment.tz.setDefault("Asia/Manila");

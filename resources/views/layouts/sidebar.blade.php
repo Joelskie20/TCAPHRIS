@@ -96,6 +96,7 @@
                 <li><a href="{{ route('overtimes-for-approval') }}"><i class="fa fa-calendar-plus-o"></i>For Approval</a></li>
                 <li><a href="{{ route('approved-overtimes') }}"><i class="fa fa-calendar-check-o"></i>Approved</a></li>
                 <li><a href="{{ route('denied-overtimes') }}"><i class="fa fa-calendar-times-o"></i>Denied</a></li>
+                <li><a href="{{ route('cancelled-overtimes') }}"><i class="fa fa-calendar-times-o"></i>Cancelled</a></li>
                 @hasrole('manager')
                 <li><a href="{{ route('approving-overtimes') }}"><i class="fa fa-check"></i>For Your Approval</a></li>
                 @endhasrole

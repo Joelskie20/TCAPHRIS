@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon;
 use Hash;
+use DB;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -106,6 +107,17 @@ class User extends Authenticatable
         $this->assignRole($request->roles);
 
         $this->save();
+
+        list($from, $to) = explode(' - ', $request->workshift_schedule_range);
+
+         DB::table('user_workshift_schedules')->insert([
+            [
+                'user_id' => DB::table('users')->where('employee_id', $request->employee_id)->first()->id,
+                'workshift_id' => $request->workshift_id,
+                'date_from' => Carbon::parse($from)->format('Ymd'),
+                'date_to' => Carbon::parse($to)->format('Ymd')
+            ]
+        ]);
     }
 
     public function updateUser($request, $user)
@@ -180,6 +192,19 @@ class User extends Authenticatable
         // $this->password = Hash::make($request->employee_id);
 
         $this->save();
+
+        list($from, $to) = explode(' - ', $request->workshift_schedule_range);
+
+        $user->workshiftSchedules()->updateOrInsert(
+            [
+                'user_id' => $user->id,
+            ],
+            [
+                'workshift_id' => $request->workshift_id,
+                'date_from' => Carbon::parse($from)->format('Ymd'),
+                'date_to' => Carbon::parse($to)->format('Ymd')
+            ]
+        );
     }
 
     public function lastNameFirst()
@@ -366,6 +391,11 @@ class User extends Authenticatable
 
     public function overtimes()
     {
-        $this->hasMany('App\Overtime');
+        return $this->hasMany(Overtime::class);
+    }
+
+    public function workshiftSchedules()
+    {
+        return $this->hasMany(WorkshiftSched::class);
     }
 }

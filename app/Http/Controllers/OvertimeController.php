@@ -118,7 +118,11 @@ class OvertimeController extends Controller
      */
     public function destroy(Overtime $overtime)
     {
-        //
+        $overtime->delete();
+
+        Session::flash('message', 'Overtime has been deleted.');
+
+        return redirect('/overtimes-for-approval');
     }
 
     public function forApproval()
@@ -172,6 +176,28 @@ class OvertimeController extends Controller
         Session::flash('message', 'Overtime denied.');
 
         return redirect('/approving-overtimes');
+    }
+
+    public function cancelled()
+    {
+        return view('overtime.cancelled', [
+            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false, 
+            'users' => User::all(),
+            'overtimes' => Overtime::where('user_id', Auth::id())->where('status', 'cancelled')->get()
+        ]);
+    }
+
+    public function cancellingOvertimes(Request $request, Overtime $overtime)
+    {
+        $overtime->update([
+            'status' => 'cancelled',
+            'date_cancelled' => Carbon::now(),
+            'cancelled_by' => Auth::user()->id
+        ]);
+
+        Session::flash('message', 'Overtime cancelled.');
+
+        return redirect('/leaves-for-approval');
     }
 
 

@@ -41,7 +41,7 @@
                                         <th>Filing Date</th>
                                         <th>Approved By</th>
                                         <th>Date Approved</th>
-                                        {{-- <th>Remarks</th> --}}
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -61,7 +61,15 @@
                                             @endif
                                         </td>
                                         <td>{{ Carbon::parse($leave->date_approved)->format('F d, Y - g:i:s A') }}</td>
-                                        {{-- <td>{{ $leave->approved_remarks }}</td> --}}
+                                        <td>
+                                            <form style="display: inline-block;" action="{{ action('LeaveController@cancellingLeaves', ['id' => $leave->id]) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-warning btn-xs" title="Cancel">
+                                                    <i class="fa fa-ban"></i>
+                                                </button>
+                                            </form>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
