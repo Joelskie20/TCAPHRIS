@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon;
 use Hash;
 use DB;
+use App\WorkshiftSched;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -110,14 +111,49 @@ class User extends Authenticatable
 
         list($from, $to) = explode(' - ', $request->workshift_schedule_range);
 
-         DB::table('user_workshift_schedules')->insert([
+        DB::table('user_workshift_schedules')->insert([
             [
-                'user_id' => DB::table('users')->where('employee_id', $request->employee_id)->first()->id,
+                'user_id' => $this->where('employee_id', $request->employee_id)->first()->id,
                 'workshift_id' => $request->workshift_id,
                 'date_from' => Carbon::parse($from)->format('Ymd'),
                 'date_to' => Carbon::parse($to)->format('Ymd')
             ]
         ]);
+
+        $start = Carbon::parse($from)->format('Ymd');
+        $end = Carbon::parse($to)->format('Ymd');
+        $dateRange = WorkshiftSched::getAllDays($start, $end);
+
+        $dateRange->each(function ($item, $key) {
+        
+            $days = [
+                0 => 'sunday',
+                1 => 'monday',
+                2 => 'tuesday',
+                3 => 'wednesday',
+                4 => 'thursday',
+                5 => 'friday',
+                6 => 'saturday'
+            ];
+
+            if ( array_key_exists(Carbon::parse($item)->dayOfWeek, $days) ) {
+
+                $getDay = "{$days[Carbon::parse($item)->dayOfWeek]}_workshift";
+
+                DB::table('user_workshift_per_day')->insert([
+                    [
+                        'user_id' => $this->where('employee_id', request()->employee_id)->first()->id,
+                        'workshift_schedule' => $this->where('employee_id', request()->employee_id)->first()->workshift->$getDay,
+                        'date_code' => Carbon::parse($item)->format('Ymd'),
+                        'rest_day' => $this->where('employee_id', request()->employee_id)->first()->workshift->$getDay === 'RD' ? true : false
+                    ]
+                ]);
+
+            }
+
+        });
+
+        
     }
 
     public function updateUser($request, $user)
@@ -205,6 +241,44 @@ class User extends Authenticatable
                 'date_to' => Carbon::parse($to)->format('Ymd')
             ]
         );
+
+        WorkshiftPerDay::where('user_id', $user->id)->delete();
+
+        $start = Carbon::parse($from)->format('Ymd');
+        $end = Carbon::parse($to)->format('Ymd');
+        $dateRange = WorkshiftSched::getAllDays($start, $end);
+
+        $dateRange->each(function ($item, $key) {
+        
+            $days = [
+                0 => 'sunday',
+                1 => 'monday',
+                2 => 'tuesday',
+                3 => 'wednesday',
+                4 => 'thursday',
+                5 => 'friday',
+                6 => 'saturday'
+            ];
+
+            if ( array_key_exists(Carbon::parse($item)->dayOfWeek, $days) ) {
+
+                $getDay = "{$days[Carbon::parse($item)->dayOfWeek]}_workshift";
+
+                DB::table('user_workshift_per_day')->insert([
+                    [
+                        'user_id' => $this->where('employee_id', request()->employee_id)->first()->id,
+                        'workshift_schedule' => $this->where('employee_id', request()->employee_id)->first()->workshift->$getDay,
+                        'date_code' => Carbon::parse($item)->format('Ymd'),
+                        'rest_day' => $this->where('employee_id', request()->employee_id)->first()->workshift->$getDay === 'RD' ? true : false
+                    ]
+                ]);
+
+            }
+
+        });
+
+        
+
     }
 
     public function lastNameFirst()
@@ -397,5 +471,10 @@ class User extends Authenticatable
     public function workshiftSchedules()
     {
         return $this->hasMany(WorkshiftSched::class);
+    }
+
+    public function workshiftPerDay()
+    {
+        return $this->hasMany(WorkshiftPerDay::class);
     }
 }

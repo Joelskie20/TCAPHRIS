@@ -81,6 +81,9 @@ Route::group(['middleware' => 'auth'], function() {
         Route::patch('/workshifts/{workshift}', 'WorkshiftController@update')->middleware('permission:edit workshift');
         Route::delete('/workshifts/{workshift}', 'WorkshiftController@destroy')->middleware('permission:delete workshift');
         Route::get('/workshifts/{workshift}', 'WorkshiftController@show');
+
+        Route::get('/workshift-assignment', 'WorkshiftController@assignment')->name('workshift-assignment');
+        Route::post('/workshift-assignment', 'WorkshiftController@assignmentStore');
     });
 
     Route::group(['middleware' => ['permission:leaves']], function () {

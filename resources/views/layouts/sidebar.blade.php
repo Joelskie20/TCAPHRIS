@@ -43,10 +43,15 @@
 
         @can('workshifts')
         <!-- WORKSHIFT -->
-        <li class="{{ set_active('workshift*') }}">
+        <li class="{{ set_active('workshifts*') }}">
             <a href="{{ route('workshift') }}"><i class="fa fa-sitemap"></i> <span>Workshift</span></a>
         </li>
         @endcan
+
+        <!-- WORKSHIFT ASSIGNMENT -->
+        <li class="{{ set_active('workshift-assignment*') }}">
+            <a href="{{ route('workshift-assignment') }}"><i class="glyphicon glyphicon-th-list"></i> <span>Workshift Assignment</span></a>
+        </li>
 
         @can('leaves')
         <!-- LEAVES -->

@@ -4,6 +4,8 @@
 <link rel="stylesheet" href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css') }}">
 <!-- Ionics -->
 <link rel="stylesheet" href="{{ asset('bower_components/Ionicons/css/ionicons.min.css') }}">
+<!-- Select2 -->
+<link rel="stylesheet" href="{{ asset('/bower_components/select2/dist/css/select2.min.css') }}">
 <!-- AdminLTE -->
 <link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css') }}">
 <!-- AdminLTE blue skin -->
@@ -14,8 +16,7 @@
 <link rel="stylesheet" href="{{ asset('plugins/timepicker/bootstrap-timepicker.min.css') }}">
 <!-- daterange picker -->
 <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
-<!-- Select2 -->
-{{-- <link rel="stylesheet" href="{{ asset('/bower_components/select2/dist/css/select2.min.css') }}"> --}}
+
 
 <!-- Personal Stylesheet -->
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
