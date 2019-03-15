@@ -2,6 +2,13 @@
 
 @section('title', 'Dashboard')
 
+@section('styles')
+<style>
+.latest-attendance tr, .latest-attendance tr th {text-align: center;}
+/* .latest-attendance tr td:first-child {vertical-align: middle;} */
+</style>
+@endsection
+
 @section('content')
   <div class="content-wrapper">
       <!-- Content Header (Page header) -->
@@ -52,6 +59,57 @@
 							</div>
 						</div>
 							
+						</div>
+
+						<div class="col-md-6">
+							<div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Latest Attendances</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="table-responsive">
+                <table class="latest-attendance table table-striped">
+                  <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Time In</th>
+                    <th>Time Out</th>
+										<th>Work Hours</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+									@foreach($user->attendances()->latest()->limit(10)->get() as $attendance)
+									<tr>
+
+										{{-- <span style="font-size: 80%; opacity: .50;">({{ Carbon::createFromTimestamp($attendance->time_in)->format('m/d') }})</span> --}}
+										
+										<td style="vertical-align: middle;">{{ Carbon::createFromTimestamp($attendance->time_in)->format('F j, Y') }} </td>
+										<td>{{ Carbon::createFromTimestamp($attendance->time_in)->format('g:i:s a') }}<br><span style="font-size: 80%; opacity: .50;">({{ Carbon::createFromTimestamp($attendance->time_in)->format('m/d') }})</span></td>
+										<td>{{ empty($attendance->time_out) ? '' : Carbon::createFromTimestamp($attendance->time_out)->format('g:i:s a') }} <br><span style="font-size: 80%; opacity: .50;">{{ empty($attendance->time_out) ? '' : '(' . Carbon::createFromTimestamp($attendance->time_out)->format('m/d') . ')' }}</span></td>
+										<td style="vertical-align: middle;">{{ empty($attendance->time_out) ? '' : App\Dtr::timeDiff($attendance->time_out, $attendance->time_in) }}</td>
+
+									</tr>
+									@endforeach
+
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.table-responsive -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+              <a href="/daily-time-records" class="btn btn-sm btn-default btn-flat pull-left">View All Attendances</a>
+            </div>
+            <!-- /.box-footer -->
+          </div>
 						</div>
 
       </section>
