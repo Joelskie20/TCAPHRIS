@@ -200,6 +200,7 @@
                             </div>
                         </div>
 
+                        <!-- WORKSHIFT RANGE -->
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
                             <label>Workshift Range</label>

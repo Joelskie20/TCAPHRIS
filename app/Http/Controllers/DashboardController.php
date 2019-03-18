@@ -25,7 +25,10 @@ class DashboardController extends Controller
     {
         $disabled = (Attendance::checkAttendanceStatus()) ? true : false;
         
-        return view('dashboard', ['disabled' => $disabled]);
+        return view('dashboard', [
+            'disabled' => $disabled,
+            'user' => User::where('id', auth()->id())->first()
+        ]);
     }
 
     public function store(Request $request)

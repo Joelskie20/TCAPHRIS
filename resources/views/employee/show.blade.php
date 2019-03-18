@@ -209,23 +209,31 @@ table tr.rest-day{background:#98fb98 !important;}
 										</table>
 										
 										<h4>Workshift Schedules
-											<a href="#" class="btn btn-info btn-xs pull-right">MANAGE WORKSHIFT</a>
+											{{-- <a href="#" class="btn btn-info btn-xs pull-right">MANAGE WORKSHIFT</a> --}}
 										</h4>
+										@if ($employee->workshiftSchedules->count() > 0)
 										<table class="table table-bordered table-hover table-striped">
-											{{-- <thead>
+											<thead>
 												<tr>
 													<th>Effectivity Date</th>
 													<th>Code</th>
 													<th>Workshift</th>
 												</tr>
-											</thead> --}}
-											{{-- <tbody>
-												<tr><td>October 15, 2018</td><td>MRG-MF-6A3P-SSR</td><td>Morning Monday-Friday 6AM-3PM Sat-Sun Restday</td></tr><tr><td>September 15, 2018</td><td>NGT-THM-9P6A-MTR</td><td>Night Shift 9PM-6AM Monday-Tuesday Restday</td></tr>												<tr><td colspan="3"></td></tr>
-											</tbody> --}}
+											</thead>
 											<tbody>
-												<tr><td class="text-center">To follow</td></tr>
+												<tr>
+													<td>{{ Carbon::parse($employee->workshiftSchedules->first()->date_from)->format('F j, Y') }} - {{ Carbon::parse($employee->workshiftSchedules->first()->date_to)->format('F j, Y') }}</td>
+													<td>{{ $employee->workshift->code }}</td>
+													<td>{{ $employee->workshift->name }}</td>
+												</tr>
+												<tr>
+													<td colspan="3"></td>
+												</tr>
 											</tbody>
 										</table>
+										@else
+										<p class="text-muted">None</p>
+										@endif
 										
 									</div>
 	

@@ -23,7 +23,7 @@ class WorkshiftSched extends Model
         return $this->belongsTo(Workshift::class);
     }
 
-    public function getAllDays($start, $end)
+    public static function getAllDays($start, $end)
     {
         $period = CarbonPeriod::create($start, $end);
 

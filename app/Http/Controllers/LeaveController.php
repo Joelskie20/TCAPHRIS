@@ -204,7 +204,7 @@ class LeaveController extends Controller
 
         Session::flash('message', 'Leave cancelled.');
 
-        return redirect('/leaves-for-approval');
+        return redirect('/cancelled-leaves');
     }
 
 }
