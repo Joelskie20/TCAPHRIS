@@ -238,4 +238,34 @@ class WorkshiftController extends Controller
 
         return redirect('/workshift-assignment');
     }
+
+    public function calendar()
+    {
+        return view('workshift.calendar', [
+            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
+            'workshifts' => Workshift::all(),
+            'users' => User::all(),
+            'divisions' => Division::all(),
+            'teams' => Team::all(),
+            'accounts' => Account::all(),
+            'job_codes' => JobCode::all(),
+            'from' => now(),
+            'to' => now()->endOfMonth(),
+            'dateRange' => WorkshiftSched::getAllDays(now(), now()->endOfMonth()),
+            'users' => User::all()
+        ]);
+    }
+
+    public function calendarPost(Request $request)
+    {
+        list($from, $to) = explode(' - ', $request->daterange);
+
+        return view('workshift.calendar', [
+            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
+            'from' => Carbon::parse($from),
+            'to' => Carbon::parse($to),
+            'dateRange' => WorkshiftSched::getAllDays(Carbon::parse($from)->format('Ymd'), Carbon::parse($to)->format('Ymd')),
+            'users' => User::all(),
+        ]);
+    }
 }

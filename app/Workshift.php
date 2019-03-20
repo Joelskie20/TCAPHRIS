@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Carbon;
 
 class Workshift extends Model
 {
@@ -347,6 +348,42 @@ class Workshift extends Model
         list($sundaySchedule, $sundayWorkHours) = explode(',', $this->sunday_workshift);
 
         return $sundayWorkHours;
+    }
+
+    public static function getUserWorkshift($date, $user)
+    {
+
+        $getDayTimeIn  = 'get' . config('app.days')[$date->dayOfWeek] . 'TimeIn';
+        $getDayTimeOut = 'get' . config('app.days')[$date->dayOfWeek] . 'TimeOut';
+
+        $timeIn = '';
+        $timeOut = '';
+
+        if ( $user->workshift->$getDayTimeIn() == 'RD' || $user->workshift->$getDayTimeOut() == 'RD' ) {
+            return 'RD';
+        }
+
+        if ( array_key_exists($user->workshift->$getDayTimeIn(), config('app.timeValues') ) ) {
+
+            $timeIn = Carbon::parse(config('app.timeValues')[$user->workshift->$getDayTimeIn()])->format('g:i a');
+
+        } else {
+
+            $timeIn = Carbon::parse($user->workshift->$getDayTimeIn())->format('g:i a');
+
+        }
+
+        if ( array_key_exists($user->workshift->$getDayTimeOut(), config('app.timeValues') ) ) {
+
+            $timeOut = Carbon::parse(config('app.timeValues')[$user->workshift->$getDayTimeOut()])->format('g:i a');
+
+        } else {
+
+            $timeOut = Carbon::parse( $user->workshift->$getDayTimeOut() )->format('g:i a');
+
+        }
+
+        return $timeIn . ' - ' . $timeOut;
     }
 
     

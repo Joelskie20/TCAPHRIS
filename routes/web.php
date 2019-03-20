@@ -84,6 +84,8 @@ Route::group(['middleware' => 'auth'], function() {
 
         Route::get('/workshift-assignment', 'WorkshiftController@assignment')->name('workshift-assignment');
         Route::post('/workshift-assignment', 'WorkshiftController@assignmentStore');
+        Route::get('/workshift-assignment/calendar', 'WorkshiftController@calendar');
+        Route::post('/workshift-assignment/calendar', 'WorkshiftController@calendarPost');
     });
 
     Route::group(['middleware' => ['permission:leaves']], function () {

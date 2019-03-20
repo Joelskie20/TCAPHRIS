@@ -12,6 +12,7 @@
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
+        "laravel/telescope": "^2.0",
         "laravel/tinker": "^1.0",
         "spatie/laravel-activitylog": "^3.2",
         "spatie/laravel-permission": "^2.29"
@@ -32,7 +33,7 @@
     "extra": {
         "laravel": {
             "dont-discover": [
-                "TelescopeServiceProvider.php"
+                
             ]
         }
     },
