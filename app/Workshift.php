@@ -350,40 +350,138 @@ class Workshift extends Model
         return $sundayWorkHours;
     }
 
-    public static function getUserWorkshift($date, $user)
+    public static function getUserWorkshiftPerDay($user, $dateCode)
     {
 
-        $getDayTimeIn  = 'get' . config('app.days')[$date->dayOfWeek] . 'TimeIn';
-        $getDayTimeOut = 'get' . config('app.days')[$date->dayOfWeek] . 'TimeOut';
+        $sched = $user->workshiftPerDay()->where('date_code', $dateCode)->first();
 
-        $timeIn = '';
-        $timeOut = '';
-
-        if ( $user->workshift->$getDayTimeIn() == 'RD' || $user->workshift->$getDayTimeOut() == 'RD' ) {
+        if ( $sched->workshift_schedule === 'RD' ) {
             return 'RD';
         }
 
-        if ( array_key_exists($user->workshift->$getDayTimeIn(), config('app.timeValues') ) ) {
+        $userWorkshiftInfo = explode(',', $sched->workshift_schedule);
 
-            $timeIn = Carbon::parse(config('app.timeValues')[$user->workshift->$getDayTimeIn()])->format('g:i a');
+        $userWorkshift = $userWorkshiftInfo[0];
+
+        $userWorkHours = $userWorkshiftInfo[1]; 
+
+        $attendance = explode('-', $userWorkshift);
+
+        $timeIn = $attendance[0];
+        $timeOut = $attendance[1];
+
+        if ( array_key_exists($timeIn, config('app.timeValues')) ) {
+
+            $timeIn = Carbon::parse(config('app.timeValues')[$timeIn])->format('g:i a');
 
         } else {
 
-            $timeIn = Carbon::parse($user->workshift->$getDayTimeIn())->format('g:i a');
-
+            $timeIn = Carbon::parse($timeIn)->format('g:i a');
         }
 
-        if ( array_key_exists($user->workshift->$getDayTimeOut(), config('app.timeValues') ) ) {
+        if ( array_key_exists($timeOut, config('app.timeValues')) ) {
 
-            $timeOut = Carbon::parse(config('app.timeValues')[$user->workshift->$getDayTimeOut()])->format('g:i a');
+            $timeOut = Carbon::parse(config('app.timeValues')[$timeOut])->format('g:i a');
 
         } else {
 
-            $timeOut = Carbon::parse( $user->workshift->$getDayTimeOut() )->format('g:i a');
-
+            $timeOut = Carbon::parse($timeOut)->format('g:i a');
         }
 
         return $timeIn . ' - ' . $timeOut;
+
+    }
+
+    public static function getUserTimeIn($user, $dateCode)
+    {
+
+        $sched = $user->workshiftPerDay()->where('date_code', $dateCode)->first();
+
+        if ( is_null($sched) ) {
+            return null;
+        }
+
+        if ( $sched->workshift_schedule === 'RD' ) {
+            return 'RD';
+        }
+
+        $userWorkshiftInfo = explode(',', $sched->workshift_schedule);
+
+        $userWorkshift = $userWorkshiftInfo[0];
+
+        $userWorkHours = $userWorkshiftInfo[1]; 
+
+        $attendance = explode('-', $userWorkshift);
+
+        $timeIn = $attendance[0];
+        $timeOut = $attendance[1];
+
+        if ( array_key_exists($timeIn, config('app.timeValues')) ) {
+
+            $timeIn = Carbon::parse(config('app.timeValues')[$timeIn])->format('g:i a');
+
+        } else {
+
+            $timeIn = Carbon::parse($timeIn)->format('g:i a');
+        }
+
+        if ( array_key_exists($timeOut, config('app.timeValues')) ) {
+
+            $timeOut = Carbon::parse(config('app.timeValues')[$timeOut])->format('g:i a');
+
+        } else {
+
+            $timeOut = Carbon::parse($timeOut)->format('g:i a');
+        }
+
+        return $timeIn;
+
+    }
+
+    public static function getUserTimeOut($user, $dateCode)
+    {
+
+        $sched = $user->workshiftPerDay()->where('date_code', $dateCode)->first();
+
+        if ( is_null($sched) ) {
+            return null;
+        }
+
+        if ( $sched->workshift_schedule === 'RD' ) {
+            return 'RD';
+        }
+
+        $userWorkshiftInfo = explode(',', $sched->workshift_schedule);
+
+        $userWorkshift = $userWorkshiftInfo[0];
+
+        $userWorkHours = $userWorkshiftInfo[1]; 
+
+        $attendance = explode('-', $userWorkshift);
+
+        $timeIn = $attendance[0];
+        $timeOut = $attendance[1];
+
+        if ( array_key_exists($timeIn, config('app.timeValues')) ) {
+
+            $timeIn = Carbon::parse(config('app.timeValues')[$timeIn])->format('g:i a');
+
+        } else {
+
+            $timeIn = Carbon::parse($timeIn)->format('g:i a');
+        }
+
+        if ( array_key_exists($timeOut, config('app.timeValues')) ) {
+
+            $timeOut = Carbon::parse(config('app.timeValues')[$timeOut])->format('g:i a');
+
+        } else {
+
+            $timeOut = Carbon::parse($timeOut)->format('g:i a');
+        }
+
+        return $timeOut;
+
     }
 
     

@@ -197,6 +197,18 @@
                 @csrf
                 <div class="modal-body">
                     <div class="row">
+                        @can('can add leave for other users')
+                        <div class="col-sm-6">
+                            <div class="form-group employee" id="employee-add">
+                                <label for="employee-add">Employee</label>
+                                <select class="form-control" id="employee-add" name="employee_id">
+                                    @foreach($users as $user)
+                                    <option value="{{ $user->id }}">[{{ $user->employee_id }}] {{ $user->firstNameFirst() }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        @endcan
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="leaveDate">Leave Date</label>
@@ -206,16 +218,6 @@
                                     </div>
                                     <input type="text" id="leaveDate" name="leave_date" placeholder="mm/dd/yyyy" class="form-control datepicker" required>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group employee" id="employee-add">
-                                <label for="employee-add">Employee</label>
-                                <select class="form-control" id="employee-add" name="employee_id">
-                                    @foreach($users as $user) 
-                                        <option value="{{ $user->id }}">[{{ $user->employee_id }}] {{ $user->firstNameFirst() }}</option>
-                                    @endforeach
-                                </select>
                             </div>
                         </div>
                     </div>

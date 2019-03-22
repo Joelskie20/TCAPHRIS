@@ -196,7 +196,7 @@ class WorkshiftController extends Controller
 
     public function generateWorkshift($users, $start, $end, $dateRange)
     {
-        foreach( $users as $user ) {
+        foreach ( $users as $user ) {
 
             WorkshiftSched::create([
                 'user_id' => $user->id,
@@ -268,4 +268,14 @@ class WorkshiftController extends Controller
             'users' => User::all(),
         ]);
     }
+
+    public function fetchDaySched($userID, $dateCode)
+    {
+        return WorkshiftPerDay::where([
+            ['user_id', '=', $userID],
+            ['date_code', '=', $dateCode]
+        ])->get();
+    }
+
+
 }

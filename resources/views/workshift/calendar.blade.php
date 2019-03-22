@@ -24,6 +24,9 @@
 .cell-gen{border-top:1px solid #eee;border-left:1px solid #eee;font-weight:bold;padding:7px;text-align:center;}
 .cell-gen:last-child{border-right:1px solid #eee;}
 .cell-norm{border:1px solid #eee;padding:5px 0;height:30px;}
+.userTimeIn{display:block;background:green;color:white;}
+.userTimeOut{display:block;background:black;color:white;}
+.userRestDay{display:block;background:midnightblue;color:white;}
 </style>
 @endsection
 
@@ -50,7 +53,7 @@
                         <!-- FILTER -->
 
                         <div class="col-md-12">
-                            <form class="form-horizontal mr10" method="POST" action="{{ action('WorkshiftController@calendar') }}">
+                            <form class="form-horizontal mr10" method="POST" action="{{ action('WorkshiftController@calendarPost') }}">
                                 @csrf
                                 <div class="form-group">
                                     <div class="row">
@@ -62,8 +65,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
-                                                <input type="text" class="form-control pull-right daterange" id="daterange" name="daterange"
-                                                    value="03/15/2019 - 04/01/2019">
+                                                <input type="text" class="form-control pull-right daterange" id="daterange" name="daterange" value="{{ $from->format('m/d/Y') }} - {{ $to->format('m/d/Y') }}">
                                             </div>
                                         </div>
 
@@ -90,10 +92,11 @@
                     </div>
                     <div class="box-body work-rate-table">
                         <table id="work-rate" class="fht-table table-hover">
+
                             <thead>
                                 <tr class="month-header">
                                     <th colspan="2"></th> 
-                                    <th class="text-center" style="border-right:1px solid #ccc;" colspan="{{ App\WorkshiftSched::getAllDays($from, $to)->count() }}">March</th>
+                                    <th class="text-center" colspan="{{ App\WorkshiftSched::getAllDays($from, $to)->count() }}">March</th>
 
                                     {{-- @if($from->between()) --}}
 
@@ -105,7 +108,6 @@
                                     @foreach($dateRange as $date)
                                         <th class="text-center cell-gen">{{ $date->day }}<br>
                                             <span style="font-size:80%;opacity:0.5">
-                                                {{-- {{ array_key_exists($date->dayOfWeek, config('app.days')) ? 'test' }} --}}
                                                 {{ array_key_exists( $date->dayOfWeek, config('app.days') ) ? config('app.days')[$date->dayOfWeek] : '' }}
                                             </span>
                                         </th>
@@ -114,19 +116,47 @@
                                 </tr>
                             </thead>
                             <tbody>
+
                                 @foreach($users as $key => $user)
 
-                                    <tr id="u-{{ $user->id }}" class="user-row sched-row" data-user="{{ $user->id }}">
+                                    <tr id="u-{{ $user->id }}" class="user-row sched-row" data-user-id="{{ $user->id }}">
                                         <td style="padding:5px;">{{ $user->id }}</td>
                                         <td class="cell-norm user-name-row" style="padding:5px;"><a href="/employee/{{ $user->id }}" target="_blank" style="float:left;width:175px;">{{ $user->lastNameFirst() }}</a></td>
+                                        
                                         @foreach($dateRange as $date)
-                                            <td style="text-align: center;padding:3px;">
-                                                {{ App\Workshift::getUserWorkshift($date, $user) }}
+
+                                        
+                                            <td style="text-align:center;padding:3px;font-size:14px;" data-toggle="modal" data-target="workshift-modal"
+                                                id="day-{{ App\WorkshiftPerDay::where('user_id', $user->id)->where('date_code', $date->format('Ymd'))->value('id') }}" 
+                                                data-id="{{ App\WorkshiftPerDay::where('user_id', $user->id)->where('date_code', $date->format('Ymd'))->value('id') }}"
+                                                data-time-in="{{ App\Workshift::getUserTimeIn($user, $date->format('Ymd')) }}"
+                                                data-time-out="{{ App\Workshift::getUserTimeOut($user, $date->format('Ymd')) }}"
+                                                data-date="{{ $date->format('Ymd') }}">
+                                                
+                                                @foreach($user->workshiftPerDay as $schedPerDay)
+
+                                                    @if($date->format('Ymd') === $schedPerDay->date_code)
+
+                                                        @if (! $schedPerDay->rest_day)
+                                                            <span class="userTimeIn">{{ App\Workshift::getUserTimeIn($user, $schedPerDay->date_code) }}</span>
+                                                            <span class="userTimeOut">{{ App\Workshift::getUserTimeOut($user, $schedPerDay->date_code) }}</span>
+                                                        @else
+                                                            <span class="userRestDay">Rest Day</span>
+                                                        @endif
+                                                        
+                                                        
+
+                                                    @endif
+                                                
+                                                @endforeach
                                             </td>
+
                                         @endforeach
+                                        
                                     </tr>
 
                                 @endforeach
+
                             </tbody>
                         </table>
                     </div>
@@ -136,7 +166,30 @@
         </div>
 
         
-
+        <div class="modal fade" id="workshift-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title date">Default Modal</h4>
+              </div>
+              <div class="modal-body">
+                  <p class="user_name"></p>
+                  <p class="user_id"></p>
+                  <p class="time_in"></p>
+                  <p class="time_out"></p>
+                  <p class="date"></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
 
 
             
@@ -173,6 +226,24 @@ $('#level').change( function() {
         $('#account').css('display', 'none');
         $('#employee').css('display', 'none');
     }
+});
+
+$("td").click(function() {
+
+    var url = '/workshift-per-day/' + $(this).parent().attr('data-user-id') + '/' + $(this).attr('id');
+
+    var user_id = $(this).parent().attr('data-user-id');
+    var time_in = $(this).attr('data-time-in');
+    var time_out = $(this).attr('data-time-out');
+    var date = $(this).attr('data-date');
+    var user_name = $(this).parent().find('.user-name-row').text();
+
+    $('#workshift-modal .user_name').html(user_name);
+    $('#workshift-modal .user_id').html(user_id);
+    $('#workshift-modal .time_in').html(time_in);
+    $('#workshift-modal .time_out').html(time_out);
+    $('#workshift-modal .date').html(moment(date).format('LL'));
+
 });
 </script>
 @endsection
