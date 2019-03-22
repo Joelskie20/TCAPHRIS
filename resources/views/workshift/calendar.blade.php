@@ -27,6 +27,7 @@
 .userTimeIn{display:block;background:green;color:white;}
 .userTimeOut{display:block;background:black;color:white;}
 .userRestDay{display:block;background:midnightblue;color:white;}
+.user_name{font-size:18px;}
 </style>
 @endsection
 
@@ -121,12 +122,12 @@
 
                                     <tr id="u-{{ $user->id }}" class="user-row sched-row" data-user-id="{{ $user->id }}">
                                         <td style="padding:5px;">{{ $user->id }}</td>
-                                        <td class="cell-norm user-name-row" style="padding:5px;"><a href="/employee/{{ $user->id }}" target="_blank" style="float:left;width:175px;">{{ $user->lastNameFirst() }}</a></td>
+                                        <td class="cell-norm user-name-row" style="padding:5px;"><a href="/employee/{{ $user->id }}" target="_blank" style="float:left;width:175px;">{{ $user->firstNameFirst() }}</a></td>
                                         
                                         @foreach($dateRange as $date)
 
                                         
-                                            <td style="text-align:center;padding:3px;font-size:14px;" data-toggle="modal" data-target="workshift-modal"
+                                            <td style="text-align:center;padding:3px;font-size:14px;" data-toggle="modal" data-target="#workshift-modal"
                                                 id="day-{{ App\WorkshiftPerDay::where('user_id', $user->id)->where('date_code', $date->format('Ymd'))->value('id') }}" 
                                                 data-id="{{ App\WorkshiftPerDay::where('user_id', $user->id)->where('date_code', $date->format('Ymd'))->value('id') }}"
                                                 data-time-in="{{ App\Workshift::getUserTimeIn($user, $date->format('Ymd')) }}"
@@ -172,14 +173,35 @@
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title date">Default Modal</h4>
+                <h4 class="modal-title date"></h4>
               </div>
               <div class="modal-body">
                   <p class="user_name"></p>
-                  <p class="user_id"></p>
-                  <p class="time_in"></p>
+
+                  <form action="#" method="POST">
+                    <div class="row">
+
+                        <!-- TIME IN -->
+                        <div class="col-md-6">
+                            <label for="timeIn">Time In</label>
+                            <select class="form-control" id="time_in" name="time_in" required>
+                                <option value="0">12:00 AM</option><option value="30">12:30 AM</option><option value="100">1:00 AM</option><option value="130">1:30 AM</option><option value="200">2:00 AM</option><option value="230">2:30 AM</option><option value="300">3:00 AM</option><option value="330">3:30 AM</option><option value="400">4:00 AM</option><option value="430">4:30 AM</option><option value="500">5:00 AM</option><option value="530">5:30 AM</option><option value="600">6:00 AM</option><option value="630">6:30 AM</option><option value="700">7:00 AM</option><option value="730">7:30 AM</option><option value="800">8:00 AM</option><option value="830">8:30 AM</option><option value="900">9:00 AM</option><option value="930">9:30 AM</option><option value="1000">10:00 AM</option><option value="1030">10:30 AM</option><option value="1100">11:00 AM</option><option value="1130">11:30 AM</option><option value="1200">12:00 PM</option><option value="1230">12:30 PM</option><option value="1300">1:00 PM</option><option value="1330">1:30 PM</option><option value="1400">2:00 PM</option><option value="1430">2:30 PM</option><option value="1500">3:00 PM</option><option value="1530">3:30 PM</option><option value="1600">4:00 PM</option><option value="1630">4:30 PM</option><option value="1700" selected="">5:00 PM</option><option value="1730">5:30 PM</option><option value="1800">6:00 PM</option><option value="1830">6:30 PM</option><option value="1900">7:00 PM</option><option value="1930">7:30 PM</option><option value="2000">8:00 PM</option><option value="2030">8:30 PM</option><option value="2100">9:00 PM</option><option value="2130">9:30 PM</option><option value="2200">10:00 PM</option><option value="2230">10:30 PM</option><option value="2300">11:00 PM</option><option value="2330">11:30 PM</option>
+                            </select>                        
+                        </div>
+
+                        <!-- TIME IN -->
+                        <div class="col-md-6">
+                            <label for="timeIn">Time Out</label>
+                            <select class="form-control" id="time_out" name="time_out" required>
+                                <option value="0">12:00 AM</option><option value="30">12:30 AM</option><option value="100">1:00 AM</option><option value="130">1:30 AM</option><option value="200">2:00 AM</option><option value="230">2:30 AM</option><option value="300">3:00 AM</option><option value="330">3:30 AM</option><option value="400">4:00 AM</option><option value="430">4:30 AM</option><option value="500">5:00 AM</option><option value="530">5:30 AM</option><option value="600">6:00 AM</option><option value="630">6:30 AM</option><option value="700">7:00 AM</option><option value="730">7:30 AM</option><option value="800">8:00 AM</option><option value="830">8:30 AM</option><option value="900">9:00 AM</option><option value="930">9:30 AM</option><option value="1000">10:00 AM</option><option value="1030">10:30 AM</option><option value="1100">11:00 AM</option><option value="1130">11:30 AM</option><option value="1200">12:00 PM</option><option value="1230">12:30 PM</option><option value="1300">1:00 PM</option><option value="1330">1:30 PM</option><option value="1400">2:00 PM</option><option value="1430">2:30 PM</option><option value="1500">3:00 PM</option><option value="1530">3:30 PM</option><option value="1600">4:00 PM</option><option value="1630">4:30 PM</option><option value="1700" selected="">5:00 PM</option><option value="1730">5:30 PM</option><option value="1800">6:00 PM</option><option value="1830">6:30 PM</option><option value="1900">7:00 PM</option><option value="1930">7:30 PM</option><option value="2000">8:00 PM</option><option value="2030">8:30 PM</option><option value="2100">9:00 PM</option><option value="2130">9:30 PM</option><option value="2200">10:00 PM</option><option value="2230">10:30 PM</option><option value="2300">11:00 PM</option><option value="2330">11:30 PM</option>
+                            </select>                        
+                        </div>
+                    </div>
+                  </form>
+
+                  {{-- <p class="time_in"></p>
                   <p class="time_out"></p>
-                  <p class="date"></p>
+                  <p class="date"></p> --}}
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -230,7 +252,7 @@ $('#level').change( function() {
 
 $("td").click(function() {
 
-    var url = '/workshift-per-day/' + $(this).parent().attr('data-user-id') + '/' + $(this).attr('id');
+    // var url = '/workshift-per-day/' + $(this).parent().attr('data-user-id') + '/' + $(this).attr('id');
 
     var user_id = $(this).parent().attr('data-user-id');
     var time_in = $(this).attr('data-time-in');
@@ -238,11 +260,11 @@ $("td").click(function() {
     var date = $(this).attr('data-date');
     var user_name = $(this).parent().find('.user-name-row').text();
 
+    $('#workshift-modal .date').html(moment(date).format('LL'));
     $('#workshift-modal .user_name').html(user_name);
     $('#workshift-modal .user_id').html(user_id);
     $('#workshift-modal .time_in').html(time_in);
     $('#workshift-modal .time_out').html(time_out);
-    $('#workshift-modal .date').html(moment(date).format('LL'));
 
 });
 </script>
