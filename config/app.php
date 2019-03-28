@@ -261,4 +261,14 @@ return [
         '900' => '9:00am',
         '930' => '9:30am'
     ],
+
+    'day_workshift' => [
+        'monday_workshift',
+        'tuesday_workshift',
+        'wednesday_workshift',
+        'thursday_workshift',
+        'friday_workshift',
+        'saturday_workshift',
+        'sunday_workshift'
+    ]
 ];

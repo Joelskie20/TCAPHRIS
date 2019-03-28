@@ -225,7 +225,7 @@ class WorkshiftController extends Controller
                         'user_id' => $user->id,
                         'workshift_schedule' => $user->workshift->$getDay,
                         'date_code' => Carbon::parse($date)->format('Ymd'),
-                        'rest_day' => $user->workshift->$getDay === 'RD' ? true : false
+                        'rest_day' => str_contains($user->workshift->$getDay, "RD") ? true : false 
                     ]);
 
                 }
@@ -239,42 +239,34 @@ class WorkshiftController extends Controller
         return redirect('/workshift-assignment');
     }
 
-    public function calendar()
+    public function calendar(Request $request)
     {
+        if (! isset($request->daterange)) {
+            list($from, $to) = explode(' - ', '04/01/2019 - 04/15/2019');    
+        } else {
+            list($from, $to) = explode(' - ', $request->daterange);
+        }
+
+        $request->flash();
+
         return view('workshift.calendar', [
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
-            'workshifts' => Workshift::all(),
-            'users' => User::all(),
-            'divisions' => Division::all(),
             'teams' => Team::all(),
-            'accounts' => Account::all(),
-            'job_codes' => JobCode::all(),
-            'from' => now(),
-            'to' => now()->endOfMonth(),
-            'dateRange' => WorkshiftSched::getAllDays(now(), now()->endOfMonth()),
-            'users' => User::all()
-        ]);
-    }
-
-    public function calendarPost(Request $request)
-    {
-        list($from, $to) = explode(' - ', $request->daterange);
-
-        return view('workshift.calendar', [
-            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
             'from' => Carbon::parse($from),
             'to' => Carbon::parse($to),
             'dateRange' => WorkshiftSched::getAllDays(Carbon::parse($from)->format('Ymd'), Carbon::parse($to)->format('Ymd')),
-            'users' => User::all(),
+            'users' => User::where('team_id', $request->team_id)->get()
         ]);
     }
 
     public function fetchDaySched($userID, $dateCode)
     {
-        return WorkshiftPerDay::where([
+        $data = WorkshiftPerDay::where([
             ['user_id', '=', $userID],
             ['date_code', '=', $dateCode]
-        ])->get();
+        ])->first();
+
+        return response()->json($data, 200);
     }
 
 

@@ -85,8 +85,10 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/workshift-assignment', 'WorkshiftController@assignment')->name('workshift-assignment');
         Route::post('/workshift-assignment', 'WorkshiftController@assignmentStore');
         Route::get('/workshift-assignment/calendar', 'WorkshiftController@calendar');
-        Route::post('/workshift-assignment/calendar', 'WorkshiftController@calendarPost');
-        Route::get('/workshift-per-day/{userID}/{dateCode}', 'WorkshiftController@fetchDaySched');
+
+        Route::post('/workshift-per-day', 'WorkshiftPerDayController@store');
+        Route::patch('/workshift-per-day/{id}', 'WorkshiftPerDayController@update');
+        Route::delete('/workshift-per-day/{id}', 'WorkshiftPerDayController@destroy');
     });
 
     Route::group(['middleware' => ['permission:leaves']], function () {

@@ -145,7 +145,7 @@ class User extends Authenticatable
                         'user_id' => $this->where('employee_id', request()->employee_id)->first()->id,
                         'workshift_schedule' => $this->where('employee_id', request()->employee_id)->first()->workshift->$getDay,
                         'date_code' => Carbon::parse($item)->format('Ymd'),
-                        'rest_day' => $this->where('employee_id', request()->employee_id)->first()->workshift->$getDay === 'RD' ? true : false
+                        'rest_day' => (str_contains($this->where('employee_id', request()->employee_id)->first()->workshift->$getDay, "RD")) ? true : false
                     ]
                 ]);
 
@@ -269,7 +269,7 @@ class User extends Authenticatable
                         'user_id' => $this->where('employee_id', request()->employee_id)->first()->id,
                         'workshift_schedule' => $this->where('employee_id', request()->employee_id)->first()->workshift->$getDay,
                         'date_code' => Carbon::parse($item)->format('Ymd'),
-                        'rest_day' => $this->where('employee_id', request()->employee_id)->first()->workshift->$getDay === 'RD' ? true : false
+                        'rest_day' => (str_contains($this->where('employee_id', request()->employee_id)->first()->workshift->$getDay, "RD")) ? true : false
                     ]
                 ]);
 

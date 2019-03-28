@@ -75,11 +75,13 @@
                                     <td> - </td>
                                     <td> - </td>
                                     <td> - </td>
-                                    <td style="background-color:green;color:white;">
+                                    <td>
                                         @if($approved->leave_type === 'Vacation Leave')
                                             {{ 'VL' }}
                                         @elseif($approved->leave_type === 'Sick Leave')
                                             {{ 'SL' }}
+                                        @elseif($approved->leave_type === 'Birthday Leave')
+                                            {{ 'BL' }}
                                         @endif
                                     </td>
                                     <td>
@@ -106,8 +108,7 @@
                                     {{ ($attendance->time_out == NULL) ? '' : date('g:i:s a', $attendance->time_out) }} <br><span style="font-size: 80%; opacity: .50"> {{ ($attendance->time_out == NULL) ? '' : '('. date('m/d', $attendance->time_out) .')' }}</span>
                                 </td>
                                 <td>{{ ($attendance->time_out == NULL) ? '' : App\Dtr::timeDiff($attendance->time_out, $attendance->time_in) }}</td>
-                                <td> {{ App\Dtr::checkIfLate( $user, $attendance, Carbon::createFromTimestamp($attendance->time_in)->dayOfWeek ) }}
-                                </td>
+                                <td> {{ App\Dtr::checkIfLate( $user, $attendance, Carbon::createFromTimestamp($attendance->time_in)->dayOfWeek ) }}</td>
                                 <td>
                                     @if($attendance->time_out == NULL || ( date('m/d', $attendance->time_out) != date('m/d', $attendance->time_in) ) )
                                         {{ '' }}

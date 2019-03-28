@@ -354,16 +354,16 @@
 <script>
 		$(function() {
 			
-			$('.restday-toggle').click(function() {
-				console.log($(this).find('input').is(':checked'));
-				if($(this).find('input').is(':checked')) {
-					$(this).addClass('text-bold');
-					$(this).parent().parent().parent().find('.form-dropdown').hide();
-				} else {
-					$(this).removeClass('text-bold');
-					$(this).parent().parent().parent().find('.form-dropdown').show();
-				}
-			});
+			// $('.restday-toggle').click(function() {
+			// 	console.log($(this).find('input').is(':checked'));
+			// 	if($(this).find('input').is(':checked')) {
+			// 		$(this).addClass('text-bold');
+			// 		$(this).parent().parent().parent().find('.form-dropdown').hide();
+			// 	} else {
+			// 		$(this).removeClass('text-bold');
+			// 		$(this).parent().parent().parent().find('.form-dropdown').show();
+			// 	}
+			// });
 			
 			$('#mondayTimeIn, #mondayTimeOut').change(function() {
 				if($('#mondayTimeIn').val()*1 > $('#mondayTimeOut').val()*1) {
