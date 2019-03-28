@@ -51,7 +51,7 @@ class LeaveController extends Controller
         ]);
         
         Leave::create([
-            'user_id' => $request->employee_id,
+            'user_id' => isset($request->employee_id) ? $request->employee_id : auth()->id(),
             'leave_date' => Carbon::parse($request->leave_date),
             'leave_type' => $request->leave_type,
             'day_count' => $request->day_count,

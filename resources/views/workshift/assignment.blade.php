@@ -26,6 +26,7 @@
             @csrf
             <div class="box-header with-border">
                 <h3 class="box-title">Assign Workshift</h3>
+                <a href="/workshift-assignment/calendar" class="btn btn-success pull-right">Calendar View</a>
             </div>
             <div class="box-body">
                 <div class="col-lg-6">

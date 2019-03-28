@@ -229,4 +229,46 @@ return [
 
     ],
 
+    'days' => [
+        0 => 'Sun',
+        1 => 'Mon',
+        2 => 'Tue',
+        3 => 'Wed',
+        4 => 'Thu',
+        5 => 'Fri',
+        6 => 'Sat'
+    ],
+
+    'timeValues' => [
+        '0' => '12:00am',
+        '30' => '12:30am',
+        '100' => '1:00am',
+        '130' => '1:30am',
+        '200' => '2:00am',
+        '230' => '2:30am',
+        '300' => '3:00am',
+        '330' => '3:30am',
+        '400' => '4:00am',
+        '430' => '4:30am',
+        '500' => '5:00am',
+        '530' => '5:30am',
+        '600' => '6:00am',
+        '630' => '6:30am',
+        '700' => '7:00am',
+        '730' => '7:30am',
+        '800' => '8:00am',
+        '830' => '8:30am',
+        '900' => '9:00am',
+        '930' => '9:30am'
+    ],
+
+    'day_workshift' => [
+        'monday_workshift',
+        'tuesday_workshift',
+        'wednesday_workshift',
+        'thursday_workshift',
+        'friday_workshift',
+        'saturday_workshift',
+        'sunday_workshift'
+    ]
 ];

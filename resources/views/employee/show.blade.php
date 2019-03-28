@@ -150,14 +150,20 @@ table tr.rest-day{background:#98fb98 !important;}
 													<td>{{ $employee->getWorkshiftName() }}</td>
 												</tr>
 												<tr>
-													<th>Monday</th>
-													@if ($employee->workshift->monday_workshift == 'RD')
-														<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
-													@else
-														<td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> {{ App\Workshift::regularTime($employee->workshift->getMondayTimeIn()) }} - {{ App\Workshift::regularTime($employee->workshift->getMondayTimeOut()) }}</span> &nbsp; <span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $employee->workshift->getMondayWorkHours() }}</span></td>
+												<th>Workshift</th>
+												@foreach(config('app.day_workshift') as $day)
+												<td>
+													<span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 
+														{{ App\Workshift::regularTime($employee->workshift->getWorkshiftInfo($day)['timein']) . ' - ' . App\Workshift::regularTime($employee->workshift->getWorkshiftInfo($day)['timeout']) }}
+													</span>
+													<br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $employee->workshift->getWorkshiftInfo($day)['workhours'] }}</span>
+													@if(strpos($employee->workshift->$day,'RD') > -1)
+														<br><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span>
 													@endif
+												</td>
+												@endforeach
 												</tr>
-												<tr>
+												{{-- <tr>
 													<th>Tuesday</th>
 													@if ($employee->workshift->tuesday_workshift == 'RD')
 														<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
@@ -204,7 +210,7 @@ table tr.rest-day{background:#98fb98 !important;}
 													@else
 														<td><span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> {{ App\Workshift::regularTime($employee->workshift->getSundayTimeIn()) }} - {{ App\Workshift::regularTime($employee->workshift->getSundayTimeOut()) }}</span> &nbsp; <span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $employee->workshift->getSundayWorkHours() }}</span></td>
 													@endif
-												</tr>
+												</tr> --}}
 											</tbody>
 										</table>
 										

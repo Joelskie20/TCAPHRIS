@@ -196,7 +196,7 @@ class WorkshiftController extends Controller
 
     public function generateWorkshift($users, $start, $end, $dateRange)
     {
-        foreach( $users as $user ) {
+        foreach ( $users as $user ) {
 
             WorkshiftSched::create([
                 'user_id' => $user->id,
@@ -225,7 +225,7 @@ class WorkshiftController extends Controller
                         'user_id' => $user->id,
                         'workshift_schedule' => $user->workshift->$getDay,
                         'date_code' => Carbon::parse($date)->format('Ymd'),
-                        'rest_day' => $user->workshift->$getDay === 'RD' ? true : false
+                        'rest_day' => str_contains($user->workshift->$getDay, "RD") ? true : false 
                     ]);
 
                 }
@@ -238,4 +238,36 @@ class WorkshiftController extends Controller
 
         return redirect('/workshift-assignment');
     }
+
+    public function calendar(Request $request)
+    {
+        if (! isset($request->daterange)) {
+            list($from, $to) = explode(' - ', '04/01/2019 - 04/15/2019');    
+        } else {
+            list($from, $to) = explode(' - ', $request->daterange);
+        }
+
+        $request->flash();
+
+        return view('workshift.calendar', [
+            'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
+            'teams' => Team::all(),
+            'from' => Carbon::parse($from),
+            'to' => Carbon::parse($to),
+            'dateRange' => WorkshiftSched::getAllDays(Carbon::parse($from)->format('Ymd'), Carbon::parse($to)->format('Ymd')),
+            'users' => User::where('team_id', $request->team_id)->get()
+        ]);
+    }
+
+    public function fetchDaySched($userID, $dateCode)
+    {
+        $data = WorkshiftPerDay::where([
+            ['user_id', '=', $userID],
+            ['date_code', '=', $dateCode]
+        ])->first();
+
+        return response()->json($data, 200);
+    }
+
+
 }

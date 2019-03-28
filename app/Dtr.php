@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon;
+use App\Workshift;
 
 class Dtr extends Model
 {
@@ -47,101 +48,53 @@ class Dtr extends Model
 
     public static function checkIfLate($user, $attendance, $day) 
     {
-        $days = [
-            0 => 'Sunday',
-            1 => 'Monday',
-            2 => 'Tuesday',
-            3 => 'Wednesday',
-            4 => 'Thursday',
-            5 => 'Friday',
-            6 => 'Saturday'
+        $workshifts = [
+            0 => 'monday_workshift',
+            1 => 'tuesday_workshift',
+            2 => 'wednesday_workshift',
+            3 => 'thursday_workshift',
+            4 => 'friday_workshift',
+            5 => 'saturday_workshift',
+            6 => 'sunday_workshift'
         ];
 
-        if ( array_key_exists($day, $days) ) {
+        if ( array_key_exists($day, $workshifts) ) {
 
-            $timeValues = [
-                '0' => '12:00am',
-                '30' => '12:30am',
-                '100' => '1:00am',
-                '130' => '1:30am',
-                '200' => '2:00am',
-                '230' => '2:30am',
-                '300' => '3:00am',
-                '330' => '3:30am',
-                '400' => '4:00am',
-                '430' => '4:30am',
-                '500' => '5:00am',
-                '530' => '5:30am',
-                '600' => '6:00am',
-                '630' => '6:30am',
-                '700' => '7:00am',
-                '730' => '7:30am',
-                '800' => '8:00am',
-                '830' => '8:30am',
-                '900' => '9:00am',
-                '930' => '9:30am'
-            ];
 
-            $getDayTimeIn = "get{$days[$day]}TimeIn";
+            $timeInRaw = $user->workshift->getWorkshiftInfo($workshifts[$day])['timein'];
 
-            if ( array_key_exists($user->workshift->$getDayTimeIn(), $timeValues) ) {   
+            if ( array_key_exists($timeInRaw, config('app.timeValues')) ) {
 
-                $shiftTimestamps = strtotime(date('H:i', strtotime($timeValues[$user->workshift->$getDayTimeIn()])));
+                $shiftTimeStamp = strtotime(date('H:i', strtotime(config('app.timeValues')[$timeInRaw])));
 
-                $shiftTimeIn = date('H:i', strtotime('+6 minutes', $shiftTimestamps));
+                $shiftTimeIn = date('H:i', strtotime('+6 minutes', $shiftTimeStamp));
 
                 $userTimeIn = date('H:i', $attendance->time_in);
 
                 if ( $userTimeIn > $shiftTimeIn ) {
                     return static::timeDiff(strtotime($userTimeIn), strtotime($shiftTimeIn));
                 }
-
             }
-
-            
         }
     }
 
     public static function checkIfUndertime($user, $attendance, $day) 
     {
-        $days = [
-            0 => 'Sunday',
-            1 => 'Monday',
-            2 => 'Tuesday',
-            3 => 'Wednesday',
-            4 => 'Thursday',
-            5 => 'Friday',
-            6 => 'Saturday'
+         $workshifts = [
+            0 => 'monday_workshift',
+            1 => 'tuesday_workshift',
+            2 => 'wednesday_workshift',
+            3 => 'thursday_workshift',
+            4 => 'friday_workshift',
+            5 => 'saturday_workshift',
+            6 => 'sunday_workshift'
         ];
 
-        if ( array_key_exists($day, $days) ) {
+        if ( array_key_exists($day, $workshifts) ) {
 
-            $timeValues = [
-                '0' => '12:00am',
-                '30' => '12:30am',
-                '100' => '1:00am',
-                '130' => '1:30am',
-                '200' => '2:00am',
-                '230' => '2:30am',
-                '300' => '3:00am',
-                '330' => '3:30am',
-                '400' => '4:00am',
-                '430' => '4:30am',
-                '500' => '5:00am',
-                '530' => '5:30am',
-                '600' => '6:00am',
-                '630' => '6:30am',
-                '700' => '7:00am',
-                '730' => '7:30am',
-                '800' => '8:00am',
-                '830' => '8:30am',
-                '900' => '9:00am',
-                '930' => '9:30am'
-            ];
+            $timeOutRaw = $user->workshift->getWorkshiftInfo($workshifts[$day])['timeout'];
 
-            $getDayTimeOut = "get{$days[$day]}TimeOut";
-
-            $shiftTimeOut = date('H:i', strtotime($user->workshift->$getDayTimeOut()));
+            $shiftTimeOut = date('H:i', strtotime($timeOutRaw));
 
             $userTimeOut = date('H:i', $attendance->time_out);
 

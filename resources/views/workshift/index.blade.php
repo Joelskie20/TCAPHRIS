@@ -72,88 +72,26 @@
 							</tr>
 						</thead>
 							<tbody>
+								{{-- @php
+								$day_arr = array('monday_workshift','tuesday_workshift','wednesday_workshift','thursday_workshift','friday_workshift','saturday_workshift','sunday_workshift');	
+								@endphp --}}
 								@foreach($workshifts as $key => $workshift)
 									<tr id="w2" data-id="2">
 										<td>{{ ++$key }}</td>
 										<td><a title="{{ $workshift->code }}" href="/workshifts/{{ $workshift->id }}/edit">{{ $workshift->code }}</a></td>
 										<td><a title="{{ $workshift->name }}" href="/workshifts/{{ $workshift->id }}/edit"">{{ $workshift->name }}</a></td>
 
-										@if($workshift->monday_workshift == 'RD')
-											<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
-										@else
-											<td>
-												<span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 
-													{{ App\Workshift::regularTime($workshift->getMondayTimeIn()) . ' - ' . App\Workshift::regularTime($workshift->getMondayTimeOut()) }}
+										@foreach(config('app.day_workshift') as $day)
+										<td>
+											<span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 
+													{{ App\Workshift::regularTime($workshift->getWorkshiftInfo($day)['timein']) . ' - ' . App\Workshift::regularTime($workshift->getWorkshiftInfo($day)['timeout']) }}
 												</span>
-												<br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $workshift->getMondayWorkHours() }}</span>
-											</td>
-										@endif
-
-										@if($workshift->tuesday_workshift == 'RD')
-											<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
-										@else
-											<td>
-												<span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 
-													{{ App\Workshift::regularTime($workshift->getTuesdayTimeIn()) . ' - ' . App\Workshift::regularTime($workshift->getTuesdayTimeOut()) }}
-												</span>
-												<br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $workshift->getTuesdayWorkHours() }}</span>
-											</td>
-										@endif
-
-										@if($workshift->wednesday_workshift == 'RD')
-											<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
-										@else
-											<td>
-												<span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 
-													{{ App\Workshift::regularTime($workshift->getWednesdayTimeIn()) . ' - ' . App\Workshift::regularTime($workshift->getWednesdayTimeOut()) }}
-												</span>
-												<br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $workshift->getWednesdayWorkHours() }}</span>
-											</td>
-										@endif
-
-										@if($workshift->thursday_workshift == 'RD')
-											<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
-										@else
-											<td>
-												<span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 
-													{{ App\Workshift::regularTime($workshift->getThursdayTimeIn()) . ' - ' . App\Workshift::regularTime($workshift->getThursdayTimeOut()) }}
-												</span>
-												<br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $workshift->getThursdayWorkHours() }}</span>
-											</td>
-										@endif
-
-										@if($workshift->friday_workshift == 'RD')
-											<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
-										@else
-											<td>
-												<span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 
-													{{ App\Workshift::regularTime($workshift->getFridayTimeIn()) . ' - ' . App\Workshift::regularTime($workshift->getFridayTimeOut()) }}
-												</span>
-												<br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $workshift->getFridayWorkHours() }}</span>
-											</td>
-										@endif
-
-										@if($workshift->saturday_workshift == 'RD')
-											<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
-										@else
-											<td>
-												<span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 
-													{{ App\Workshift::regularTime($workshift->getSaturdayTimeIn()) . ' - ' . App\Workshift::regularTime($workshift->getSaturdayTimeOut()) }}
-												</span>
-												<br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $workshift->getSaturdayWorkHours() }}</span>
-											</td>
-										@endif
-
-										@if($workshift->sunday_workshift == 'RD')
-											<td><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span></td>
-										@else
-											<td>
-												<span title="Time Schedule"><small class="icon"><i class="fa fa-clock-o text-gray"></i></small> 
-													{{ App\Workshift::regularTime($workshift->getSundayTimeIn()) . ' - ' . App\Workshift::regularTime($workshift->getSundayTimeOut()) }}
-												</span>
-												<br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $workshift->getSundayWorkHours() }}</span>
-											</td>
-										@endif
+												<br><span title="Work Hours"><small class="icon"><i class="fa fa-bolt text-yellow"></i></small> {{ $workshift->getWorkshiftInfo($day)['workhours'] }}</span>
+											@if(strpos($workshift->$day,'RD') > -1)
+												<br><span class="text-green" title="Rest Day"><small class="icon"><i class="fa fa-coffee"></i></small> <small>REST DAY</small></span>
+											@endif
+										</td>
+										@endforeach
 										
 										{{-- <td></td> --}}
 										<td class="data-row-options-cell">
