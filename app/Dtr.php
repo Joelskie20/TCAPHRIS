@@ -46,62 +46,30 @@ class Dtr extends Model
         return $regularTime;
     }
 
-    public static function checkIfLate($user, $attendance, $day) 
+    public static function checkIfLate($userTimeIn, $userTimeInShift)
     {
-        $workshifts = [
-            0 => 'monday_workshift',
-            1 => 'tuesday_workshift',
-            2 => 'wednesday_workshift',
-            3 => 'thursday_workshift',
-            4 => 'friday_workshift',
-            5 => 'saturday_workshift',
-            6 => 'sunday_workshift'
-        ];
 
-        if ( array_key_exists($day, $workshifts) ) {
+        $timeIn = new Carbon($userTimeIn);
+        
+        $timeInShift = new Carbon($userTimeInShift);
+        
+        if ( $timeIn->gt($timeInShift->addMinutes(6)) ) {
+            
+            return static::timeDiff(strtotime($timeIn), strtotime($timeInShift));
 
-
-            $timeInRaw = $user->workshift->getWorkshiftInfo($workshifts[$day])['timein'];
-
-            if ( array_key_exists($timeInRaw, config('app.timeValues')) ) {
-
-                $shiftTimeStamp = strtotime(date('H:i', strtotime(config('app.timeValues')[$timeInRaw])));
-
-                $shiftTimeIn = date('H:i', strtotime('+6 minutes', $shiftTimeStamp));
-
-                $userTimeIn = date('H:i', $attendance->time_in);
-
-                if ( $userTimeIn > $shiftTimeIn ) {
-                    return static::timeDiff(strtotime($userTimeIn), strtotime($shiftTimeIn));
-                }
-            }
         }
     }
 
-    public static function checkIfUndertime($user, $attendance, $day) 
+    public static function checkIfUndertime($userTimeOut, $userTimeOutShift) 
     {
-         $workshifts = [
-            0 => 'monday_workshift',
-            1 => 'tuesday_workshift',
-            2 => 'wednesday_workshift',
-            3 => 'thursday_workshift',
-            4 => 'friday_workshift',
-            5 => 'saturday_workshift',
-            6 => 'sunday_workshift'
-        ];
+        $timeOut = new Carbon($userTimeOut);
+        
+        $timeOutShift = new Carbon($userTimeOutShift);
 
-        if ( array_key_exists($day, $workshifts) ) {
+        if ( $timeOut->lt($timeOutShift) ) {
 
-            $timeOutRaw = $user->workshift->getWorkshiftInfo($workshifts[$day])['timeout'];
+            return static::timeDiff(strtotime($timeOutShift), strtotime($timeOut));
 
-            $shiftTimeOut = date('H:i', strtotime($timeOutRaw));
-
-            $userTimeOut = date('H:i', $attendance->time_out);
-
-            if ( ($userTimeOut < $shiftTimeOut) ) {
-                return static::timeDiff(strtotime($shiftTimeOut), strtotime($userTimeOut));
-            }
-            
         }
     }
 }

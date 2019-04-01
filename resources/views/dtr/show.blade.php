@@ -62,10 +62,29 @@
                             </thead>
                             <tbody>
 
+                            @if($holidays->count() > 0)
+                                @foreach($holidays as $holiday)
+                                    <tr style="text-align:center;background:lightyellow">
+                                    <td title="{{ Carbon::parse($holiday->date)->format('F j, Y') }}">{{ Carbon::parse($holiday->date)->format('m/d/Y') }}</td>
+                                    <td>{{ $holiday->name }}</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                                @endforeach
+                            @endif
+
                             @if($user->id === Auth::id())
                                 @foreach($user->leaves()->where('status', 'approved')->get() as $approved)
-                                <tr style="text-align:center;">
-                                    <td>{{ Carbon::parse($approved->leave_date)->format('m/d/Y') }}</td>
+                                <tr style="text-align:center;background:#627162;color:white">
+                                    <td title="{{ Carbon::parse($approved->leave_date)->format('F j, Y') }}">{{ Carbon::parse($approved->leave_date)->format('m/d/Y') }}</td>
                                     <td> - </td>
                                     <td> - </td>
                                     <td> - </td>
@@ -75,11 +94,13 @@
                                     <td> - </td>
                                     <td> - </td>
                                     <td> - </td>
-                                    <td style="background-color:green;color:white;">
+                                    <td>
                                         @if($approved->leave_type === 'Vacation Leave')
                                             {{ 'VL' }}
                                         @elseif($approved->leave_type === 'Sick Leave')
                                             {{ 'SL' }}
+                                        @elseif($approved->leave_type === 'Birthday Leave')
+                                            {{ 'BL' }}
                                         @endif
                                     </td>
                                     <td>
@@ -95,9 +116,21 @@
 
                             
                             @foreach ($user->attendances()->latest()->get() as $attendance)
-                            <tr style="text-align: center;">
-                                <td>{{ date('m/d/Y', $attendance->time_in) }}</td>
-                                <td>{{ $attendance->user->workshift->code }}</td>
+                            <tr style="text-align: center;" title="{{ Carbon::createFromTimestamp($attendance->time_in)->format('F j, Y') }}">
+                                {{-- <td>{{ date('m/d/Y', $attendance->time_in) }}</td> --}}
+                                <td title="{{ Carbon::createFromTimestamp($attendance->time_in)->format('F j, Y') }}">{{ Carbon::createFromTimestamp($attendance->time_in)->format('m/d/Y') }}</td>
+                                <td>
+                                    @foreach($user->workshiftPerDay()->get() as $day)
+                                        
+                                        @if (Carbon::createFromTimestamp($attendance->time_in)->format('Ymd') === $day->date_code)
+
+                                            {{ is_null($day->workshift_id) ? 'Custom: ' . App\Workshift::formatTime(App\Workshift::getUserTimeIn($user, $day->date_code, $day->id)) . ' - ' . App\Workshift::formatTime(App\Workshift::getUserTimeOut($user, $day->date_code, $day->id)) : App\Workshift::where('id', $day->workshift_id)->value('code')  }}<br>
+
+                                        @endif
+
+                                    @endforeach
+                                </td>
+                                
                                 <td style="line-height: 1.1;">
                                     {{ date('g:i:s a', $attendance->time_in) }}
                                     <br><span style="font-size: 80%; opacity: .50"> ({{ date('m/d', $attendance->time_in) }})</span>
@@ -106,13 +139,28 @@
                                     {{ ($attendance->time_out == NULL) ? '' : date('g:i:s a', $attendance->time_out) }} <br><span style="font-size: 80%; opacity: .50"> {{ ($attendance->time_out == NULL) ? '' : '('. date('m/d', $attendance->time_out) .')' }}</span>
                                 </td>
                                 <td>{{ ($attendance->time_out == NULL) ? '' : App\Dtr::timeDiff($attendance->time_out, $attendance->time_in) }}</td>
-                                <td>{{ App\Dtr::checkIfLate( $user, $attendance, Carbon::createFromTimestamp($attendance->time_in)->dayOfWeek ) }}</td>
+                                {{-- <td> {{ App\Dtr::checkIfLate( $user, $attendance, Carbon::createFromTimestamp($attendance->time_in)->dayOfWeek ) }}</td> --}}
                                 <td>
-                                    @if($attendance->time_out == NULL || ( date('m/d', $attendance->time_out) != date('m/d', $attendance->time_in) ) )
-                                        {{ '' }}
-                                    @else
-                                        {{ App\Dtr::checkIfUndertime( $user, $attendance, Carbon::createFromTimestamp($attendance->time_in)->dayOfWeek ) }}
-                                    @endif
+                                     @foreach($user->workshiftPerDay()->get() as $day)
+                                        
+                                        @if (Carbon::createFromTimestamp($attendance->time_in)->format('Ymd') === $day->date_code)
+
+                                            {{ App\Dtr::checkIfLate(Carbon::createFromTimestamp($attendance->time_in)->format('h:i a'), App\Workshift::formatTime(App\Workshift::getUserTimeIn($user, $day->date_code, $day->id))) }}
+
+                                        @endif
+
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach($user->workshiftPerDay()->get() as $day)
+                                        
+                                        @if (Carbon::createFromTimestamp($attendance->time_out)->format('Ymd') === $day->date_code && Carbon::createFromTimestamp($attendance->time_out)->format('Ymd') === Carbon::createFromTimestamp($attendance->time_in)->format('Ymd'))
+
+                                            {{ App\Dtr::checkIfUndertime(Carbon::createFromTimestamp($attendance->time_out)->format('h:i a'), App\Workshift::formatTime(App\Workshift::getUserTimeOut($user, $day->date_code, $day->id))) }}
+                                        
+                                        @endif
+
+                                    @endforeach
                                 </td>
                                 <td>
                                     @foreach($user->overtimes()->where('status', 'approved')->get() as $overtime)

@@ -143,7 +143,9 @@ class WorkshiftController extends Controller
 
             $dateRange = WorkshiftSched::getAllDays($start, $end);
 
-            return $this->generateWorkshift($users, $start, $end, $dateRange);
+            $workshift_id = $request->workshift_id;
+
+            return $this->generateWorkshift($users, $start, $end, $dateRange, $workshift_id);
 
         }
 
@@ -159,7 +161,9 @@ class WorkshiftController extends Controller
 
             $dateRange = WorkshiftSched::getAllDays($start, $end);
 
-            return $this->generateWorkshift($users, $start, $end, $dateRange);
+            $workshift_id = $request->workshift_id;
+
+            return $this->generateWorkshift($users, $start, $end, $dateRange, $workshift_id);
         }
 
         // Division, Team, Account Selected
@@ -174,7 +178,9 @@ class WorkshiftController extends Controller
 
             $dateRange = WorkshiftSched::getAllDays($start, $end);
 
-            return $this->generateWorkshift($users, $start, $end, $dateRange);
+            $workshift_id = $request->workshift_id;
+
+            return $this->generateWorkshift($users, $start, $end, $dateRange, $workshift_id);
         }
 
         if ( isset($request->employee_id) ) {
@@ -187,20 +193,22 @@ class WorkshiftController extends Controller
 
             $dateRange = WorkshiftSched::getAllDays($start, $end);
 
-            return $this->generateWorkshift($users, $start, $end, $dateRange);
+            $workshift_id = $request->workshift_id;
+
+            return $this->generateWorkshift($users, $start, $end, $dateRange, $workshift_id);
 
         }
 
         
     }
 
-    public function generateWorkshift($users, $start, $end, $dateRange)
+    public function generateWorkshift($users, $start, $end, $dateRange, $workshift_id)
     {
         foreach ( $users as $user ) {
 
             WorkshiftSched::create([
                 'user_id' => $user->id,
-                'workshift_id' => $user->workshift->id,
+                'workshift_id' => $workshift_id,
                 'date_from' => $start,
                 'date_to' => $end
             ]);
@@ -219,13 +227,14 @@ class WorkshiftController extends Controller
 
                 if ( array_key_exists(Carbon::parse($date)->dayOfWeek, $days) ) {
 
-                    $getDay = "{$days[Carbon::parse($date)->dayOfWeek]}_workshift";
+                    $getDay = "{$days[Carbon::parse($date)->dayOfWeek]}_workshift"; //monday_workshift
 
                     WorkshiftPerDay::create([
                         'user_id' => $user->id,
-                        'workshift_schedule' => $user->workshift->$getDay,
+                        'workshift_id' => $workshift_id,
+                        'workshift_schedule' => Workshift::where('id', $workshift_id)->first()->$getDay,
                         'date_code' => Carbon::parse($date)->format('Ymd'),
-                        'rest_day' => str_contains($user->workshift->$getDay, "RD") ? true : false 
+                        'rest_day' => str_contains(Workshift::where('id', $workshift_id)->first()->$getDay, "RD") ? true : false 
                     ]);
 
                 }

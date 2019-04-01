@@ -6,6 +6,7 @@ use Auth;
 use App\Dtr;
 use App\User;
 use App\Attendance;
+use App\Holiday;
 use Illuminate\Http\Request;
 
 class DtrController extends Controller
@@ -22,6 +23,7 @@ class DtrController extends Controller
             // 'attendances' => Attendance::where('user_id', Auth::id())->get(),
             // 'attendances' => User::where('id', Auth::id())->attendances()->latest()->get(),
             'user' => User::where('id', Auth::id())->first(),
+            'holidays' => Holiday::all()
         ]);
     }
 
@@ -58,7 +60,8 @@ class DtrController extends Controller
             'disabled' => (Attendance::checkAttendanceStatus()) ? true : false,
             // 'attendances' => Attendance::where('user_id', Auth::id())->get(),
             // 'attendances' => User::where('id', Auth::id())->attendances()->latest()->get(),
-            'user' => User::where('id', $id)->first(),
+            'user' => User::where('id', $id)->firstOrFail(),
+            'holidays' => Holiday::all()
         ]);
     }
 
