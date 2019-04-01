@@ -98,8 +98,20 @@
                             
                             @foreach ($user->attendances()->latest()->get() as $attendance)
                             <tr style="text-align: center;">
-                                <td>{{ date('m/d/Y', $attendance->time_in) }}</td>
-                                <td>{{ $attendance->user->workshift->code }}</td>
+                                {{-- <td>{{ date('m/d/Y', $attendance->time_in) }}</td> --}}
+                                <td>{{ Carbon::createFromTimestamp($attendance->time_in)->format('m/d/Y') }}</td>
+                                <td>
+                                    @foreach($user->workshiftPerDay()->get() as $day)
+                                        
+                                        @if (Carbon::createFromTimestamp($attendance->time_in)->format('Ymd') === $day->date_code)
+
+                                            {{ 'exists' }}
+
+                                        @endif
+
+                                    @endforeach
+                                </td>
+                                
                                 <td style="line-height: 1.1;">
                                     {{ date('g:i:s a', $attendance->time_in) }}
                                     <br><span style="font-size: 80%; opacity: .50"> ({{ date('m/d', $attendance->time_in) }})</span>
