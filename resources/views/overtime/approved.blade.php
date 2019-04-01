@@ -173,6 +173,97 @@
 
     </section>
 
+    <div class="modal fade" id="modal-default-add">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">File Leave</h4>
+            </div>
+            <form method="POST" action="{{ action('OvertimeController@store') }}">
+                @csrf
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="leaveDate">Overtime Date</label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" id="overtimeDate" name="overtime_date" placeholder="mm/dd/yyyy" class="form-control datepicker" required>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- <div class="col-sm-6">
+                            <div class="form-group employee" id="employee-add">
+                                <label for="employee-add">Employee</label>
+                                <select class="form-control" id="employee-add" name="employee_id">
+                                    @foreach($users as $user)
+                                        <option value="{{ $user->id }}">[{{ $user->employee_id }}] {{ $user->lastNameFirst() }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div> --}}
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group" id="overtime_time_in">
+                                <div class="bootstrap-timepicker">
+
+                                    <label>Time In</label>
+
+                                    <div class="input-group">
+                                        <input type="text" class="form-control timepicker" name="time_in">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock-o"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group" id="overtime_time_out">
+                                <div class="bootstrap-timepicker">
+                                    <div class="form-group">
+
+                                        <label>Time Out</label>
+
+                                        <div class="input-group">
+                                            <input type="text" class="form-control timepicker" name="time_out">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
+                                        </div>
+                                        <!-- /.input group -->
+                                        
+                                    </div>
+                                    <!-- /.form group -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group remarks" id="remarks-add">
+                                <label for="remarks-add">Remarks/Reason</label>
+                                <textarea class="form-control" id="remarks-add" name="remarks"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">File Overtime</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 </div>
 @endsection
 

@@ -51,7 +51,7 @@ class OvertimeController extends Controller
         ]);
 
         Overtime::create([
-            'user_id' => $request->employee_id,
+            'user_id' => isset($request->employee_id) ? $request->employee_id : auth()->id(),
             'date' => Carbon::parse($request->overtime_date),
             'time_in' => strtotime($request->time_in),
             'time_out' => strtotime($request->time_out),

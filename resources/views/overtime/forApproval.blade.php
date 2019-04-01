@@ -210,7 +210,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        {{-- <div class="col-sm-6">
                             <div class="form-group employee" id="employee-add">
                                 <label for="employee-add">Employee</label>
                                 <select class="form-control" id="employee-add" name="employee_id">
@@ -219,7 +219,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
